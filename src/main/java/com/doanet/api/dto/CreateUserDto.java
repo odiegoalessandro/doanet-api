@@ -37,12 +37,6 @@ public record CreateUserDto(
     String state,
 
     @NotBlank
-    String zipCode,
-
-    @NotNull
-    Double latitude,
-
-    @NotNull
-    Double longitude
+    String zipCode
 ) {
 }

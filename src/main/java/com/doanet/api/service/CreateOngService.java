@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateOngService {
-  private final UserRepository userRepository;
+  private final CreateUserService createUserService;
   private final OngRepository ongRepository;
 
-  public CreateOngService(UserRepository userRepository, OngRepository ongRepository){
-    this.userRepository = userRepository;
+  public CreateOngService(CreateUserService createUserService, OngRepository ongRepository){
+    this.createUserService = createUserService;
     this.ongRepository = ongRepository;
   }
 
   public Ong create(CreateUserDto user, String cnpj){
     var newUser = new User(user);
     newUser.setUserType(UserType.ONG);
-    this.userRepository.save(newUser);
+    this.createUserService.save(newUser);
 
     var ong = new Ong();
     ong.setUser(newUser);

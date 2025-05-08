@@ -12,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
+@Setter
 @Table(name = "users")
 public class User {
 
@@ -64,8 +65,6 @@ public class User {
   @NotNull
   public User(CreateUserDto user) {
     this.city = user.city();
-    this.longitude = user.longitude();
-    this.latitude = user.latitude();
     this.email = user.email();
     this.neighborhood = user.neighborhood();
     this.number = user.number();
@@ -75,6 +74,15 @@ public class User {
     this.street = user.street();
     this.zipCode = user.zipCode();
     this.name = user.name();
+  }
+
+  public String buildAddress() {
+    return street + ", " +
+        number + ", " +
+        neighborhood + ", " +
+        city + ", " +
+        state + " - " +
+        zipCode;
   }
 
   public void setUserType(UserType userType) {

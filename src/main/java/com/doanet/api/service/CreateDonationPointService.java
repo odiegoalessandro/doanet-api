@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateDonationPointService {
-  private final UserRepository userRepository;
+  private final CreateUserService createUserService;
   private final DonationPointRepository donationPointRepository;
 
-  public CreateDonationPointService(UserRepository userRepository, DonationPointRepository donationPointRepository) {
+  public CreateDonationPointService(CreateUserService createUserService, DonationPointRepository donationPointRepository) {
     this.donationPointRepository = donationPointRepository;
-    this.userRepository = userRepository;
+    this.createUserService = createUserService;
   }
 
   public DonationPoint create(CreateUserDto user, String description){
     var newUser = new User(user);
     newUser.setUserType(UserType.DONATION_POINT);
 
-    this.userRepository.save(newUser);
+    this.createUserService.save(newUser);
 
     var donationPoint = new DonationPoint();
     donationPoint.setUser(newUser);
