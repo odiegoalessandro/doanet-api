@@ -1,6 +1,7 @@
 package com.doanet.api.client;
 
 import com.doanet.api.dto.CoordinetesDto;
+import com.doanet.api.entity.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +35,11 @@ public class GeolocationClient {
     }
   }
 
-  public CoordinetesDto getCoordinetes(String address){
+  public CoordinetesDto setCoordinatesByAddress(String address){
+    return getCoordinetes(address);
+  }
+
+  private CoordinetesDto getCoordinetes(String address){
     var url = UriComponentsBuilder
         .fromHttpUrl("https://api.opencagedata.com/geocode/v1/json")
         .queryParam("q", address)

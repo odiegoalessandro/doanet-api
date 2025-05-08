@@ -17,18 +17,13 @@ public class CreateUserService {
   }
 
   public void save(User user){
-    updateAddress(user);
+    String address = user.buildAddress();
+    CoordinetesDto coordinetesDto = this.geolocationClient.setCoordinatesByAddress(address);
+
+    user.setLatitude(coordinetesDto.latitude());
+    user.setLongitude(coordinetesDto.longitude());
 
     this.userRepository.save(user);
-  }
-
-
-  public void updateAddress(User user){
-    String address = user.buildAddress();
-    CoordinetesDto response = geolocationClient.getCoordinetes(address);
-
-    user.setLatitude(response.latitude());
-    user.setLatitude(response.longitude());
   }
 }
 
