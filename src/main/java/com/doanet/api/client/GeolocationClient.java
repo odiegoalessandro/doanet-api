@@ -1,7 +1,8 @@
 package com.doanet.api.client;
 
-import com.doanet.api.dto.CoordinetesDto;
-import com.doanet.api.entity.User;
+import com.doanet.api.dto.CoordinatesDto;
+import com.doanet.api.exception.CoordinatesInternalServerException;
+import com.doanet.api.exception.CoordinatesNotFoundException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,39 +16,53 @@ public class GeolocationClient {
   private String opencageApiKey;
 
   private final RestTemplate restTemplate;
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper;
 
-  public GeolocationClient(RestTemplate restTemplate) {
+  public GeolocationClient(RestTemplate restTemplate, ObjectMapper objectMapper) {
     this.restTemplate = restTemplate;
+    this.objectMapper = objectMapper;
   }
 
-  private CoordinetesDto extractCoordinates(String json) {
+  private CoordinatesDto extractCoordinates(String json) {
     try {
       JsonNode root = objectMapper.readTree(json);
-      JsonNode geometry = root.path("results").get(0).path("geometry");
+      JsonNode results = root.path("results");
 
+      if (!results.isArray() || results.isEmpty()) {
+        throw new CoordinatesNotFoundException("Nenhuma coordenada encontrada para o endereço informado.");
+      }
+
+      JsonNode geometry = results.get(0).path("geometry");
       double latitude = geometry.get("lat").asDouble();
       double longitude = geometry.get("lng").asDouble();
 
-      return new CoordinetesDto(latitude, longitude);
+      return new CoordinatesDto(latitude, longitude);
     } catch (Exception e) {
-      throw new RuntimeException("Error to extract coordinates ", e);
+      throw new CoordinatesInternalServerException("Error ao extrair as coordenadas: " + e.getMessage());
     }
   }
 
-  public CoordinetesDto setCoordinatesByAddress(String address){
-    return getCoordinetes(address);
+  public CoordinatesDto setCoordinatesByAddress(String address){
+    if (address == null || address.isBlank()) {
+      throw new IllegalArgumentException("Endereço não pode ser nulo ou vazio");
+    }
+
+    return getCoordinates(address);
   }
 
-  private CoordinetesDto getCoordinetes(String address){
-    var url = UriComponentsBuilder
+  private CoordinatesDto getCoordinates(String address){
+    try {
+      var url = UriComponentsBuilder
         .fromHttpUrl("https://api.opencagedata.com/geocode/v1/json")
         .queryParam("q", address)
         .queryParam("key", opencageApiKey)
         .toUriString();
 
-    var json = restTemplate.getForEntity(url, String.class).getBody();
+      var json = restTemplate.getForEntity(url, String.class).getBody();
 
-    return this.extractCoordinates(json);
+      return this.extractCoordinates(json);
+    } catch (Exception e) {
+      throw new CoordinatesInternalServerException("Erro ao chamar API de geolocalização" + e.getMessage());
+    }
   }
 }
