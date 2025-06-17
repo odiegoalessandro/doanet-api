@@ -7,6 +7,7 @@ import com.doanet.api.enums.UserType;
 import com.doanet.api.repository.DonorRepository;
 import com.doanet.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CreateDonorService {
@@ -18,6 +19,7 @@ public class CreateDonorService {
     this.donorRepository = donorRepository;
   }
 
+  @Transactional
   public Donor create(CreateUserDto user, String document, String reasonSocial) {
     var newUser = new User(user);
     newUser.setUserType(UserType.DONOR);

@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,7 +30,6 @@ public class DonorController {
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  @Transactional
   public Donor create(@RequestBody CreateDonorDto donor){
     return this.createDonorService.create(donor.user(), donor.document(), donor.reasonSocial());
   }

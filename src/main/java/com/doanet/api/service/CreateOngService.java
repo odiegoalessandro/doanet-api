@@ -7,6 +7,7 @@ import com.doanet.api.enums.UserType;
 import com.doanet.api.repository.OngRepository;
 import com.doanet.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CreateOngService {
@@ -18,6 +19,7 @@ public class CreateOngService {
     this.ongRepository = ongRepository;
   }
 
+  @Transactional
   public Ong create(CreateUserDto user, String cnpj){
     var newUser = new User(user);
     newUser.setUserType(UserType.ONG);

@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,7 +33,6 @@ public class DonationPointController {
     @ApiResponse(responseCode = "400", description = "Dados de cadastro inválidos"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
-  @Transactional
   public DonationPoint create(@RequestBody @Valid CreateDonationPointDto donationPoint) {
     return this.createDonationPointService.create(donationPoint.user(), donationPoint.description());
   }

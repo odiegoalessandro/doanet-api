@@ -7,17 +7,22 @@ import com.doanet.api.enums.UserType;
 import com.doanet.api.repository.DonationPointRepository;
 import com.doanet.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CreateDonationPointService {
   private final CreateUserService createUserService;
   private final DonationPointRepository donationPointRepository;
 
-  public CreateDonationPointService(CreateUserService createUserService, DonationPointRepository donationPointRepository) {
+  public CreateDonationPointService(
+    CreateUserService createUserService,
+    DonationPointRepository donationPointRepository
+  ) {
     this.donationPointRepository = donationPointRepository;
     this.createUserService = createUserService;
   }
 
+  @Transactional
   public DonationPoint create(CreateUserDto user, String description){
     var newUser = new User(user);
     newUser.setUserType(UserType.DONATION_POINT);

@@ -10,9 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +24,6 @@ public class OngController {
     this.findOngService = findOngService;
   }
 
-  @Transactional
   @Operation(summary = "Realiza a criação de ONG`s dentro do sistema", method = "POST")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "201", description = "Criação de ONG realizado com sucesso"),
