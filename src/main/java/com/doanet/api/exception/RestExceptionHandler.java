@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.stream.Collectors;
 
@@ -32,6 +33,12 @@ public class RestExceptionHandler {
   public ResponseEntity<ApiError> handleNotFound(EntityNotFoundException ex, HttpServletRequest request){
     return buildError(HttpStatus.NOT_FOUND, ex.getMessage(), request);
   }
+
+  @ExceptionHandler(NoHandlerFoundException.class)
+  public ResponseEntity<ApiError> handleNotFound(NoHandlerFoundException ex, HttpServletRequest request) {
+    return buildError(HttpStatus.NOT_FOUND, "Rota não encontrada", request);
+  }
+
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiError> handleGeneric(Exception ex, HttpServletRequest request){
