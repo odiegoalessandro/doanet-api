@@ -2,6 +2,7 @@ package com.doanet.api.controller;
 
 import com.doanet.api.dto.CreateDonationPointDto;
 import com.doanet.api.entity.DonationPoint;
+import com.doanet.api.response.ApiSuccessResponse;
 import com.doanet.api.service.CreateDonationPointService;
 import com.doanet.api.service.FindDonationPointService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,17 +11,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/donation-point", produces = { "application/json" })
 public class DonationPointController {
+
   private final CreateDonationPointService createDonationPointService;
   private final FindDonationPointService findDonationPointService;
 
   public DonationPointController(
-      CreateDonationPointService createDonationPointService,
-      FindDonationPointService findDonationPointService
+    CreateDonationPointService createDonationPointService,
+    FindDonationPointService findDonationPointService
   ) {
     this.createDonationPointService = createDonationPointService;
     this.findDonationPointService = findDonationPointService;
@@ -33,56 +37,86 @@ public class DonationPointController {
     @ApiResponse(responseCode = "400", description = "Dados de cadastro inválidos"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
-  public DonationPoint create(@RequestBody @Valid CreateDonationPointDto donationPoint) {
-    return this.createDonationPointService.create(donationPoint.user(), donationPoint.description());
+  public ResponseEntity<ApiSuccessResponse<DonationPoint>> create(
+    @RequestBody @Valid CreateDonationPointDto donationPoint
+  ) {
+    DonationPoint result = this.createDonationPointService.create(
+      donationPoint.user(),
+      donationPoint.description()
+    );
+    var response = new ApiSuccessResponse<DonationPoint>(
+      HttpStatus.CREATED,
+      "Ponto de doação criado com sucesso",
+      result
+    );
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @Operation(summary = "Realiza a pesquisa do ponto de doação pela descrição", method = "GET")
+  @Operation(summary = "Pesquisa ponto de doação pela descrição", method = "GET")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Pesquisa realizada e ponto foi encontrado"),
-    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas o ponto não foi encontrado"),
+    @ApiResponse(responseCode = "200", description = "Pesquisa realizada com sucesso"),
+    @ApiResponse(responseCode = "404", description = "Ponto de doação não encontrado"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
   @GetMapping("/description/{description}")
-  public Page<DonationPoint> findByDescription(
-      @PathVariable("description") String description,
-      @RequestParam Integer pageNumber,
-      @RequestParam Integer pageSize
-  ){
-    return this.findDonationPointService.findByDescription(description, pageNumber, pageSize);
+  public ResponseEntity<ApiSuccessResponse<Page<DonationPoint>>> findByDescription(
+    @PathVariable("description") String description,
+    @RequestParam Integer pageNumber,
+    @RequestParam Integer pageSize
+  ) {
+    Page<DonationPoint> result = this.findDonationPointService.findByDescription(description, pageNumber, pageSize);
+    var response = new ApiSuccessResponse<Page<DonationPoint>>(
+      HttpStatus.OK,
+      "Pontos de doação encontrados com sucesso",
+      result
+    );
+
+    return ResponseEntity.ok(response);
   }
 
-  @Operation(summary = "Realiza a pesquisa do ponto de doação pela descrição", method = "GET")
+  @Operation(summary = "Busca ponto de doação por ID", method = "GET")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Pesquisa realizada e ponto foi encontrado"),
-    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas o ponto não foi encontrado"),
+    @ApiResponse(responseCode = "200", description = "Ponto de doação encontrado"),
+    @ApiResponse(responseCode = "404", description = "Ponto de doação não encontrado"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
   @GetMapping("/{id}")
-  public DonationPoint findById(
+  public ResponseEntity<ApiSuccessResponse<DonationPoint>> findById(
     @PathVariable("id")
     @Parameter(name = "id", description = "Id do ponto de doação a ser buscado", example = "1")
     Long id
-  ){
-    return this.findDonationPointService.findById(id);
+  ) {
+    DonationPoint result = this.findDonationPointService.findById(id);
+    var response = new ApiSuccessResponse<DonationPoint>(
+      HttpStatus.OK,
+      "Ponto de doação encontrado com sucesso",
+      result
+    );
+
+    return ResponseEntity.ok(response);
   }
 
-  @Operation(summary = "Realiza a pesquisa do ponto de doação pela descrição", method = "GET")
+  @Operation(summary = "Lista todos os pontos de doação", method = "GET")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Pesquisa realizada com sucesso"),
+    @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
   @GetMapping
-  public Page<DonationPoint> findAll(
+  public ResponseEntity<ApiSuccessResponse<Page<DonationPoint>>> findAll(
     @RequestParam
     @Parameter(name = "pageNumber", description = "Número da página a ser buscada", example = "1")
     Integer pageNumber,
     @RequestParam
-    @Parameter(name = "pageSize", description = "Quantidade maxima de itens a serem retornados", example = "100")
+    @Parameter(name = "pageSize", description = "Quantidade máxima de itens a serem retornados", example = "100")
     Integer pageSize
-  ){
-    return this.findDonationPointService.findAll(pageNumber, pageSize);
+  ) {
+    Page<DonationPoint> result = this.findDonationPointService.findAll(pageNumber, pageSize);
+    ApiSuccessResponse<Page<DonationPoint>> response = new ApiSuccessResponse<>(
+      HttpStatus.OK,
+      "Lista de pontos de doação retornada com sucesso",
+      result
+    );
+    return ResponseEntity.ok(response);
   }
 }
-
-

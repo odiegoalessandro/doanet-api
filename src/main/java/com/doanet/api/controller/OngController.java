@@ -2,6 +2,7 @@ package com.doanet.api.controller;
 
 import com.doanet.api.dto.CreateOngDto;
 import com.doanet.api.entity.Ong;
+import com.doanet.api.response.ApiSuccessResponse;
 import com.doanet.api.service.CreateOngService;
 import com.doanet.api.service.FindOngService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,7 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,9 +34,12 @@ public class OngController {
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public Ong create(@RequestBody @Valid CreateOngDto ong){
-    return this.createOngService.create(ong.user(), ong.cnpj());
+  public ResponseEntity<ApiSuccessResponse<Ong>> create(@RequestBody @Valid CreateOngDto ong){
+    Ong result = this.createOngService.create(ong.user(), ong.cnpj());
+    var response = new ApiSuccessResponse<>(HttpStatus.CREATED, "ONG criada com sucesso", result);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
+
   @Operation(summary = "Realiza a pesquisa da ONG pelo ID", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Pesquisa realizada e ONG foi encontrada"),
@@ -41,12 +47,14 @@ public class OngController {
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
   @GetMapping("/{id}")
-  public Ong findById(
+  public ResponseEntity<ApiSuccessResponse<Ong>> findById(
     @PathVariable("id")
     @Parameter(name = "id", description = "Id da ONG a ser buscada")
     Long id
   ){
-    return this.findOngService.findById(id);
+    Ong result = this.findOngService.findById(id);
+    var response = new ApiSuccessResponse<>(HttpStatus.OK, "ONG encontrada com sucesso", result);
+    return ResponseEntity.ok(response);
   }
 
   @GetMapping("/cnpj/{cnpj}")
@@ -56,12 +64,14 @@ public class OngController {
     @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas ONG não foi encontrada"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
-  public Ong findByCnpj(
+  public ResponseEntity<ApiSuccessResponse<Ong>> findByCnpj(
     @PathVariable("cnpj")
     @Parameter(name = "cnpj", description = "CNPJ da ONG a ser buscada", example = "Ong Turma do Bem")
     String cnpj
   ){
-    return this.findOngService.findByCnpj(cnpj);
+    Ong result = this.findOngService.findByCnpj(cnpj);
+    var response = new ApiSuccessResponse<>(HttpStatus.OK, "ONG encontrada com sucesso", result);
+    return ResponseEntity.ok(response);
   }
 
   @GetMapping
@@ -70,14 +80,16 @@ public class OngController {
     @ApiResponse(responseCode = "200", description = "Pesquisa realizada com sucesso"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
   })
-  public Page<Ong> findAll(
+  public ResponseEntity<ApiSuccessResponse<Page<Ong>>> findAll(
     @RequestParam
-    @Parameter(name = "pageNumber", description = "Número da página a ser buscada")
+    @Parameter(name = "pageNumber", description = "Número da página a ser buscada", example = "1")
     Integer pageNumber,
     @RequestParam
-    @Parameter(name = "pageSize", description = "Quantidade maxima de itens retornados")
+    @Parameter(name = "pageSize", description = "Quantidade maxima de itens retornados", example = "100")
     Integer pageSize
   ){
-    return this.findOngService.findAll(pageNumber, pageSize);
+    Page<Ong> result = this.findOngService.findAll(pageNumber, pageSize);
+    var response = new ApiSuccessResponse<>(HttpStatus.OK, "Lista de ONGs retornada com sucesso", result);
+    return ResponseEntity.ok(response);
   }
 }
