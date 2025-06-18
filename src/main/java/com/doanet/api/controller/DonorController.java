@@ -2,13 +2,17 @@ package com.doanet.api.controller;
 
 import com.doanet.api.dto.CreateDonorDto;
 import com.doanet.api.entity.Donor;
+import com.doanet.api.exception.ApiError;
 import com.doanet.api.response.ApiSuccessResponse;
 import com.doanet.api.service.CreateDonorService;
 import com.doanet.api.service.FindDonorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/donor", produces = { "application/json" })
+@Tag(name = "Donors", description = "Operações relacionadas aos doadores")
 public class DonorController {
   private final CreateDonorService createDonorService;
   private final FindDonorService findDonorService;
@@ -30,8 +35,10 @@ public class DonorController {
   @Operation(summary = "Realiza o cadastro do doador", method = "POST")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "201", description = "Cadastro foi realizado com sucesso"),
-    @ApiResponse(responseCode = "400", description = "Dados de cadastro inválidos"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    @ApiResponse(responseCode = "400", description = "Dados de cadastro inválidos",
+      content = @Content(schema = @Schema(implementation = ApiError.class))),
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<ApiSuccessResponse<Donor>> create(@RequestBody @Valid CreateDonorDto donor){
@@ -45,8 +52,10 @@ public class DonorController {
   @Operation(summary = "Realiza a pesquisa do doador pelo ID", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Pesquisa realizada e doador foi encontrado"),
-    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas doador não foi encontrado"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas doador não foi encontrado",
+      content = @Content(schema = @Schema(implementation = ApiError.class))),
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   public ResponseEntity<ApiSuccessResponse<Donor>> findById(
     @PathVariable("id")
@@ -62,8 +71,10 @@ public class DonorController {
   @Operation(summary = "Realiza a pesquisa do doador pelo documento(CPF/CNPJ)", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Pesquisa realizada e doador foi encontrado"),
-    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas doador não foi encontrado"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas doador não foi encontrado",
+      content = @Content(schema = @Schema(implementation = ApiError.class))),
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping("/document/{document}")
   public ResponseEntity<ApiSuccessResponse<Donor>> findByDocument(
@@ -80,13 +91,19 @@ public class DonorController {
   @Operation(summary = "Realiza a pesquisa do doador pela razão social", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Pesquisa realizada e doador foi encontrado"),
-    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas doador não foi encontrado"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    @ApiResponse(responseCode = "404", description = "Pesquisa realizada mas doador não foi encontrado",
+      content = @Content(schema = @Schema(implementation = ApiError.class))),
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping("/reason-social/{reasonSocial}")
   public ResponseEntity<ApiSuccessResponse<Donor>> findByReasonSocial(
     @PathVariable("reasonSocial")
-    @Parameter(name = "reasonSocial", description = "Razão social do doador a ser buscado", example = "Diego A.C. Martins")
+    @Parameter(
+      name = "reasonSocial",
+      description = "Razão social do doador a ser buscado",
+      example = "Diego A.C. Martins"
+    )
     String reasonSocial
   ){
     Donor result = this.findDonorService.findByReasonSocial(reasonSocial);
@@ -98,7 +115,8 @@ public class DonorController {
   @Operation(summary = "Realiza a pesquisa dos doadores por páginas numeradas", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Pesquisa realizada com sucesso"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping
   public ResponseEntity<ApiSuccessResponse<Page<Donor>>> findAll(
