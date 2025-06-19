@@ -11,6 +11,5 @@ public record CreateOngDto(
 
     @CNPJ
     @NotNull
-    @Pattern(regexp = "\\d{14}", message = "CNPJ inválido")
     String cnpj) {
 }
