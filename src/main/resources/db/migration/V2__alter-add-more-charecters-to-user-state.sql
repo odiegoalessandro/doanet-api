@@ -1,0 +1,2 @@
+ALTER TABLE users
+    ALTER COLUMN state TYPE VARCHAR(30);
