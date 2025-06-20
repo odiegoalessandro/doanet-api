@@ -32,6 +32,10 @@ public class GeolocationClient {
         throw new CoordinatesNotFoundException("Nenhuma coordenada encontrada para o endereço informado.");
       }
 
+      JsonNode firstResult = results.get(0);
+
+      validateResult(firstResult);
+
       JsonNode geometry = results.get(0).path("geometry");
       double latitude = geometry.get("lat").asDouble();
       double longitude = geometry.get("lng").asDouble();
@@ -48,6 +52,15 @@ public class GeolocationClient {
     }
 
     return getCoordinates(address);
+  }
+
+  private void validateResult(JsonNode firstResult) {
+    int confidence = firstResult.path("confidence").asInt(0);
+    String country = firstResult.path("components").path("country").asText();
+
+    if (confidence < 5 || !"Brazil".equalsIgnoreCase(country)) {
+      throw new CoordinatesNotFoundException("Endereço inválido ou fora do Brasil, pais: " + country );
+    }
   }
 
   private CoordinatesDto getCoordinates(String address){

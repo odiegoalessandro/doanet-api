@@ -43,10 +43,7 @@ public class RestExceptionHandler {
 
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<ApiError> handleConstraintViolation(ConstraintViolationException ex, HttpServletRequest request) {
-    String message = ex.getConstraintViolations().stream()
-      .map(cv -> cv.getPropertyPath() + ": " + cv.getMessage())
-      .collect(Collectors.joining(", "));
-    return buildError(HttpStatus.BAD_REQUEST, message, request);
+    return buildError(HttpStatus.INTERNAL_SERVER_ERROR, "Violação do banco de dados", request);
   }
 
   @ExceptionHandler(TransactionSystemException.class)
