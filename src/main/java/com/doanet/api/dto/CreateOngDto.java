@@ -9,7 +9,6 @@ public record CreateOngDto(
     @Valid
     CreateUserDto user,
 
-    @CNPJ
     @NotNull
     String cnpj) {
 }

@@ -77,12 +77,15 @@ public class User {
   }
 
   public String buildAddress() {
-    return street + ", " +
-        number + ", " +
-        neighborhood + ", " +
-        city + ", " +
-        state + " - " +
-        zipCode;
+    return String.join(", ",
+      street,
+      number,
+      neighborhood,
+      city,
+      state,
+      "Brazil",
+      zipCode
+    );
   }
 
   public void setUserType(UserType userType) {

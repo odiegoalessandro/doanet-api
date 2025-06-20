@@ -23,7 +23,6 @@ public class Ong {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @CNPJ
   @NotNull
   @Pattern(regexp = "\\d{14}", message = "CNPJ inválido")
   private String cnpj;
