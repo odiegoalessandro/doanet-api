@@ -5,7 +5,6 @@ import com.doanet.api.entity.Donor;
 import com.doanet.api.entity.User;
 import com.doanet.api.enums.UserType;
 import com.doanet.api.repository.DonorRepository;
-import com.doanet.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
