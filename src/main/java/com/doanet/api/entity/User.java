@@ -2,6 +2,8 @@ package com.doanet.api.entity;
 
 import com.doanet.api.dto.CreateUserDto;
 import com.doanet.api.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +31,8 @@ public class User {
 
   @NotBlank(message = "Password is required")
   @Column(name = "password_hash", nullable = false)
+  @JsonIgnore
+  @Schema(hidden = true)
   private String password;
 
   @NotBlank
