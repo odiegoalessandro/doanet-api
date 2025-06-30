@@ -1,0 +1,1 @@
+ALTER TABLE donation_item ADD COLUMN item_id INT REFERENCES item(id);
