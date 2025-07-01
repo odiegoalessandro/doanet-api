@@ -42,8 +42,8 @@ public class DonationMapper {
 
   private ResponseDonationItemDto toItemResponse(DonationItem item) {
     return new ResponseDonationItemDto(
-      item.getDonationItem().getId(),
-      item.getDonationItem().getName(),
+      item.getItem().getId(),
+      item.getItem().getName(),
       item.getQuantity()
     );
   }

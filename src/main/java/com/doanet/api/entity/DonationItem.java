@@ -20,14 +20,14 @@ public class DonationItem {
 
   @ManyToOne
   @JoinColumn(name = "item_id")
-  private Item donationItem;
+  private Item item;
 
   @ManyToOne
   @JoinColumn(name = "donation_id")
   private Donation donation;
 
   public DonationItem(Item item, Donation donation, Integer quantity) {
-    this.donationItem = item;
+    this.item = item;
     this.donation = donation;
     this.quantity = quantity;
   }
