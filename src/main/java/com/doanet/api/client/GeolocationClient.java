@@ -57,10 +57,10 @@ public class GeolocationClient {
   private void validateResult(JsonNode firstResult) {
     int confidence = firstResult.path("confidence").asInt(0);
     String country = firstResult.path("components").path("country").asText();
-
-    if (confidence < 5 || !"Brazil".equalsIgnoreCase(country)) {
-      throw new CoordinatesNotFoundException("Endereço inválido ou fora do Brasil, pais: " + country );
-    }
+//
+//    if (confidence < 5 || !"Brazil".equalsIgnoreCase(country)) {
+//      throw new CoordinatesNotFoundException("Endereço inválido ou fora do Brasil, pais: " + country );
+//    }
   }
 
   private CoordinatesDto getCoordinates(String address){
