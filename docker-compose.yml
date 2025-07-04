@@ -10,6 +10,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       OPENCAGE_API_KEY: ${OPENCAGE_API_KEY}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
     networks:
       - compose-bridge
     ports:
