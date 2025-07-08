@@ -16,23 +16,23 @@ public class FindDonorService {
   }
 
   public Donor findById(Long id){
-    return this.donorRepository.findById(id)
+    return this.donorRepository.findByIdActive(id)
         .orElseThrow(() -> new EntityNotFoundException("No donor found with id " + id));
   }
 
   public Donor findByDocument(String document){
-    return this.donorRepository.findByDocument(document)
+    return this.donorRepository.findByDocumentActive(document)
         .orElseThrow(() -> new EntityNotFoundException("No donor found with document " + document));
   }
 
   public Donor findByReasonSocial(String reasonSocial){
-    return this.donorRepository.findByReasonSocialIgnoreCase(reasonSocial)
+    return this.donorRepository.findByReasonSocialIgnoreCaseActive(reasonSocial.toLowerCase())
         .orElseThrow(() -> new EntityNotFoundException("No donor found with reason social " + reasonSocial));
   }
 
   public Page<Donor> findAll(int pageNumber, int pageSize){
     var pageable = PageRequest.of(pageNumber, pageSize);
 
-    return this.donorRepository.findAll(pageable);
+    return this.donorRepository.findAllActive(pageable);
   }
 }

@@ -67,6 +67,10 @@ public class User {
   private UserType userType;
 
   @NotNull
+  @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT TRUE NOT NULL")
+  private boolean isActive = true;
+
+  @NotNull
   public User(CreateUserDto user) {
     this.city = user.city();
     this.email = user.email();
@@ -78,6 +82,7 @@ public class User {
     this.street = user.street();
     this.zipCode = user.zipCode();
     this.name = user.name();
+    this.isActive = true;
   }
 
   public String buildAddress() {

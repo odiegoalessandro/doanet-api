@@ -16,18 +16,18 @@ public class FindOngService {
   }
 
   public Ong findById(Long id){
-    return this.ongRepository.findById(id)
+    return this.ongRepository.findByIdActive(id)
         .orElseThrow(() -> new EntityNotFoundException("No ONG found with id " + id));
   }
 
   public Ong findByCnpj(String cnpj){
-    return this.ongRepository.findByCnpj(cnpj)
+    return this.ongRepository.findByCnpjActive(cnpj)
         .orElseThrow(() -> new EntityNotFoundException("No ONG found with CNPJ " + cnpj));
   }
 
   public Page<Ong> findAll(Integer pageNumber, Integer pageSize){
     var pageable = PageRequest.of(pageNumber, pageSize);
 
-    return this.ongRepository.findAll(pageable);
+    return this.ongRepository.findAllActive(pageable);
   }
 }

@@ -23,7 +23,7 @@ public class FindDonationPointService {
   public Page<DonationPoint> findByDescription(String description, Integer pageNumber, Integer pageSize){
     var pageable = PageRequest.of(pageNumber, pageSize);
 
-    return this.donationPointRepository.findByDescriptionContainingIgnoreCase(description, pageable);
+    return this.donationPointRepository.findByDescriptionContainingIgnoreCaseActive(description, pageable);
   }
 
   public Page<DonationPoint> findAll(Integer pageNumber, Integer pageSize) {
