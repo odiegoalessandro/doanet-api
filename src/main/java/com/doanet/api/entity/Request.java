@@ -1,5 +1,6 @@
 package com.doanet.api.entity;
 
+import com.doanet.api.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,10 @@ public class Request {
 
   @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RequestItem> requestItems = new ArrayList<>();
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private Status status = Status.CREATED;
 
   public Request(DonationPoint donationPoint, Ong ong, LocalDate createdAt) {
     this.donationPoint = donationPoint;
