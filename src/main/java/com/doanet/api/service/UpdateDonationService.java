@@ -14,7 +14,12 @@ import java.util.Set;
 
 @Service
 public class UpdateDonationService {
-  private static final Set<Status> NOT_ALLOWED_TO_UPDATE = Set.of(Status.BLOCKED, Status.DELIVERED, Status.EXPIRED);
+  private static final Set<Status> NOT_ALLOWED_TO_UPDATE = Set.of(
+    Status.BLOCKED,
+    Status.DELIVERED,
+    Status.EXPIRED,
+    Status.CANCELLED
+  );
 
   private FindItemService findItemService;
   private DonationRepository donationRepository;

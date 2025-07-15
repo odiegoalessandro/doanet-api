@@ -5,7 +5,6 @@ import com.doanet.api.dto.UpdateRequestItemsDto;
 import com.doanet.api.entity.Request;
 import com.doanet.api.entity.RequestItem;
 import com.doanet.api.enums.Status;
-import com.doanet.api.repository.RequestItemRepository;
 import com.doanet.api.repository.RequestRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,15 +14,20 @@ import java.util.Set;
 
 @Service
 public class UpdateRequestService {
-  private static final Set<Status> NOT_ALLOWED_TO_UPDATE = Set.of(Status.BLOCKED, Status.DELIVERED, Status.EXPIRED);
+  private static final Set<Status> NOT_ALLOWED_TO_UPDATE = Set.of(
+    Status.BLOCKED,
+    Status.DELIVERED,
+    Status.EXPIRED,
+    Status.CANCELLED,
+    Status.REJECTED
+  );
 
   private FindItemService findItemService;
   private RequestRepository requestRepository;
 
   public UpdateRequestService(
     FindItemService findItemService,
-    RequestRepository requestRepository,
-    RequestItemRepository requestItemRepository
+    RequestRepository requestRepository
   ) {
     this.findItemService = findItemService;
     this.requestRepository = requestRepository;
