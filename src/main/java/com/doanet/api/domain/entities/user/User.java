@@ -19,6 +19,14 @@ public class User {
   private UserType userType;
   private boolean isActive = true;
 
+  public void setLatitude(Double latitude) {
+    this.latitude = latitude;
+  }
+
+  public void setLongitude(Double longitude) {
+    this.longitude = longitude;
+  }
+
   public Long getId() {
     return id;
   }
@@ -77,6 +85,18 @@ public class User {
 
   public boolean isActive() {
     return isActive;
+  }
+
+  public String buildAddress() {
+    return String.join(", ",
+      street,
+      number,
+      neighborhood,
+      city,
+      state,
+      "Brazil",
+      zipCode
+    );
   }
 
   public User(Long id,

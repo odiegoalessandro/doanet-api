@@ -2,7 +2,7 @@ package com.doanet.api.legacy.service;
 
 import com.doanet.api.legacy.dto.CreateUserDto;
 import com.doanet.api.legacy.entity.Donor;
-import com.doanet.api.legacy.entity.User;
+import com.doanet.api.infra.persistence.UserEntity;
 import com.doanet.api.legacy.enums.UserType;
 import com.doanet.api.legacy.repository.DonorRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class CreateDonorService {
 
   @Transactional
   public Donor create(CreateUserDto user, String document, String reasonSocial) {
-    var newUser = new User(user);
+    var newUser = new UserEntity(user);
     newUser.setUserType(UserType.DONOR);
 
     this.createUserService.save(newUser);

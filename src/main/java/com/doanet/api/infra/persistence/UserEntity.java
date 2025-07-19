@@ -1,4 +1,4 @@
-package com.doanet.api.legacy.entity;
+package com.doanet.api.infra.persistence;
 
 import com.doanet.api.legacy.dto.CreateUserDto;
 import com.doanet.api.legacy.enums.UserType;
@@ -16,7 +16,7 @@ import lombok.*;
 @Entity
 @Setter
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,8 +70,7 @@ public class User {
   @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT TRUE NOT NULL")
   private boolean isActive = true;
 
-  @NotNull
-  public User(CreateUserDto user) {
+  public UserEntity(CreateUserDto user) {
     this.city = user.city();
     this.email = user.email();
     this.neighborhood = user.neighborhood();
@@ -83,6 +82,30 @@ public class User {
     this.zipCode = user.zipCode();
     this.name = user.name();
     this.isActive = true;
+  }
+
+  public UserEntity(String city,
+                    String email,
+                    String neighborhood,
+                    String number,
+                    String password,
+                    String phone,
+                    String state,
+                    String street,
+                    String zipCode,
+                    String name,
+                    boolean isActive) {
+    this.city = city;
+    this.email = email;
+    this.neighborhood = neighborhood;
+    this.number = number;
+    this.password = password;
+    this.phone = phone;
+    this.state = state;
+    this.street = street;
+    this.zipCode = zipCode;
+    this.name = name;
+    this.isActive = isActive;
   }
 
   public String buildAddress() {

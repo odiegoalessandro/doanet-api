@@ -2,7 +2,7 @@ package com.doanet.api.legacy.service;
 
 import com.doanet.api.legacy.client.GeolocationClient;
 import com.doanet.api.legacy.dto.CoordinatesDto;
-import com.doanet.api.legacy.entity.User;
+import com.doanet.api.infra.persistence.UserEntity;
 import com.doanet.api.legacy.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ public class CreateUserService {
   }
 
   @Transactional
-  public void save(User user){
+  public void save(UserEntity user){
     if (user == null){
       throw new IllegalArgumentException("Usuário não pode ser nulo");
     }

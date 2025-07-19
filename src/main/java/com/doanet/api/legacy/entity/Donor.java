@@ -1,5 +1,6 @@
 package com.doanet.api.legacy.entity;
 
+import com.doanet.api.infra.persistence.UserEntity;
 import com.doanet.api.legacy.dto.CreateDonorDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class Donor {
   @OneToOne
   @MapsId
   @JoinColumn(name = "user_id")
-  private User user;
+  private UserEntity user;
 
 
   @NotBlank
