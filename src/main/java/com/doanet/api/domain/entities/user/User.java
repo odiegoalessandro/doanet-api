@@ -151,4 +151,56 @@ public class User {
     this.userType = userType;
     this.isActive = isActive;
   }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public void setStreet(String street) {
+    this.street = street;
+  }
+
+  public void setNumber(String number) {
+    this.number = number;
+  }
+
+  public void setNeighborhood(String neighborhood) {
+    this.neighborhood = neighborhood;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+  }
+
+  public void setZipCode(String zipCode) {
+    this.zipCode = zipCode;
+  }
+
+  public void setUserType(UserType userType) {
+    this.userType = userType;
+  }
+
+  public void setActive(boolean active) {
+    isActive = active;
+  }
 }
