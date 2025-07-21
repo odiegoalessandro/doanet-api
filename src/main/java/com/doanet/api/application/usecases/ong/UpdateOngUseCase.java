@@ -1,4 +1,4 @@
-package com.doanet.api.application.usecases;
+package com.doanet.api.application.usecases.ong;
 
 import com.doanet.api.application.commands.UpdateOngCommand;
 import com.doanet.api.application.gateways.OngRepository;

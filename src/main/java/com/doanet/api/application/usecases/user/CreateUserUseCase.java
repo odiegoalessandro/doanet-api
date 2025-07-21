@@ -1,4 +1,4 @@
-package com.doanet.api.application.usecases;
+package com.doanet.api.application.usecases.user;
 
 import com.doanet.api.application.gateways.GetCoordinatesByAddress;
 import com.doanet.api.application.gateways.UserRepository;

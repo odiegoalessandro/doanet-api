@@ -1,7 +1,6 @@
-package com.doanet.api.application.usecases;
+package com.doanet.api.application.usecases.ong;
 
 import com.doanet.api.application.gateways.OngRepository;
-import com.doanet.api.legacy.entity.Ong;
 
 public class DeleteOngByIdUseCase {
   private final OngRepository ongRepository;

@@ -1,7 +1,8 @@
-package com.doanet.api.application.usecases;
+package com.doanet.api.application.usecases.ong;
 
 import com.doanet.api.application.commands.CreateOngCommand;
 import com.doanet.api.application.gateways.OngRepository;
+import com.doanet.api.application.usecases.user.CreateUserUseCase;
 import com.doanet.api.domain.entities.ong.Ong;
 import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.legacy.enums.UserType;
