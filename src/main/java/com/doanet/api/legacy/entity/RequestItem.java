@@ -1,5 +1,6 @@
 package com.doanet.api.legacy.entity;
 
+import com.doanet.api.infra.persistence.ItemEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -22,12 +23,12 @@ public class RequestItem {
 
   @ManyToOne
   @JoinColumn(name = "item_id")
-  private Item item;
+  private ItemEntity item;
 
   @Column(columnDefinition = "INT DEFAULT 1")
   private Integer quantity;
 
-  public RequestItem(Request request, Item item, @NotNull Integer quantity) {
+  public RequestItem(Request request, ItemEntity item, @NotNull Integer quantity) {
     this.request = request;
     this.item = item;
     this.quantity = quantity;

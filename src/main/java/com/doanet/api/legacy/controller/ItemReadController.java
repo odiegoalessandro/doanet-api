@@ -1,6 +1,6 @@
 package com.doanet.api.legacy.controller;
 
-import com.doanet.api.legacy.entity.Item;
+import com.doanet.api.infra.persistence.ItemEntity;
 import com.doanet.api.legacy.exception.ApiError;
 import com.doanet.api.legacy.response.ApiSuccessResponse;
 import com.doanet.api.legacy.service.FindItemService;
@@ -35,12 +35,12 @@ public class ItemReadController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping("/{id}")
-  public ResponseEntity<ApiSuccessResponse<Item>> findById(
+  public ResponseEntity<ApiSuccessResponse<ItemEntity>> findById(
     @PathVariable("id")
     @Parameter(name = "id", description = "ID do item a ser buscado", example = "1")
     Long id
   ) {
-    Item result = this.findItemService.findById(id);
+    ItemEntity result = this.findItemService.findById(id);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Item encontrado com sucesso", result);
     return ResponseEntity.ok(response);
   }
@@ -52,7 +52,7 @@ public class ItemReadController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping("/search")
-  public ResponseEntity<ApiSuccessResponse<Page<Item>>> findByName(
+  public ResponseEntity<ApiSuccessResponse<Page<ItemEntity>>> findByName(
     @RequestParam
     @Parameter(name = "name", description = "Nome parcial do item para busca", example = "banana")
     String name,
@@ -63,7 +63,7 @@ public class ItemReadController {
     @Parameter(name = "pageSize", description = "Quantidade máxima de itens por página", example = "10")
     int pageSize
   ) {
-    Page<Item> result = this.findItemService.findByName(name, pageNumber, pageSize);
+    Page<ItemEntity> result = this.findItemService.findByName(name, pageNumber, pageSize);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Itens encontrados com sucesso", result);
     return ResponseEntity.ok(response);
   }
@@ -75,7 +75,7 @@ public class ItemReadController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping
-  public ResponseEntity<ApiSuccessResponse<Page<Item>>> findAll(
+  public ResponseEntity<ApiSuccessResponse<Page<ItemEntity>>> findAll(
     @RequestParam
     @Parameter(name = "pageNumber", description = "Número da página (0 baseado)", example = "0")
     int pageNumber,
@@ -83,7 +83,7 @@ public class ItemReadController {
     @Parameter(name = "pageSize", description = "Quantidade máxima de itens por página", example = "10")
     int pageSize
   ) {
-    Page<Item> result = this.findItemService.findAll(pageNumber, pageSize);
+    Page<ItemEntity> result = this.findItemService.findAll(pageNumber, pageSize);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Lista de itens retornada com sucesso", result);
     return ResponseEntity.ok(response);
   }

@@ -1,4 +1,4 @@
-package com.doanet.api.legacy.entity;
+package com.doanet.api.infra.persistence;
 
 import com.doanet.api.legacy.dto.CreateItemDto;
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(of = "id")
 @Entity(name = "item")
 @Table(name = "item")
-public class Item {
+public class ItemEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -30,10 +30,10 @@ public class Item {
   @Column(name = "expiration_date", nullable = true, columnDefinition = "DATE DEFAULT NULL")
   private LocalDate expirationDate;
 
-  public Item(CreateItemDto itemDto) {
-    this.name = itemDto.name();
-    this.description = itemDto.description();
-    this.isPerishable = itemDto.isPerishable();
-    this.expirationDate = itemDto.expirationDate();
+  public ItemEntity(String name, String description, boolean isPerishable, LocalDate expirationDate){
+    this.name = name;
+    this.description = description;
+    this.isPerishable = isPerishable;
+    this.expirationDate = expirationDate;
   }
 }

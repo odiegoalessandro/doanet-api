@@ -1,5 +1,6 @@
 package com.doanet.api.legacy.entity;
 
+import com.doanet.api.infra.persistence.ItemEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,13 +21,13 @@ public class DonationItem {
 
   @ManyToOne
   @JoinColumn(name = "item_id")
-  private Item item;
+  private ItemEntity item;
 
   @ManyToOne
   @JoinColumn(name = "donation_id")
   private Donation donation;
 
-  public DonationItem(Item item, Donation donation, Integer quantity) {
+  public DonationItem(ItemEntity item, Donation donation, Integer quantity) {
     this.item = item;
     this.donation = donation;
     this.quantity = quantity;

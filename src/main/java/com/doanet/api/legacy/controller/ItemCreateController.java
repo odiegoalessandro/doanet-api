@@ -1,7 +1,7 @@
 package com.doanet.api.legacy.controller;
 
 import com.doanet.api.legacy.dto.CreateItemDto;
-import com.doanet.api.legacy.entity.Item;
+import com.doanet.api.infra.persistence.ItemEntity;
 import com.doanet.api.legacy.exception.ApiError;
 import com.doanet.api.legacy.response.ApiSuccessResponse;
 import com.doanet.api.legacy.service.CreateItemService;
@@ -37,8 +37,8 @@ public class ItemCreateController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<ApiSuccessResponse<Item>> create(@RequestBody @Valid CreateItemDto itemDto) {
-    Item result = this.createItemService.create(itemDto);
+  public ResponseEntity<ApiSuccessResponse<ItemEntity>> create(@RequestBody @Valid CreateItemDto itemDto) {
+    ItemEntity result = this.createItemService.create(itemDto);
     var response = new ApiSuccessResponse<>(HttpStatus.CREATED, "Item criado com sucesso", result);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
