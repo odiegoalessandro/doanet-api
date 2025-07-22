@@ -1,7 +1,7 @@
 package com.doanet.api.application.usecases;
 
 import com.doanet.api.application.gateways.ItemRepository;
-import com.doanet.api.domain.entities.user.Item;
+import com.doanet.api.domain.entities.item.Item;
 
 public class CreateItemUseCase {
   private final ItemRepository itemRepository;

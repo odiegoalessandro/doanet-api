@@ -18,6 +18,7 @@ public class Ong {
   }
 
   public void updateUserData(String name, String email, String phone) {
+    // TODO: criar validação desses campos antes de settar eles
     if (name != null) user.setName(name);
     if (email != null) user.setEmail(email);
     if (phone != null) user.setPhone(phone);

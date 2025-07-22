@@ -3,7 +3,7 @@ package com.doanet.api.infra.gateways;
 import com.doanet.api.application.dto.PageResponse;
 import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.application.gateways.ItemRepository;
-import com.doanet.api.domain.entities.user.Item;
+import com.doanet.api.domain.entities.item.Item;
 import com.doanet.api.infra.persistence.JpaItemRepository;
 import org.springframework.data.domain.PageRequest;
 

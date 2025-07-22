@@ -1,4 +1,4 @@
-package com.doanet.api.domain.entities.user;
+package com.doanet.api.domain.entities.item;
 
 
 import java.time.LocalDate;

@@ -2,7 +2,7 @@ package com.doanet.api.application.gateways;
 
 import com.doanet.api.application.dto.PageResponse;
 import com.doanet.api.application.dto.Pagination;
-import com.doanet.api.domain.entities.user.Item;
+import com.doanet.api.domain.entities.item.Item;
 
 public interface ItemRepository {
   Item save(Item item);

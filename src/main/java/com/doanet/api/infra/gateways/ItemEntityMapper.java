@@ -1,6 +1,6 @@
 package com.doanet.api.infra.gateways;
 
-import com.doanet.api.domain.entities.user.Item;
+import com.doanet.api.domain.entities.item.Item;
 import com.doanet.api.infra.persistence.ItemEntity;
 
 public class ItemEntityMapper {

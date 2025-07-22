@@ -2,6 +2,8 @@ package com.doanet.api.domain.entities.donor;
 
 import com.doanet.api.domain.entities.user.User;
 
+// TODO: criar validações de campo dentro do construtor
+// TODO: criar testes unitarios na classe de dominio do doador
 public class Donor {
   private Long id;
   private User user;
@@ -41,6 +43,7 @@ public class Donor {
   }
 
   public void updateUserData(String name, String email, String phone) {
+    // TODO: criar validação desses campos antes de settar eles
     if (name != null) user.setName(name);
     if (email != null) user.setEmail(email);
     if (phone != null) user.setPhone(phone);

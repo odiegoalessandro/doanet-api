@@ -1,6 +1,5 @@
 package com.doanet.api.domain.entities.item;
 
-import com.doanet.api.domain.entities.user.Item;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
