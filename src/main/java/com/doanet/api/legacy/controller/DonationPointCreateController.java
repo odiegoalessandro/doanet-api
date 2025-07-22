@@ -1,7 +1,7 @@
 package com.doanet.api.legacy.controller;
 
 import com.doanet.api.legacy.dto.CreateDonationPointDto;
-import com.doanet.api.legacy.entity.DonationPoint;
+import com.doanet.api.legacy.entity.DonationPointEntity;
 import com.doanet.api.legacy.exception.ApiError;
 import com.doanet.api.legacy.response.ApiSuccessResponse;
 import com.doanet.api.legacy.service.CreateDonationPointService;
@@ -36,14 +36,14 @@ public class DonationPointCreateController {
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
-  public ResponseEntity<ApiSuccessResponse<DonationPoint>> create(
+  public ResponseEntity<ApiSuccessResponse<DonationPointEntity>> create(
     @RequestBody @Valid CreateDonationPointDto donationPoint
   ) {
-    DonationPoint result = this.createDonationPointService.create(
+    DonationPointEntity result = this.createDonationPointService.create(
       donationPoint.user(),
       donationPoint.description()
     );
-    var response = new ApiSuccessResponse<DonationPoint>(
+    var response = new ApiSuccessResponse<DonationPointEntity>(
       HttpStatus.CREATED,
       "Ponto de doação criado com sucesso",
       result

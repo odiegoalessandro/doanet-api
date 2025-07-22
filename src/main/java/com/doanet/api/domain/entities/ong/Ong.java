@@ -16,6 +16,7 @@ public class Ong {
     this.user = user;
     this.cnpj = cnpj;
   }
+
   public void updateUserData(String name, String email, String phone) {
     if (name != null) user.setName(name);
     if (email != null) user.setEmail(email);

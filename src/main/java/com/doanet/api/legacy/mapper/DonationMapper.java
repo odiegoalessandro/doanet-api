@@ -20,7 +20,7 @@ public class DonationMapper {
     return new ResponseDonationDto(
       donation.getId(),
       donation.getDonor().getId(),
-      donation.getDonationPoint().getId(),
+      donation.getDonationPointEntity().getId(),
       donation.getCreatedAt(),
       items
     );
@@ -34,7 +34,7 @@ public class DonationMapper {
     return new DetailedResponseDonationDto(
       donation.getId(),
       donation.getDonor(),
-      donation.getDonationPoint(),
+      donation.getDonationPointEntity(),
       donation.getCreatedAt(),
       items
     );

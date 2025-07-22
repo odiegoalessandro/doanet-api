@@ -12,7 +12,7 @@ import lombok.*;
 @EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "donation_point")
-public class DonationPoint {
+public class DonationPointEntity {
   @Id
   @Column(name = "user_id")
   private Long id;

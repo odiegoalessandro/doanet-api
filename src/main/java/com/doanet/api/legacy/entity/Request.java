@@ -22,7 +22,7 @@ public class Request {
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "donation_point_id")
-  private DonationPoint donationPoint;
+  private DonationPointEntity donationPointEntity;
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "ong_id")
@@ -38,8 +38,8 @@ public class Request {
   @Column(nullable = false)
   private Status status = Status.CREATED;
 
-  public Request(DonationPoint donationPoint, Ong ong, LocalDate createdAt) {
-    this.donationPoint = donationPoint;
+  public Request(DonationPointEntity donationPointEntity, Ong ong, LocalDate createdAt) {
+    this.donationPointEntity = donationPointEntity;
     this.ong = ong;
     this.createdAt = createdAt;
   }

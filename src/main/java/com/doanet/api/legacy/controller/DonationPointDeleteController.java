@@ -1,6 +1,6 @@
 package com.doanet.api.legacy.controller;
 
-import com.doanet.api.legacy.entity.DonationPoint;
+import com.doanet.api.legacy.entity.DonationPointEntity;
 import com.doanet.api.legacy.exception.ApiError;
 import com.doanet.api.legacy.service.DeleteDonationPointService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +33,7 @@ public class DonationPointDeleteController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @DeleteMapping("/{id}")
-  public DonationPoint delete(@PathVariable("id") Long donationPointId){
+  public DonationPointEntity delete(@PathVariable("id") Long donationPointId){
     return this.deleteDonationPointService.delete(donationPointId);
   }
 }

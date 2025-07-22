@@ -19,7 +19,7 @@ public class RequestMapper {
     return new ResponseRequestDto(
       request.getId(),
       request.getOng().getId(),
-      request.getDonationPoint().getId(),
+      request.getDonationPointEntity().getId(),
       request.getCreatedAt(),
       items
     );
@@ -33,7 +33,7 @@ public class RequestMapper {
     return new DetailedResponseRequestDto(
       request.getId(),
       request.getOng(),
-      request.getDonationPoint(),
+      request.getDonationPointEntity(),
       request.getCreatedAt(),
       items
     );

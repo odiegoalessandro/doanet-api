@@ -1,7 +1,7 @@
 package com.doanet.api.legacy.service;
 
 import com.doanet.api.legacy.dto.UpdateDonationPointDto;
-import com.doanet.api.legacy.entity.DonationPoint;
+import com.doanet.api.legacy.entity.DonationPointEntity;
 import com.doanet.api.legacy.mapper.UpdateDonationPointMapper;
 import com.doanet.api.legacy.repository.DonationPointRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class UpdateDonationPointService {
   }
 
   @Transactional
-  public DonationPoint update(Long donationPointId, UpdateDonationPointDto donationPointDto){
+  public DonationPointEntity update(Long donationPointId, UpdateDonationPointDto donationPointDto){
     var donationPoint = this.findDonationPointService.findById(donationPointId);
 
     this.updateDonationPointMapper.updateFromDto(donationPointDto, donationPoint);

@@ -27,7 +27,7 @@ public class Donation {
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "donation_point_id")
-  private DonationPoint donationPoint;
+  private DonationPointEntity donationPointEntity;
 
   @Column(name = "created_at")
   private LocalDate createdAt;
@@ -39,9 +39,9 @@ public class Donation {
   @Column(nullable = false)
   private Status status = Status.CREATED;
 
-  public Donation(Donor donor, DonationPoint donationPoint, LocalDate createdAt) {
+  public Donation(Donor donor, DonationPointEntity donationPointEntity, LocalDate createdAt) {
     this.donor = donor;
-    this.donationPoint = donationPoint;
+    this.donationPointEntity = donationPointEntity;
     this.createdAt = createdAt;
   }
 }

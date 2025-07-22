@@ -1,6 +1,6 @@
 package com.doanet.api.legacy.service;
 
-import com.doanet.api.legacy.entity.DonationPoint;
+import com.doanet.api.legacy.entity.DonationPointEntity;
 import com.doanet.api.legacy.repository.DonationPointRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ public class DeleteDonationPointService {
   }
 
   @Transactional
-  public DonationPoint delete(Long donationPointId){
+  public DonationPointEntity delete(Long donationPointId){
     var donationPoint = this.findDonationPointService.findById(donationPointId);
 
     donationPoint.getUser().setActive(false);

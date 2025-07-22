@@ -1,7 +1,7 @@
 package com.doanet.api.legacy.mapper;
 
 import com.doanet.api.legacy.dto.UpdateDonationPointDto;
-import com.doanet.api.legacy.entity.DonationPoint;
+import com.doanet.api.legacy.entity.DonationPointEntity;
 import org.mapstruct.*;
 
 @Mapper(
@@ -16,6 +16,6 @@ public interface UpdateDonationPointMapper {
   @Mapping(target = "user.name", source = "name")
   @Mapping(target = "user.email", source = "email")
   @Mapping(target = "user.phone", source = "phone")
-  void updateFromDto(UpdateDonationPointDto dto, @MappingTarget DonationPoint entity);
+  void updateFromDto(UpdateDonationPointDto dto, @MappingTarget DonationPointEntity entity);
 
 }

@@ -35,7 +35,7 @@ public class ItemRepositoryImpl implements ItemRepository {
       dtoPage.getContent(),
       dtoPage.getTotalElements(),
       dtoPage.getTotalPages(),
-      dtoPage.getNumber()
+      dtoPage.getNumber() + 1
     );
   }
 }

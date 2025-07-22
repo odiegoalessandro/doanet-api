@@ -1,7 +1,7 @@
 package com.doanet.api.legacy.controller;
 
 import com.doanet.api.legacy.dto.UpdateDonationPointDto;
-import com.doanet.api.legacy.entity.DonationPoint;
+import com.doanet.api.legacy.entity.DonationPointEntity;
 import com.doanet.api.legacy.exception.ApiError;
 import com.doanet.api.legacy.response.ApiSuccessResponse;
 import com.doanet.api.legacy.service.UpdateDonationPointService;
@@ -38,7 +38,7 @@ public class DonationPointUpdateController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @PatchMapping(value = "/{id}", consumes = { "application/json" })
-  public ResponseEntity<ApiSuccessResponse<DonationPoint>> update(
+  public ResponseEntity<ApiSuccessResponse<DonationPointEntity>> update(
     @PathVariable("id")
     @Parameter(name = "id", description = "ID do ponto de doação a ser atualizado")
     Long id,

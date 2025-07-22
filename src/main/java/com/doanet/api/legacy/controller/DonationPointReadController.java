@@ -1,7 +1,7 @@
 package com.doanet.api.legacy.controller;
 
 
-import com.doanet.api.legacy.entity.DonationPoint;
+import com.doanet.api.legacy.entity.DonationPointEntity;
 import com.doanet.api.legacy.exception.ApiError;
 import com.doanet.api.legacy.response.ApiSuccessResponse;
 import com.doanet.api.legacy.service.FindDonationPointService;
@@ -36,13 +36,13 @@ public class DonationPointReadController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping("/description/{description}")
-  public ResponseEntity<ApiSuccessResponse<Page<DonationPoint>>> findByDescription(
+  public ResponseEntity<ApiSuccessResponse<Page<DonationPointEntity>>> findByDescription(
     @PathVariable("description") String description,
     @RequestParam Integer pageNumber,
     @RequestParam Integer pageSize
   ) {
-    Page<DonationPoint> result = this.findDonationPointService.findByDescription(description, pageNumber, pageSize);
-    var response = new ApiSuccessResponse<Page<DonationPoint>>(
+    Page<DonationPointEntity> result = this.findDonationPointService.findByDescription(description, pageNumber, pageSize);
+    var response = new ApiSuccessResponse<Page<DonationPointEntity>>(
       HttpStatus.OK,
       "Pontos de doação encontrados com sucesso",
       result
@@ -60,13 +60,13 @@ public class DonationPointReadController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping("/{id}")
-  public ResponseEntity<ApiSuccessResponse<DonationPoint>> findById(
+  public ResponseEntity<ApiSuccessResponse<DonationPointEntity>> findById(
     @PathVariable("id")
     @Parameter(name = "id", description = "Id do ponto de doação a ser buscado", example = "1")
     Long id
   ) {
-    DonationPoint result = this.findDonationPointService.findById(id);
-    var response = new ApiSuccessResponse<DonationPoint>(
+    DonationPointEntity result = this.findDonationPointService.findById(id);
+    var response = new ApiSuccessResponse<DonationPointEntity>(
       HttpStatus.OK,
       "Ponto de doação encontrado com sucesso",
       result
@@ -82,7 +82,7 @@ public class DonationPointReadController {
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
   @GetMapping
-  public ResponseEntity<ApiSuccessResponse<Page<DonationPoint>>> findAll(
+  public ResponseEntity<ApiSuccessResponse<Page<DonationPointEntity>>> findAll(
     @RequestParam
     @Parameter(name = "pageNumber", description = "Número da página a ser buscada", example = "1")
     Integer pageNumber,
@@ -90,8 +90,8 @@ public class DonationPointReadController {
     @Parameter(name = "pageSize", description = "Quantidade máxima de itens a serem retornados", example = "100")
     Integer pageSize
   ) {
-    Page<DonationPoint> result = this.findDonationPointService.findAll(pageNumber, pageSize);
-    ApiSuccessResponse<Page<DonationPoint>> response = new ApiSuccessResponse<>(
+    Page<DonationPointEntity> result = this.findDonationPointService.findAll(pageNumber, pageSize);
+    ApiSuccessResponse<Page<DonationPointEntity>> response = new ApiSuccessResponse<>(
       HttpStatus.OK,
       "Lista de pontos de doação retornada com sucesso",
       result
