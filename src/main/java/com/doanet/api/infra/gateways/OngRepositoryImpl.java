@@ -1,9 +1,11 @@
 package com.doanet.api.infra.gateways;
 
+import com.doanet.api.application.dto.PageResponse;
+import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.application.gateways.OngRepository;
 import com.doanet.api.domain.entities.ong.Ong;
 import com.doanet.api.infra.persistence.JpaOngRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -35,6 +37,21 @@ public class OngRepositoryImpl implements OngRepository {
   @Override
   public Optional<Ong> findByCnpjActive(String cnpj) {
     return this.jpaOngRepository.findByCnpjActive(cnpj).map(mapper::toDomain);
+  }
+
+  @Override
+  public PageResponse<Ong> findAllActive(Pagination pagination) {
+    var pageNumber = Math.max(1, pagination.page()) - 1;
+    var pageable = PageRequest.of(pageNumber, pagination.size());
+    var jpaPage = this.jpaOngRepository.findAllActive(pageable);
+    var dtoPage = jpaPage.map(mapper::toDomain);
+
+    return new PageResponse<>(
+      dtoPage.getContent(),
+      dtoPage.getTotalElements(),
+      dtoPage.getTotalPages(),
+      dtoPage.getNumber() + 1
+    );
   }
 
   @Override

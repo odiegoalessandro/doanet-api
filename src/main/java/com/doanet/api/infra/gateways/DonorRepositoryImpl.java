@@ -1,8 +1,12 @@
 package com.doanet.api.infra.gateways;
 
+import com.doanet.api.application.dto.PageResponse;
+import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.application.gateways.DonorRepository;
+import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 import com.doanet.api.domain.entities.donor.Donor;
 import com.doanet.api.infra.persistence.JpaDonorRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -52,5 +56,20 @@ public class DonorRepositoryImpl implements DonorRepository {
   @Override
   public void deleteById(Long id) {
     this.donorRepository.deleteById(id);
+  }
+
+  @Override
+  public PageResponse<Donor> findAllActive(Pagination pagination) {
+    var pageNumber = Math.max(1, pagination.page()) - 1;
+    var pageable = PageRequest.of(pageNumber, pagination.size());
+    var jpaPage = this.donorRepository.findAllActive(pageable);
+    var dtoPage = jpaPage.map(mapper::toDomain);
+
+    return new PageResponse<Donor>(
+      dtoPage.getContent(),
+      dtoPage.getTotalElements(),
+      dtoPage.getTotalPages(),
+      dtoPage.getNumber() + 1
+    );
   }
 }

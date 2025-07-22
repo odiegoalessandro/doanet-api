@@ -1,5 +1,7 @@
 package com.doanet.api.application.gateways;
 
+import com.doanet.api.application.dto.PageResponse;
+import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.domain.entities.donor.Donor;
 import org.springframework.data.repository.query.Param;
 
@@ -13,6 +15,5 @@ public interface DonorRepository {
   Optional<Donor> findByReasonSocialIgnoreCaseActive(@Param("reasonSocial") String reasonSocial);
   Optional<Donor> findByReasonSocialIgnoreCase(String reasonSocial);
   void deleteById(Long id);
-
-//  Page<Donor> findAllActive(Pageable pageable);
+  PageResponse<Donor> findAllActive(Pagination pagination);
 }
