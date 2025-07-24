@@ -4,10 +4,10 @@ import com.doanet.api.application.exceptions.ResourceNotFoundException;
 import com.doanet.api.application.gateways.DonationPointRepository;
 import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 
-public class FindActiveDonationPointById {
+public class FindActiveDonationPointByIdUseCase {
   private final DonationPointRepository donationPointRepository;
 
-  public FindActiveDonationPointById(DonationPointRepository donationPointRepository) {
+  public FindActiveDonationPointByIdUseCase(DonationPointRepository donationPointRepository) {
     this.donationPointRepository = donationPointRepository;
   }
 
