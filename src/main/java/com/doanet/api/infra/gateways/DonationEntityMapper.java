@@ -8,25 +8,41 @@ import java.time.LocalDate;
 public class DonationEntityMapper {
   private final DonorEntityMappper donorMapper;
   private final DonationPointEntityMapper donationPointMapper;
+  private final DonationItemEntityMapper donationItemMapper;
 
-  public DonationEntityMapper(DonorEntityMappper donorMapper, DonationPointEntityMapper donationPointMapper) {
+  public DonationEntityMapper(DonorEntityMappper donorMapper, DonationPointEntityMapper donationPointMapper,
+                              DonationItemEntityMapper donationItemMapper) {
     this.donorMapper = donorMapper;
     this.donationPointMapper = donationPointMapper;
+    this.donationItemMapper = donationItemMapper;
   }
 
   public DonationEntity toEntity(Donation donation) {
-    return new DonationEntity(
+    var donationEntity = new DonationEntity(
       donation.getId(),
-      this.donorMapper.toEntity(donation.getDonor()),
-      this.donationPointMapper.toEntity(donation.getDonationPoint()),
-      LocalDate.now(),
+      donorMapper.toEntity(donation.getDonor()),
+      donationPointMapper.toEntity(donation.getDonationPoint()),
+      donation.getCreatedAt(),
       null,
       donation.getStatus()
     );
+
+    var items = donation.getDonationItems().stream()
+      .map(item -> {
+        var entity = donationItemMapper.toEntity(item);
+        entity.setDonationEntity(donationEntity);
+
+        return entity;
+      })
+      .toList();
+
+    donationEntity.setDonationItems(items);
+    return donationEntity;
   }
 
+
   public Donation toDomain(DonationEntity entity) {
-    return new Donation(
+    var donation = new Donation(
       entity.getId(),
       this.donorMapper.toDomain(entity.getDonor()),
       this.donationPointMapper.toDomain(entity.getDonationPoint()),
@@ -34,5 +50,15 @@ public class DonationEntityMapper {
       null,
       entity.getStatus()
     );
+
+    var items = entity.getDonationItems().stream().map(item -> {
+      var entityItem = donationItemMapper.toDomain(item);
+      entityItem.setDonation(donation);
+
+      return entityItem;
+    }).toList();
+
+    donation.setDonationItems(items);
+    return donation;
   }
 }

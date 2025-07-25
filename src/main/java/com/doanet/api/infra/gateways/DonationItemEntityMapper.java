@@ -4,11 +4,9 @@ import com.doanet.api.domain.entities.donation.DonationItem;
 import com.doanet.api.infra.persistence.DonationItemEntity;
 
 public class DonationItemEntityMapper {
-  private final DonationItemMapper donorMapper;
   private final ItemEntityMapper itemMapper;
 
-  public DonationItemEntityMapper(DonationItemMapper donorMapper, ItemEntityMapper itemMapper) {
-    this.donorMapper = donorMapper;
+  public DonationItemEntityMapper(ItemEntityMapper itemMapper) {
     this.itemMapper = itemMapper;
   }
 
@@ -17,7 +15,7 @@ public class DonationItemEntityMapper {
       donationItem.getId(),
       donationItem.getQuantity(),
       this.itemMapper.toEntity(donationItem.getItem()),
-      this.donorMapper.toEntity(donationItem.getDonation())
+      null
     );
   }
 
@@ -26,7 +24,7 @@ public class DonationItemEntityMapper {
       donationItemEntity.getId(),
       donationItemEntity.getQuantity(),
       this.itemMapper.toDomain(donationItemEntity.getItem()),
-      this.donorMapper.toDomain(donationItemEntity.getDonationEntity())
+      null
     );
   }
 }
