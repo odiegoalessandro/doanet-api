@@ -8,7 +8,6 @@ import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.domain.entities.donation.Donation;
 import com.doanet.api.domain.entities.donation.DonationItem;
 import com.doanet.api.domain.enums.DonationStatus;
-import com.doanet.api.infra.gateways.ItemEntityMapper;
 
 import java.time.LocalDate;
 
