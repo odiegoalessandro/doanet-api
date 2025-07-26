@@ -7,11 +7,9 @@ import com.doanet.api.infra.gateways.OngEntityMapper;
 
 public class FindActiveOngByIdUseCase {
   private OngRepository ongRepository;
-  private OngEntityMapper mapper;
 
-  public FindActiveOngByIdUseCase(OngRepository ongRepository, OngEntityMapper mapper){
+  public FindActiveOngByIdUseCase(OngRepository ongRepository){
     this.ongRepository = ongRepository;
-    this.mapper = mapper;
   }
 
   public Ong execute(Long id) {

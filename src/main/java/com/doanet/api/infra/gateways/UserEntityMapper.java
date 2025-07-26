@@ -2,7 +2,9 @@ package com.doanet.api.infra.gateways;
 
 import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.infra.persistence.UserEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserEntityMapper {
   public UserEntity toEntity(User user){
     return new UserEntity(

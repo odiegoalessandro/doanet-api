@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
 public class DonorRepositoryImpl implements DonorRepository {
   private final JpaDonorRepository donorRepository;
   private final DonorEntityMappper mapper;

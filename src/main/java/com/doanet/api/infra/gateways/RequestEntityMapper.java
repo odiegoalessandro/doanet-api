@@ -3,7 +3,9 @@ package com.doanet.api.infra.gateways;
 import com.doanet.api.domain.entities.request.Request;
 import com.doanet.api.infra.persistence.RequestEntity;
 import com.doanet.api.infra.persistence.RequestItemEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RequestEntityMapper {
   private final DonationPointEntityMapper donationPointMapper;
   private final OngEntityMapper ongMapper;

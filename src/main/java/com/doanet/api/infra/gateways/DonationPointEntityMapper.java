@@ -2,7 +2,9 @@ package com.doanet.api.infra.gateways;
 
 import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 import com.doanet.api.infra.persistence.DonationPointEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DonationPointEntityMapper {
   private final UserEntityMapper userMapper;
 

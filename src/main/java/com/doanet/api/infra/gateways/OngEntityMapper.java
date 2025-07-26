@@ -2,7 +2,9 @@ package com.doanet.api.infra.gateways;
 
 import com.doanet.api.domain.entities.ong.Ong;
 import com.doanet.api.infra.persistence.OngEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OngEntityMapper {
   private final UserEntityMapper userMapper;
 

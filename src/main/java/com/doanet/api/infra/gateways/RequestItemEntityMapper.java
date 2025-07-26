@@ -2,7 +2,9 @@ package com.doanet.api.infra.gateways;
 
 import com.doanet.api.domain.entities.request.RequestItem;
 import com.doanet.api.infra.persistence.RequestItemEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RequestItemEntityMapper {
   private final ItemEntityMapper itemMapper;
 

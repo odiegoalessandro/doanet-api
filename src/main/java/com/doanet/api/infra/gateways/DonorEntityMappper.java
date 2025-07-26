@@ -3,7 +3,9 @@ package com.doanet.api.infra.gateways;
 import com.doanet.api.domain.entities.donor.Donor;
 import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.infra.persistence.DonorEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DonorEntityMappper {
   private final UserEntityMapper userMapper;
 

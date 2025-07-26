@@ -2,9 +2,11 @@ package com.doanet.api.infra.gateways;
 
 import com.doanet.api.domain.entities.donation.Donation;
 import com.doanet.api.infra.persistence.DonationEntity;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class DonationEntityMapper {
   private final DonorEntityMappper donorMapper;
   private final DonationPointEntityMapper donationPointMapper;
