@@ -7,6 +7,8 @@ import com.doanet.api.domain.entities.item.Item;
 import com.doanet.api.infra.persistence.JpaItemRepository;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.Optional;
+
 public class ItemRepositoryImpl implements ItemRepository {
   private final JpaItemRepository itemRepository;
   private final ItemEntityMapper mapper;
@@ -37,5 +39,15 @@ public class ItemRepositoryImpl implements ItemRepository {
       dtoPage.getTotalPages(),
       dtoPage.getNumber() + 1
     );
+  }
+
+  @Override
+  public Optional<Item> findById(Long id) {
+    return this.itemRepository.findById(id).map(mapper::toDomain);
+  }
+
+  @Override
+  public void deleteById(Long itemId) {
+    this.itemRepository.deleteById(itemId);
   }
 }
