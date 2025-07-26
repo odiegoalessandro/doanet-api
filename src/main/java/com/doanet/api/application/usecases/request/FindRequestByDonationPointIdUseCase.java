@@ -5,10 +5,10 @@ import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.application.gateways.RequestRepository;
 import com.doanet.api.domain.entities.request.Request;
 
-public class FindRequestByDonationPointId {
+public class FindRequestByDonationPointIdUseCase {
   private final RequestRepository requestRepository;
 
-  public FindRequestByDonationPointId(RequestRepository requestRepository) {
+  public FindRequestByDonationPointIdUseCase(RequestRepository requestRepository) {
     this.requestRepository = requestRepository;
   }
 
