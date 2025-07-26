@@ -1,15 +1,15 @@
 package com.doanet.api.application.usecases.donationpoint;
 
-import com.doanet.api.application.gateways.OngRepository;
+import com.doanet.api.application.gateways.DonationPointRepository;
 
 public class DeleteDonationPointUseCase {
-  private final OngRepository ongRepository;
+  private final DonationPointRepository donationPointRepository;
 
-  public DeleteDonationPointUseCase(OngRepository ongRepository) {
-    this.ongRepository = ongRepository;
+  public DeleteDonationPointUseCase(DonationPointRepository donationPointRepository) {
+    this.donationPointRepository = donationPointRepository;
   }
 
   public void execute(Long id){
-    this.ongRepository.deleteById(id);
+    this.donationPointRepository.deleteById(id);
   }
 }

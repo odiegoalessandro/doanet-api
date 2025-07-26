@@ -12,4 +12,6 @@ public interface DonationPointRepository {
   void deleteBy(Long id);
   PageResponse<DonationPoint> findByDescriptionContainingIgnoreCaseActive(String description, Pagination pagination);
   PageResponse<DonationPoint> findAllActive(Pagination pagination);
+
+  void deleteById(Long id);
 }

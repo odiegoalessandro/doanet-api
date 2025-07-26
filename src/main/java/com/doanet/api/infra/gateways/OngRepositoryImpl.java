@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
 public class OngRepositoryImpl implements OngRepository {
   private final JpaOngRepository jpaOngRepository;
   private final OngEntityMapper mapper;

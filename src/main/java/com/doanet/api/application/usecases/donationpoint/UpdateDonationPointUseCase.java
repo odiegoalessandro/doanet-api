@@ -6,16 +6,16 @@ import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 
 public class UpdateDonationPointUseCase {
   private final DonationPointRepository donationPointRepository;
-  private final FindActiveDonationPointById findActiveDonationPointById;
+  private final FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase;
 
   public UpdateDonationPointUseCase(DonationPointRepository donationPointRepository,
-                                    FindActiveDonationPointById findActiveDonationPointById) {
+                                    FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase) {
     this.donationPointRepository = donationPointRepository;
-    this.findActiveDonationPointById = findActiveDonationPointById;
+    this.findActiveDonationPointByIdUseCase = findActiveDonationPointByIdUseCase;
   }
 
   public DonationPoint execute(Long id, UpdateDonationPointCommand donationPointCommand){
-    var donationPoint = this.findActiveDonationPointById.execute(id);
+    var donationPoint = this.findActiveDonationPointByIdUseCase.execute(id);
 
     donationPoint.updateUserData(
       donationPointCommand.name(),

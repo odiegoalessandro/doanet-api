@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
 public class DonationPointRepositoryImpl implements DonationPointRepository {
   private final JpaDonationPointRepository donationPointRepository;
   private final DonationPointEntityMapper mapper;
@@ -74,5 +73,10 @@ public class DonationPointRepositoryImpl implements DonationPointRepository {
       dtoPage.getTotalPages(),
       dtoPage.getNumber() + 1
     );
+  }
+
+  @Override
+  public void deleteById(Long id) {
+    this.donationPointRepository.deleteById(id);
   }
 }
