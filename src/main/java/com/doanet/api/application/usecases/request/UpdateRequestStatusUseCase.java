@@ -5,11 +5,11 @@ import com.doanet.api.domain.entities.request.Request;
 import com.doanet.api.domain.enums.RequestStatus;
 import com.doanet.api.domain.validator.RequestStatusValidator;
 
-public class UpdateRequestStatus {
+public class UpdateRequestStatusUseCase {
   private final RequestRepository requestRepository;
   private final FindRequestByIdUseCase findRequestByIdUseCase;
 
-  public UpdateRequestStatus(RequestRepository requestRepository, FindRequestByIdUseCase findRequestByIdUseCase) {
+  public UpdateRequestStatusUseCase(RequestRepository requestRepository, FindRequestByIdUseCase findRequestByIdUseCase) {
     this.requestRepository = requestRepository;
     this.findRequestByIdUseCase = findRequestByIdUseCase;
   }

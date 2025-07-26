@@ -63,11 +63,11 @@ public class RequestConfig {
   }
 
   @Bean
-  public UpdateRequestStatus updateRequestStatus(
+  public UpdateRequestStatusUseCase updateRequestStatusUseCase(
     RequestRepository requestRepository,
     FindRequestByIdUseCase findRequestByIdUseCase
   ) {
-    return new UpdateRequestStatus(requestRepository, findRequestByIdUseCase);
+    return new UpdateRequestStatusUseCase(requestRepository, findRequestByIdUseCase);
   }
 
   @Bean
