@@ -11,8 +11,6 @@ public record CreateDonationPointCommand(
   String city,
   String state,
   String zipCode,
-  Double latitude,
-  Double longitude,
   String description
 ) {
 }

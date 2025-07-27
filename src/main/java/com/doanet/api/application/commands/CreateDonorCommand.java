@@ -11,8 +11,6 @@ public record CreateDonorCommand(
   String city,
   String state,
   String zipCode,
-  Double latitude,
-  Double longitude,
   String reasonSocial,
   String document
 ) {}

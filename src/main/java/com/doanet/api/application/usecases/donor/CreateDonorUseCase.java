@@ -5,7 +5,7 @@ import com.doanet.api.application.gateways.DonorRepository;
 import com.doanet.api.application.usecases.user.CreateUserUseCase;
 import com.doanet.api.domain.entities.donor.Donor;
 import com.doanet.api.domain.entities.user.User;
-import com.doanet.api.legacy.enums.UserType;
+import com.doanet.api.domain.enums.UserType;
 
 public class CreateDonorUseCase {
   private final DonorRepository donorRepository;

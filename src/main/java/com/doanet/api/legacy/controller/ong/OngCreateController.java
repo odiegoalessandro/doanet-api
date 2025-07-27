@@ -44,5 +44,4 @@ public class OngCreateController {
     var response = new ApiSuccessResponse<>(HttpStatus.CREATED, "ONG criada com sucesso", result);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
-
 }

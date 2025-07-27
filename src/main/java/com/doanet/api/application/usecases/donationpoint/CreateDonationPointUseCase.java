@@ -5,7 +5,7 @@ import com.doanet.api.application.gateways.DonationPointRepository;
 import com.doanet.api.application.usecases.user.CreateUserUseCase;
 import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 import com.doanet.api.domain.entities.user.User;
-import com.doanet.api.legacy.enums.UserType;
+import com.doanet.api.domain.enums.UserType;
 
 public class CreateDonationPointUseCase {
   private final DonationPointRepository donationPointRepository;
@@ -30,8 +30,8 @@ public class CreateDonationPointUseCase {
       donationPointCommand.city(),
       donationPointCommand.state(),
       donationPointCommand.zipCode(),
-      donationPointCommand.latitude(),
-      donationPointCommand.longitude(),
+      null,
+      null,
       UserType.DONATION_POINT,
       true
     ));

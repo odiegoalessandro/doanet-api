@@ -11,7 +11,5 @@ public record CreateOngCommand(
   String city,
   String state,
   String zipCode,
-  Double latitude,
-  Double longitude,
   String cnpj
 ) {}

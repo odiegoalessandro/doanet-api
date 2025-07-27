@@ -5,7 +5,7 @@ import com.doanet.api.application.gateways.OngRepository;
 import com.doanet.api.application.usecases.user.CreateUserUseCase;
 import com.doanet.api.domain.entities.ong.Ong;
 import com.doanet.api.domain.entities.user.User;
-import com.doanet.api.legacy.enums.UserType;
+import com.doanet.api.domain.enums.UserType;
 
 public class CreateOngUseCase {
   private final OngRepository ongRepository;
