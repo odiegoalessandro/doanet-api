@@ -1,7 +1,6 @@
 package com.doanet.api.infra.persistence;
 
-import com.doanet.api.legacy.dto.CreateUserDto;
-import com.doanet.api.legacy.enums.UserType;
+import com.doanet.api.domain.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -69,20 +68,6 @@ public class UserEntity {
   @NotNull
   @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT TRUE NOT NULL")
   private boolean isActive = true;
-
-  public UserEntity(CreateUserDto user) {
-    this.city = user.city();
-    this.email = user.email();
-    this.neighborhood = user.neighborhood();
-    this.number = user.number();
-    this.password = user.password();
-    this.phone = user.phone();
-    this.state = user.state();
-    this.street = user.street();
-    this.zipCode = user.zipCode();
-    this.name = user.name();
-    this.isActive = true;
-  }
 
   public UserEntity(String city,
                     String email,
