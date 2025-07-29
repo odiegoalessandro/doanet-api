@@ -9,11 +9,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface JpaDonationPointRepository extends JpaRepository<DonationPointEntity, Long> {
-    @Query("SELECT dp FROM DonationPoint dp WHERE id = :id AND dp.user.isActive = true")
+    @Query("SELECT dp FROM DonationPointEntity dp WHERE id = :id AND dp.user.isActive = true")
     Optional<DonationPointEntity> findByIdActive(@Param("id") Long id);
 
     @Query(
-      "SELECT dp FROM DonationPoint dp WHERE LOWER(dp.description) LIKE LOWER(CONCAT('%', :description, '%')) " +
+      "SELECT dp FROM DonationPointEntity dp WHERE LOWER(dp.description) LIKE LOWER(CONCAT('%', :description, '%')) " +
         "AND dp.user.isActive = true"
     )
     Page<DonationPointEntity> findByDescriptionContainingIgnoreCaseActive(
@@ -21,6 +21,6 @@ public interface JpaDonationPointRepository extends JpaRepository<DonationPointE
       Pageable pageable
     );
 
-    @Query("SELECT dp FROM DonationPoint dp WHERE dp.user.isActive = true")
+    @Query("SELECT dp FROM DonationPointEntity dp WHERE dp.user.isActive = true")
     Page<DonationPointEntity> findAllActive(Pageable pageable);
 }

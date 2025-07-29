@@ -10,13 +10,13 @@ import java.util.Optional;
 
 public interface JpaOngRepository extends JpaRepository<OngEntity, Long> {
 
-  @Query("SELECT o FROM Ong o WHERE id = :id AND o.user.isActive = true")
+  @Query("SELECT o FROM OngEntity o WHERE id = :id AND o.user.isActive = true")
   Optional<OngEntity> findByIdActive(@Param("id") Long id);
 
-  @Query("SELECT o FROM Ong o WHERE o.cnpj = :cnpj AND o.user.isActive = true")
+  @Query("SELECT o FROM OngEntity o WHERE o.cnpj = :cnpj AND o.user.isActive = true")
   Optional<OngEntity> findByCnpjActive(@Param("cnpj") String cnpj);
 
-  @Query("SELECT o FROM Ong o WHERE o.user.isActive = true")
+  @Query("SELECT o FROM OngEntity o WHERE o.user.isActive = true")
   Page<OngEntity> findAllActive(Pageable pageable);
 
   Optional<OngEntity> findByCnpj(String cnpj);
