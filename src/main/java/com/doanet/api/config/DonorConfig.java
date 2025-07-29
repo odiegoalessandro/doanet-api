@@ -7,7 +7,9 @@ import com.doanet.api.infra.gateways.DonorEntityMappper;
 import com.doanet.api.infra.gateways.DonorRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaDonorRepository;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class DonorConfig {
   @Bean
   public CreateDonorUseCase createDonorUseCase(DonorRepository donorRepository, CreateUserUseCase createUserUseCase){

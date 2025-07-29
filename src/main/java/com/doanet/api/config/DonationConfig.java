@@ -9,7 +9,9 @@ import com.doanet.api.infra.gateways.DonationEntityMapper;
 import com.doanet.api.infra.gateways.DonationRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaDonationRepository;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class DonationConfig {
   @Bean
   public CreateDonationUseCase createDonationUseCase(

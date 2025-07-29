@@ -10,7 +10,9 @@ import com.doanet.api.infra.gateways.ItemEntityMapper;
 import com.doanet.api.infra.gateways.ItemRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaItemRepository;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class ItemConfig {
   @Bean
   public CreateItemUseCase createItemUseCase(ItemRepository itemRepository){

@@ -7,7 +7,9 @@ import com.doanet.api.infra.gateways.OngEntityMapper;
 import com.doanet.api.infra.gateways.OngRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaOngRepository;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class OngConfig {
   @Bean
   public CreateOngUseCase createOngUseCase(OngRepository ongRepository, CreateUserUseCase createUserUseCase){
