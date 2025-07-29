@@ -24,11 +24,11 @@ public class DonationItemEntity {
 
   @ManyToOne
   @JoinColumn(name = "donation_id")
-  private DonationEntity donationEntity;
+  private DonationEntity donation;
 
-  public DonationItemEntity(ItemEntity item, DonationEntity donationEntity, Integer quantity) {
+  public DonationItemEntity(ItemEntity item, DonationEntity donation, Integer quantity) {
     this.item = item;
-    this.donationEntity = donationEntity;
+    this.donation = donation;
     this.quantity = quantity;
   }
 }

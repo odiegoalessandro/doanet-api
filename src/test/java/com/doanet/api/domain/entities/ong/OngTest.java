@@ -1,7 +1,7 @@
 package com.doanet.api.domain.entities.ong;
 
 import com.doanet.api.domain.entities.user.User;
-import com.doanet.api.legacy.enums.UserType;
+import com.doanet.api.domain.enums.UserType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -4,8 +4,6 @@ import com.doanet.api.domain.entities.donation.Donation;
 import com.doanet.api.infra.persistence.DonationEntity;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
 public class DonationEntityMapper {
   private final DonorEntityMappper donorMapper;
@@ -32,7 +30,7 @@ public class DonationEntityMapper {
     var items = donation.getDonationItems().stream()
       .map(item -> {
         var entity = donationItemMapper.toEntity(item);
-        entity.setDonationEntity(donationEntity);
+        entity.setDonation(donationEntity);
 
         return entity;
       })

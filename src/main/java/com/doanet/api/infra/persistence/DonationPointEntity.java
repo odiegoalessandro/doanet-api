@@ -1,7 +1,6 @@
 package com.doanet.api.infra.persistence;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -21,7 +20,5 @@ public class DonationPointEntity {
   @JoinColumn(name = "user_id")
   private UserEntity user;
 
-
-  @NotBlank
   private String description;
 }

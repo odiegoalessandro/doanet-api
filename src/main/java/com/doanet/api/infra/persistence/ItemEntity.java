@@ -1,6 +1,5 @@
 package com.doanet.api.infra.persistence;
 
-import com.doanet.api.legacy.dto.CreateItemDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -19,7 +18,6 @@ public class ItemEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
   private String name;
 
   private String description;

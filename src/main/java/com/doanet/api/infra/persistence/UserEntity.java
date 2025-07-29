@@ -21,51 +21,28 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
   private String name;
 
-  @NotBlank(message = "Email is required")
   @Column(name = "email", unique = true, nullable = false)
   private String email;
 
-  @NotBlank(message = "Password is required")
   @Column(name = "password_hash", nullable = false)
-  @JsonIgnore
   @Schema(hidden = true)
   private String password;
-
-  @NotBlank
   private String phone;
-
-  @NotBlank
   private String street;
-
-  @NotBlank
   private String number;
-
-  @NotBlank
   private String neighborhood;
-
-  @NotBlank
   private String city;
-
-  @NotBlank
   private String state;
-
-  @NotBlank
   private String zipCode;
-
-  @NotNull
   private Double latitude;
-
-  @NotNull
   private Double longitude;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "user_type")
   private UserType userType;
 
-  @NotNull
   @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT TRUE NOT NULL")
   private boolean isActive = true;
 

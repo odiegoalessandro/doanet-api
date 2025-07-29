@@ -22,7 +22,6 @@ public class OngEntity {
   @JoinColumn(name = "user_id")
   private UserEntity user;
 
-  @NotNull
   @Pattern(regexp = "\\d{14}", message = "CNPJ inválido")
   private String cnpj;
 
