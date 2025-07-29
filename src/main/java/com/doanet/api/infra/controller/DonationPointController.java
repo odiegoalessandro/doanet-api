@@ -32,12 +32,14 @@ public class DonationPointController {
   private final UpdateDonationPointUseCase updateDonationPointUseCase;
   private final DeleteDonationPointUseCase deleteDonationPointUseCase;
 
-  public DonationPointController(CreateDonationPointUseCase createDonationPointUseCase,
-                                 FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase,
-                                 FindActiveDonationPointByDescriptionUseCase findActiveDonationPointByDescriptionUseCase,
-                                 FindAllActiveDonationPointsUseCase findAllActiveDonationPointsUseCase,
-                                 UpdateDonationPointUseCase updateDonationPointUseCase,
-                                 DeleteDonationPointUseCase deleteDonationPointUseCase) {
+  public DonationPointController(
+    CreateDonationPointUseCase createDonationPointUseCase,
+    FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase,
+    FindActiveDonationPointByDescriptionUseCase findActiveDonationPointByDescriptionUseCase,
+    FindAllActiveDonationPointsUseCase findAllActiveDonationPointsUseCase,
+    UpdateDonationPointUseCase updateDonationPointUseCase,
+    DeleteDonationPointUseCase deleteDonationPointUseCase
+  ) {
     this.createDonationPointUseCase = createDonationPointUseCase;
     this.findActiveDonationPointByIdUseCase = findActiveDonationPointByIdUseCase;
     this.findActiveDonationPointByDescriptionUseCase = findActiveDonationPointByDescriptionUseCase;

@@ -12,7 +12,9 @@ public class FindDonationByDonationPointIdUseCase {
     this.donationRepository = donationRepository;
   }
 
-  public PageResponse<Donation> execute(Long donationPointId, Pagination pagination) {
+  public PageResponse<Donation> execute(Long donationPointId, int page, int size) {
+    var pagination = new Pagination(page, size);
+
     return this.donationRepository.findByDonationPointId(donationPointId, pagination);
   }
 }

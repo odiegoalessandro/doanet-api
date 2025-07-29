@@ -13,7 +13,9 @@ public class FindDonationByStatusUseCase {
     this.donationRepository = donationRepository;
   }
 
-  public PageResponse<Donation> execute(DonationStatus status, Pagination pagination) {
+  public PageResponse<Donation> execute(DonationStatus status, int page, int size) {
+    var pagination = new Pagination(page, size);
+
     return this.donationRepository.findByStatus(status, pagination);
   }
 }

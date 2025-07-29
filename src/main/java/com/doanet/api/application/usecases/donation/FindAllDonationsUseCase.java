@@ -12,7 +12,9 @@ public class FindAllDonationsUseCase {
     this.donationRepository = donationRepository;
   }
 
-  public PageResponse<Donation> execute(Pagination pagination) {
+  public PageResponse<Donation> execute(int page, int size) {
+    var pagination = new Pagination(page, size);
+
     return this.donationRepository.findAll(pagination);
   }
 }
