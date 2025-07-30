@@ -2,7 +2,7 @@ package com.doanet.api.infra.exceptions;
 
 import com.doanet.api.application.exceptions.CoordinatesInternalServerException;
 import com.doanet.api.application.exceptions.CoordinatesNotFoundException;
-import com.doanet.api.interfaces.ApiError;
+import com.doanet.api.infra.interfaces.ApiError;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;

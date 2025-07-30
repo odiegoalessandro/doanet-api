@@ -5,8 +5,8 @@ import com.doanet.api.application.commands.UpdateDonorCommand;
 import com.doanet.api.application.dto.PageResponse;
 import com.doanet.api.application.usecases.donor.*;
 import com.doanet.api.domain.entities.donor.Donor;
-import com.doanet.api.interfaces.ApiError;
-import com.doanet.api.interfaces.ApiSuccessResponse;
+import com.doanet.api.infra.interfaces.ApiError;
+import com.doanet.api.infra.interfaces.ApiSuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,23 +27,23 @@ public class DonorController {
   private final CreateDonorUseCase createDonorUseCase;
   private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;
   private final FindAllActiveDonorsUseCase findAllActiveDonorsUseCase;
-  private final FindActiveDonorByReasonSocialUseCase findActiveDonorByReasonSocialUseCase;
   private final FindActiveDonorByDocumentUseCase findActiveDonorByDocumentUseCase;
+  private final FindDonorByReasonSocialUseCase findDonorByReasonSocialUseCase;
   private final UpdateDonorUseCase updateDonorUseCase;
   private final DeleteDonorUseCase deleteDonorUseCase;
 
   public DonorController(CreateDonorUseCase createDonorUseCase,
                          FindActiveDonorByIdUseCase findActiveDonorByIdUseCase,
                          FindAllActiveDonorsUseCase findAllActiveDonorsUseCase,
-                         FindActiveDonorByReasonSocialUseCase findActiveDonorByReasonSocialUseCase,
                          FindActiveDonorByDocumentUseCase findActiveDonorByDocumentUseCase,
+                         FindDonorByReasonSocialUseCase findDonorByReasonSocialUseCase,
                          UpdateDonorUseCase updateDonorUseCase,
                          DeleteDonorUseCase deleteDonorUseCase) {
     this.createDonorUseCase = createDonorUseCase;
     this.findActiveDonorByIdUseCase = findActiveDonorByIdUseCase;
     this.findAllActiveDonorsUseCase = findAllActiveDonorsUseCase;
-    this.findActiveDonorByReasonSocialUseCase = findActiveDonorByReasonSocialUseCase;
     this.findActiveDonorByDocumentUseCase = findActiveDonorByDocumentUseCase;
+    this.findDonorByReasonSocialUseCase = findDonorByReasonSocialUseCase;
     this.updateDonorUseCase = updateDonorUseCase;
     this.deleteDonorUseCase = deleteDonorUseCase;
   }
@@ -123,9 +123,16 @@ public class DonorController {
     @ApiResponse(responseCode = "500", description = "Erro interno",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
-  public ResponseEntity<ApiSuccessResponse<DonorDto>> findByReasonSocial(@PathVariable("reasonSocial") String reasonSocial) {
-    var donor = findActiveDonorByReasonSocialUseCase.execute(reasonSocial);
-    var response = new ApiSuccessResponse<>(HttpStatus.OK, "Doador encontrado com sucesso", mapToDto(donor));
+  public ResponseEntity<ApiSuccessResponse<PageResponse<DonorDto>>> findByReasonSocial(
+    @PathVariable("reasonSocial") String reasonSocial,
+    @RequestParam Integer pageNumber,
+    @RequestParam Integer pageSize
+  ) {
+
+    var page = findDonorByReasonSocialUseCase.execute(reasonSocial, pageNumber, pageSize);
+    var items = page.content().stream().map(this::mapToDto).toList();
+    var dtoPage = new PageResponse<>(items, page.totalElements(), page.totalPages(), page.currentPage());
+    var response = new ApiSuccessResponse<>(HttpStatus.OK, "Lista de doadores retornada com sucesso", dtoPage);
     return ResponseEntity.ok(response);
   }
 

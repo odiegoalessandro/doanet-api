@@ -43,18 +43,23 @@ public class DonorRepositoryImpl implements DonorRepository {
   }
 
   @Override
-  public Optional<Donor> findByReasonSocialIgnoreCaseActive(String reasonSocial) {
-    return this.donorRepository.findByReasonSocialIgnoreCaseActive(reasonSocial).map(mapper::toDomain);
-  }
-
-  @Override
-  public Optional<Donor> findByReasonSocialIgnoreCase(String reasonSocial) {
-    return this.donorRepository.findByReasonSocialIgnoreCase(reasonSocial).map(mapper::toDomain);
-  }
-
-  @Override
   public void deleteById(Long id) {
     this.donorRepository.deleteById(id);
+  }
+
+  @Override
+  public PageResponse<Donor> findByReasonSocialContainingIgnoreCase(String reasonSocial, Pagination pagination) {
+    var pageNumber = Math.max(1, pagination.page()) - 1;
+    var pageable = PageRequest.of(pageNumber, pagination.size());
+    var jpaPage = this.donorRepository.findByReasonSocialContainingIgnoreCase(reasonSocial, pageable);
+    var dtoPage = jpaPage.map(mapper::toDomain);
+
+    return new PageResponse<Donor>(
+      dtoPage.getContent(),
+      dtoPage.getTotalElements(),
+      dtoPage.getTotalPages(),
+      dtoPage.getNumber() + 1
+    );
   }
 
   @Override

@@ -1,4 +1,4 @@
-package com.doanet.api.interfaces;
+package com.doanet.api.infra.interfaces;
 
 import org.springframework.http.HttpStatus;
 

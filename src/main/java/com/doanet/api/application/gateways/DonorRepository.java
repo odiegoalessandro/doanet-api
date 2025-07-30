@@ -12,8 +12,7 @@ public interface DonorRepository {
   Optional<Donor> findByIdActive(@Param("id") Long id);
   Optional<Donor> findByDocumentActive(@Param("document") String document);
   Optional<Donor> findByDocument(String document);
-  Optional<Donor> findByReasonSocialIgnoreCaseActive(@Param("reasonSocial") String reasonSocial);
-  Optional<Donor> findByReasonSocialIgnoreCase(String reasonSocial);
   void deleteById(Long id);
   PageResponse<Donor> findAllActive(Pagination pagination);
+  PageResponse<Donor> findByReasonSocialContainingIgnoreCase(String reasonSocial, Pagination pagination);
 }

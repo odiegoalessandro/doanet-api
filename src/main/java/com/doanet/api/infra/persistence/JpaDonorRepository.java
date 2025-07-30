@@ -17,10 +17,7 @@ public interface JpaDonorRepository extends JpaRepository<DonorEntity, Long> {
 
   Optional<DonorEntity> findByDocument(String document);
 
-  @Query("SELECT d FROM DonorEntity d WHERE LOWER(d.reasonSocial) = :reasonSocial AND d.user.isActive = true")
-  Optional<DonorEntity> findByReasonSocialIgnoreCaseActive(@Param("reasonSocial") String reasonSocial);
-
-  Optional<DonorEntity> findByReasonSocialIgnoreCase(String reasonSocial);
+  Page<DonorEntity> findByReasonSocialContainingIgnoreCase(String reasonSocial, Pageable pageable);
 
   @Query("SELECT d FROM DonorEntity d WHERE d.user.isActive = true")
   Page<DonorEntity> findAllActive(Pageable pageable);

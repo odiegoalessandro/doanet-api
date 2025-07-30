@@ -27,18 +27,13 @@ public class DonorConfig {
   }
 
   @Bean
-  public FindDonorByReasonSocialUseCase findDonorByReasonSocialUseCase(DonorRepository donorRepository) {
+  public FindDonorByReasonSocialUseCase findActiveDonorByReasonSocialUseCase(DonorRepository donorRepository) {
     return new FindDonorByReasonSocialUseCase(donorRepository);
   }
 
   @Bean
   public FindActiveDonorByDocumentUseCase findActiveDonorByDocumentUseCase(DonorRepository donorRepository) {
     return new FindActiveDonorByDocumentUseCase(donorRepository);
-  }
-
-  @Bean
-  public FindActiveDonorByReasonSocialUseCase findActiveDonorByReasonSocialUseCase(DonorRepository donorRepository) {
-    return new FindActiveDonorByReasonSocialUseCase(donorRepository);
   }
 
   @Bean
