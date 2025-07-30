@@ -10,6 +10,7 @@ public interface ItemRepository {
   Item save(Item item);
   PageResponse<Item> findByNameContainingIgnoreCase(String name, Pagination pagination);
   Optional<Item> findById(Long id);
+  PageResponse<Item> findAll(Pagination pagination);
 
   void deleteById(Long itemId);
 }

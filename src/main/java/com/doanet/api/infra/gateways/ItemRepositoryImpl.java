@@ -47,6 +47,21 @@ public class ItemRepositoryImpl implements ItemRepository {
   }
 
   @Override
+  public PageResponse<Item> findAll(Pagination pagination) {
+    var pageNumber = Math.max(1, pagination.page()) - 1;
+    var pageable = PageRequest.of(pageNumber, pagination.size());
+    var jpaPage = this.itemRepository.findAll(pageable);
+    var dtoPage = jpaPage.map(this.mapper::toDomain);
+
+    return new PageResponse<Item>(
+      dtoPage.getContent(),
+      dtoPage.getTotalElements(),
+      dtoPage.getTotalPages(),
+      dtoPage.getNumber() + 1
+    );
+  }
+
+  @Override
   public void deleteById(Long itemId) {
     this.itemRepository.deleteById(itemId);
   }

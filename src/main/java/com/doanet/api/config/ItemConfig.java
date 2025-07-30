@@ -2,10 +2,7 @@ package com.doanet.api.config;
 
 
 import com.doanet.api.application.gateways.ItemRepository;
-import com.doanet.api.application.usecases.item.CreateItemUseCase;
-import com.doanet.api.application.usecases.item.DeleteItemByIdUseCase;
-import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
-import com.doanet.api.application.usecases.item.FindItemByNameUseCase;
+import com.doanet.api.application.usecases.item.*;
 import com.doanet.api.infra.gateways.ItemEntityMapper;
 import com.doanet.api.infra.gateways.ItemRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaItemRepository;
@@ -32,6 +29,11 @@ public class ItemConfig {
   @Bean
   public DeleteItemByIdUseCase deleteItemByIdUseCase(ItemRepository itemRepository) {
     return new DeleteItemByIdUseCase(itemRepository);
+  }
+
+  @Bean
+  public FindAllItemsUseCase findAllItemsUseCase(ItemRepository itemRepository) {
+    return new FindAllItemsUseCase(itemRepository);
   }
 
   @Bean
