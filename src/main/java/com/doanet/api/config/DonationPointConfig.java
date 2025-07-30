@@ -12,11 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DonationPointConfig {
   @Bean
-  public CreateDonationPointUseCase createDonationPointUseCase(
-    DonationPointRepository donationPointRepository,
-    CreateUserUseCase createUserUseCase
-  ) {
-    return new CreateDonationPointUseCase(donationPointRepository, createUserUseCase);
+  public CreateDonationPointUseCase createDonationPointUseCase(DonationPointRepository donationPointRepository) {
+    return new CreateDonationPointUseCase(donationPointRepository);
   }
 
   @Bean

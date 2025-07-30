@@ -9,16 +9,13 @@ import com.doanet.api.domain.enums.UserType;
 
 public class CreateDonationPointUseCase {
   private final DonationPointRepository donationPointRepository;
-  private final CreateUserUseCase createUserUseCase;
 
-  public CreateDonationPointUseCase(DonationPointRepository donationPointRepository,
-                                    CreateUserUseCase createUserUseCase) {
+  public CreateDonationPointUseCase(DonationPointRepository donationPointRepository) {
     this.donationPointRepository = donationPointRepository;
-    this.createUserUseCase = createUserUseCase;
   }
 
   public DonationPoint execute(CreateDonationPointCommand donationPointCommand){
-    var user = this.createUserUseCase.execute(new User(
+    var user = new User(
       null,
       donationPointCommand.name(),
       donationPointCommand.email(),
@@ -34,7 +31,7 @@ public class CreateDonationPointUseCase {
       null,
       UserType.DONATION_POINT,
       true
-    ));
+    );
 
     var donationPoint = new DonationPoint(null, user, donationPointCommand.description());
 

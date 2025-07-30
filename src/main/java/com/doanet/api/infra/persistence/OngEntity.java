@@ -1,7 +1,6 @@
 package com.doanet.api.infra.persistence;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -14,12 +13,11 @@ import lombok.*;
 @Entity
 public class OngEntity {
   @Id
-  @Column(name = "user_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne
-  @MapsId
-  @JoinColumn(name = "user_id")
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "user_id", unique = true, nullable = false)
   private UserEntity user;
 
   @Pattern(regexp = "\\d{14}", message = "CNPJ inválido")

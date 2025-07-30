@@ -7,6 +7,8 @@ import com.doanet.api.domain.entities.donation.Donation;
 import com.doanet.api.domain.enums.DonationStatus;
 import com.doanet.api.infra.persistence.DonationItemEntity;
 import com.doanet.api.infra.persistence.JpaDonationRepository;
+import com.doanet.api.infra.persistence.JpaItemRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
@@ -15,18 +17,28 @@ import java.util.Optional;
 public class DonationRepositoryImpl implements DonationRepository {
   private final JpaDonationRepository jpaDonationRepository;
   private final DonationEntityMapper donationMapper;
+  private final JpaItemRepository jpaItemRepository;
 
-  public DonationRepositoryImpl(DonationEntityMapper donationMapper, JpaDonationRepository jpaDonationRepository) {
+  public DonationRepositoryImpl(DonationEntityMapper donationMapper, JpaDonationRepository jpaDonationRepository,
+                                JpaItemRepository jpaItemRepository) {
     this.donationMapper = donationMapper;
     this.jpaDonationRepository = jpaDonationRepository;
+    this.jpaItemRepository = jpaItemRepository;
   }
 
   @Override
   public Donation save(Donation donation) {
     var entity = this.donationMapper.toEntity(donation);
-    var savedEntity = this.jpaDonationRepository.save(entity);
 
-    return this.donationMapper.toDomain(savedEntity);
+    for (DonationItemEntity itemEntity : entity.getDonationItems()) {
+      var managedItem = this.jpaItemRepository.findById(itemEntity.getItem().getId())
+        .orElseThrow(() -> new EntityNotFoundException("Item not found: " + itemEntity.getItem().getId()));
+
+      itemEntity.setItem(managedItem);
+    }
+
+    var saved = jpaDonationRepository.save(entity);
+    return this.donationMapper.toDomain(saved);
   }
 
   @Override

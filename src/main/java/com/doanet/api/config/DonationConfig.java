@@ -8,6 +8,7 @@ import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.infra.gateways.DonationEntityMapper;
 import com.doanet.api.infra.gateways.DonationRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaDonationRepository;
+import com.doanet.api.infra.persistence.JpaItemRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -77,8 +78,9 @@ public class DonationConfig {
   @Bean
   public DonationRepository donationRepository(
     JpaDonationRepository jpaDonationRepository,
-    DonationEntityMapper donationEntityMapper
+    DonationEntityMapper donationEntityMapper,
+    JpaItemRepository jpaItemRepository
   ){
-    return new DonationRepositoryImpl(donationEntityMapper, jpaDonationRepository);
+    return new DonationRepositoryImpl(donationEntityMapper, jpaDonationRepository, jpaItemRepository);
   }
 }

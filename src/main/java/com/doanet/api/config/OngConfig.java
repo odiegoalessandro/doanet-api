@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class OngConfig {
   @Bean
   public CreateOngUseCase createOngUseCase(OngRepository ongRepository, CreateUserUseCase createUserUseCase){
-    return new CreateOngUseCase(ongRepository, createUserUseCase);
+    return new CreateOngUseCase(ongRepository);
   }
 
   @Bean

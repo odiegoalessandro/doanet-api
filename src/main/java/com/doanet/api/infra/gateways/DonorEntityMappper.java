@@ -18,6 +18,7 @@ public class DonorEntityMappper {
 
 
     return new DonorEntity(
+      donor.getId(),
       userEntity,
       donor.getDocument(),
       donor.getReasonSocial()

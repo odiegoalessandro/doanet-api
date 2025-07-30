@@ -7,6 +7,7 @@ import com.doanet.api.application.usecases.ong.FindActiveOngByIdUseCase;
 import com.doanet.api.application.usecases.request.*;
 import com.doanet.api.infra.gateways.RequestEntityMapper;
 import com.doanet.api.infra.gateways.RequestRepositoryImpl;
+import com.doanet.api.infra.persistence.JpaItemRepository;
 import com.doanet.api.infra.persistence.JpaRequestRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,8 +74,9 @@ public class RequestConfig {
   @Bean
   public RequestRepository requestRepository(
     JpaRequestRepository jpaRequestRepository,
-    RequestEntityMapper requestEntityMapper
+    RequestEntityMapper requestEntityMapper,
+    JpaItemRepository jpaItemRepository
   ) {
-    return new RequestRepositoryImpl(jpaRequestRepository, requestEntityMapper);
+    return new RequestRepositoryImpl(jpaRequestRepository, requestEntityMapper, jpaItemRepository);
   }
 }

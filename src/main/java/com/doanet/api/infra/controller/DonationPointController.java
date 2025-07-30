@@ -62,7 +62,7 @@ public class DonationPointController {
       user.getState(),
       user.getZipCode()
     );
-    return new DonationPointDto(userDto, entity.getDescription());
+    return new DonationPointDto(entity.getId(), userDto, entity.getDescription());
   }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

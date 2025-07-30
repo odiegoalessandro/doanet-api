@@ -16,6 +16,7 @@ public class OngEntityMapper {
     var user = this.userMapper.toEntity(ong.getUser());
 
     return new OngEntity(
+      ong.getId(),
       user,
       ong.getCnpj()
     );

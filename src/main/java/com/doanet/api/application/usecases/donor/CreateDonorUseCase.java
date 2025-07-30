@@ -9,15 +9,13 @@ import com.doanet.api.domain.enums.UserType;
 
 public class CreateDonorUseCase {
   private final DonorRepository donorRepository;
-  private final CreateUserUseCase createUserUseCase;
 
-  public CreateDonorUseCase(DonorRepository donorRepository, CreateUserUseCase createUserUseCase) {
+  public CreateDonorUseCase(DonorRepository donorRepository) {
     this.donorRepository = donorRepository;
-    this.createUserUseCase = createUserUseCase;
   }
 
   public Donor execute(CreateDonorCommand donorCommand){
-    var user = this.createUserUseCase.execute(new User(
+    var user = new User(
       null,
       donorCommand.name(),
       donorCommand.email(),
@@ -33,7 +31,7 @@ public class CreateDonorUseCase {
       null,
       UserType.DONOR,
       true
-    ));
+    );
 
     var donor = new Donor(null, user, donorCommand.document(), donorCommand.reasonSocial());
 

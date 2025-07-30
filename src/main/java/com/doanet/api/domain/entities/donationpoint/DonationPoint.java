@@ -10,11 +10,12 @@ public class DonationPoint {
   private User user;
   private String description;
 
-  public void updateUserData(String name, String email, String phone) {
+  public void updateUserData(String name, String email, String phone, String description) {
     // TODO: criar validação desses campos antes de settar eles
     if (name != null) user.setName(name);
     if (email != null) user.setEmail(email);
     if (phone != null) user.setPhone(phone);
+    if (description != null) this.description = description;
   }
 
   public Long getId() {

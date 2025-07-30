@@ -53,6 +53,7 @@ public class RequestController {
     this.updateRequestItemUseCase = updateRequestItemUseCase;
     this.updateRequestStatusUseCase = updateRequestStatusUseCase;
   }
+  // TODO: atualizar o contrato da API para incluir um schema preciso
 
   @ApiResponse(responseCode = "201", description = "Solicitação criada com sucesso")
   @ApiResponse(responseCode = "400", description = "Dados inválidos",
@@ -66,6 +67,7 @@ public class RequestController {
     var response = new ApiSuccessResponse<>(HttpStatus.CREATED, "Pedido criado com sucesso", mapToDto(result));
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
+  // TODO: atualizar o contrato da API para incluir um schema preciso
 
   @ApiResponse(responseCode = "200", description = "Solicitação encontrada")
   @ApiResponse(responseCode = "404", description = "Solicitação não encontrada",
@@ -79,6 +81,7 @@ public class RequestController {
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Pedido encontrado com sucesso", mapToDto(result));
     return ResponseEntity.ok(response);
   }
+  // TODO: atualizar o contrato da API para incluir um schema preciso
 
   @ApiResponse(responseCode = "200", description = "Lista de solicitações retornada")
   @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
@@ -95,6 +98,7 @@ public class RequestController {
       new PageResponse<>(items, page.totalElements(), page.totalPages(), page.currentPage()));
     return ResponseEntity.ok(response);
   }
+  // TODO: atualizar o contrato da API para incluir um schema preciso
 
   @ApiResponse(responseCode = "200", description = "Lista de solicitações retornada")
   @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
@@ -112,6 +116,7 @@ public class RequestController {
       new PageResponse<>(items, page.totalElements(), page.totalPages(), page.currentPage()));
     return ResponseEntity.ok(response);
   }
+  // TODO: atualizar o contrato da API para incluir um schema preciso
 
   @ApiResponse(responseCode = "200", description = "Lista de solicitações retornada")
   @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
@@ -145,6 +150,7 @@ public class RequestController {
   }
 
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Solicitação atualizada com sucesso"),
     @ApiResponse(responseCode = "404", description = "Solicitação não encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
@@ -184,7 +190,13 @@ public class RequestController {
     List<RequestItemDto> items = entity.getItems().stream()
       .map(item -> new RequestItemDto(item.getId(), item.getItem().getId(), item.getQuantity()))
       .toList();
-    return new RequestDto(entity.getId(), entity.getOng().getId(), entity.getDonationPoint().getId(), items);
+    return new RequestDto(
+      entity.getId(),
+      entity.getOng().getId(),
+      entity.getDonationPoint().getId(),
+      items,
+      entity.getStatus()
+    );
   }
 }
 

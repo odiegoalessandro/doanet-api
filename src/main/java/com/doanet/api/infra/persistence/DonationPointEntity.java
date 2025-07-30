@@ -12,12 +12,11 @@ import lombok.*;
 @Table(name = "donation_point")
 public class DonationPointEntity {
   @Id
-  @Column(name = "user_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne
-  @MapsId
-  @JoinColumn(name = "user_id")
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "user_id", unique = true, nullable = false)
   private UserEntity user;
 
   private String description;

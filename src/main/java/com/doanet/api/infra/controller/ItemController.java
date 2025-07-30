@@ -93,7 +93,7 @@ public class ItemController {
     @RequestParam
     @Parameter(name = "name", description = "Nome parcial do item para busca", example = "banana") String name,
     @RequestParam
-    @Parameter(name = "pageNumber", description = "Número da página (0 baseado)", example = "0") int pageNumber,
+    @Parameter(name = "pageNumber", description = "Número da página (1 baseado)", example = "0") int pageNumber,
     @RequestParam
     @Parameter(name = "pageSize", description = "Quantidade máxima de itens por página", example = "10") int pageSize
   ) {

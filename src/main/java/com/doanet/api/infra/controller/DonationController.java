@@ -54,6 +54,7 @@ public class DonationController {
 
   @Operation(summary = "Realiza o cadastro da doação", method = "POST")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "201", description = "Doação criada com sucesso"),
     @ApiResponse(responseCode = "400", description = "Dados de cadastro inválidos",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
@@ -78,6 +79,7 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doação pelo ID", method = "GET")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Doação encontrada"),
     @ApiResponse(responseCode = "404", description = "Doação não encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
@@ -98,6 +100,7 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa todas as doações paginadas", method = "GET")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
@@ -124,6 +127,7 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doações pelo ID do doador", method = "GET")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
@@ -157,6 +161,7 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doações pelo ID do ponto de doação", method = "GET")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
@@ -193,6 +198,7 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doações pelo status da doação", method = "GET")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
@@ -226,13 +232,14 @@ public class DonationController {
   @PatchMapping("/status/{id}")
   @Operation(description = "Atualiza os status da doação", method = "PATCH")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Doação atualizada com sucesso"),
     @ApiResponse(responseCode = "404", description = "Doação não encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
-  public ResponseEntity<ApiSuccessResponse<Donation>> updateStatus(
+  public ResponseEntity<ApiSuccessResponse<DonationDto>> updateStatus(
     @PathVariable("id")
     @Parameter(name = "id", description = "ID da doação a ser atualizada")
     Long id,
@@ -245,7 +252,7 @@ public class DonationController {
     var response = new ApiSuccessResponse<>(
       HttpStatus.OK,
       "Doação teve seu status atualizado com sucesso",
-      donation
+      mapToDto(donation)
     );
 
     return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -255,6 +262,7 @@ public class DonationController {
   @Operation(description = "Atualiza os itens da doação", method = "PATCH")
   @PatchMapping("/{id}")
   @ApiResponses(value = {
+    // TODO: atualizar o contrato da API para incluir um schema preciso
     @ApiResponse(responseCode = "200", description = "Doação atualizada com sucesso"),
     @ApiResponse(responseCode = "404", description = "Doação não encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
@@ -287,7 +295,8 @@ public class DonationController {
       entity.getId(),
       entity.getDonor().getId(),
       entity.getDonationPoint().getId(),
-      items
+      items,
+      entity.getStatus()
     );
   }
 }

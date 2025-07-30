@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class ItemEntityMapper {
   public ItemEntity toEntity(Item item) {
     return new ItemEntity(
+      item.getId(),
       item.getName(),
       item.getDescription(),
       item.isPerishable(),

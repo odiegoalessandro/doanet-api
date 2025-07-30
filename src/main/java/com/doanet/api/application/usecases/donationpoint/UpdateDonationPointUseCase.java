@@ -20,7 +20,8 @@ public class UpdateDonationPointUseCase {
     donationPoint.updateUserData(
       donationPointCommand.name(),
       donationPointCommand.email(),
-      donationPointCommand.phone()
+      donationPointCommand.phone(),
+      donationPointCommand.description()
     );
 
     return this.donationPointRepository.save(donationPoint);

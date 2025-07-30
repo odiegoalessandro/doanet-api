@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class DonorConfig {
   @Bean
   public CreateDonorUseCase createDonorUseCase(DonorRepository donorRepository, CreateUserUseCase createUserUseCase){
-    return new CreateDonorUseCase(donorRepository, createUserUseCase);
+    return new CreateDonorUseCase(donorRepository);
   }
 
   @Bean

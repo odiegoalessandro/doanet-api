@@ -8,17 +8,21 @@ import org.springframework.stereotype.Component;
 public class UserEntityMapper {
   public UserEntity toEntity(User user){
     return new UserEntity(
-      user.getCity(),
+      user.getId(),
+      user.getName(),
       user.getEmail(),
-      user.getNeighborhood(),
-      user.getNumber(),
       user.getPassword(),
       user.getPhone(),
-      user.getState(),
       user.getStreet(),
+      user.getNumber(),
+      user.getNeighborhood(),
+      user.getCity(),
+      user.getState(),
       user.getZipCode(),
-      user.getName(),
-      true
+      user.getLatitude(),
+      user.getLongitude(),
+      user.getUserType(),
+      user.isActive()
     );
   }
 

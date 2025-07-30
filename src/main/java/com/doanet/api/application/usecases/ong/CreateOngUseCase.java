@@ -9,16 +9,13 @@ import com.doanet.api.domain.enums.UserType;
 
 public class CreateOngUseCase {
   private final OngRepository ongRepository;
-  private final CreateUserUseCase createUserUseCase;
 
-  public CreateOngUseCase(OngRepository ongRepository, CreateUserUseCase createUserUseCase){
+  public CreateOngUseCase(OngRepository ongRepository){
     this.ongRepository = ongRepository;
-    this.createUserUseCase = createUserUseCase;
   }
 
   public Ong execute(CreateOngCommand ongCommand){
-    var user = this.createUserUseCase.execute(
-      new User(
+    var user = new User(
         null,
         ongCommand.name(),
         ongCommand.email(),
@@ -34,7 +31,6 @@ public class CreateOngUseCase {
         null,
         UserType.ONG,
         true
-      )
     );
 
     Ong ong = new Ong(null, user, ongCommand.cnpj());

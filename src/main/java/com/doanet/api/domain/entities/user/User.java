@@ -119,8 +119,8 @@ public class User {
       throw new IllegalArgumentException("Nome é obrigatório");
     }
 
-    if (email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$\n")){
-      throw new IllegalArgumentException("Email ter padrão valido");
+    if (email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+      throw new IllegalArgumentException("Email deve ter padrão válido");
     }
 
     if (phone == null || phone.length() < 8){

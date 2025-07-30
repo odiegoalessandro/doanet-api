@@ -5,7 +5,10 @@ import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.application.gateways.RequestRepository;
 import com.doanet.api.domain.entities.request.Request;
 import com.doanet.api.domain.enums.RequestStatus;
+import com.doanet.api.infra.persistence.JpaItemRepository;
 import com.doanet.api.infra.persistence.JpaRequestRepository;
+import com.doanet.api.infra.persistence.RequestItemEntity;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
@@ -13,18 +16,29 @@ import java.util.Optional;
 public class RequestRepositoryImpl implements RequestRepository {
   private final JpaRequestRepository jpaRequestRepository;
   private final  RequestEntityMapper requestMapper;
+  private final JpaItemRepository jpaItemRepository;
 
-  public RequestRepositoryImpl(JpaRequestRepository jpaRequestRepository, RequestEntityMapper requestMapper) {
+  public RequestRepositoryImpl(JpaRequestRepository jpaRequestRepository, RequestEntityMapper requestMapper,
+                               JpaItemRepository jpaItemRepository) {
     this.jpaRequestRepository = jpaRequestRepository;
     this.requestMapper = requestMapper;
+    this.jpaItemRepository = jpaItemRepository;
   }
 
   @Override
   public Request save(Request request) {
-    var requestEntity = this.requestMapper.toEntity(request);
-    var savedEntity = this.jpaRequestRepository.save(requestEntity);
+    var entity = this.requestMapper.toEntity(request);
 
-    return this.requestMapper.toDomain(savedEntity);
+    for (RequestItemEntity itemEntity : entity.getItems()) {
+      var managedItem = jpaItemRepository.findById(itemEntity.getItem().getId())
+        .orElseThrow(() -> new EntityNotFoundException("Item not found: " + itemEntity.getItem().getId()));
+
+      itemEntity.setItem(managedItem);
+    }
+
+    var saved = jpaRequestRepository.save(entity);
+
+    return this.requestMapper.toDomain(saved);
   }
 
   @Override
