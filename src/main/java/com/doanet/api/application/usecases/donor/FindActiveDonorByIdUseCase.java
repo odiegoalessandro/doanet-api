@@ -5,7 +5,7 @@ import com.doanet.api.application.gateways.DonorRepository;
 import com.doanet.api.domain.entities.donor.Donor;
 
 public class FindActiveDonorByIdUseCase {
-  private DonorRepository donorRepository;
+  private final DonorRepository donorRepository;
 
   public FindActiveDonorByIdUseCase(DonorRepository donorRepository) {
     this.donorRepository = donorRepository;

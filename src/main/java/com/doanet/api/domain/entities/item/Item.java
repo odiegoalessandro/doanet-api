@@ -4,11 +4,11 @@ package com.doanet.api.domain.entities.item;
 import java.time.LocalDate;
 
 public class Item {
-  private Long id;
-  private String name;
-  private String description;
-  private boolean isPerishable;
-  private LocalDate expirationDate;
+  private final Long id;
+  private final String name;
+  private final String description;
+  private final boolean isPerishable;
+  private final LocalDate expirationDate;
 
   public Item(Long id, String name, String description, boolean isPerishable, LocalDate expirationDate) {
     if(name == null || name.trim().isEmpty()){

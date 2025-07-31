@@ -6,7 +6,7 @@ import com.doanet.api.domain.entities.ong.Ong;
 import com.doanet.api.infra.gateways.OngEntityMapper;
 
 public class FindActiveOngByIdUseCase {
-  private OngRepository ongRepository;
+  private final OngRepository ongRepository;
 
   public FindActiveOngByIdUseCase(OngRepository ongRepository){
     this.ongRepository = ongRepository;
