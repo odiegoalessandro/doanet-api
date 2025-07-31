@@ -3,7 +3,6 @@ package com.doanet.api.domain.entities.donationpoint;
 
 import com.doanet.api.domain.entities.user.User;
 
-// TODO: criar validação desses campos no construtor
 // TODO: criar testes unitarios na classe de dominio do ponto de doação
 public class DonationPoint {
   private Long id;
@@ -11,7 +10,6 @@ public class DonationPoint {
   private String description;
 
   public void updateUserData(String name, String email, String phone, String description) {
-    // TODO: criar validação desses campos antes de settar eles
     if (name != null) user.setName(name);
     if (email != null) user.setEmail(email);
     if (phone != null) user.setPhone(phone);
@@ -31,6 +29,7 @@ public class DonationPoint {
   }
 
   public void setUser(User user) {
+    validadeUser(user);
     this.user = user;
   }
 
@@ -39,12 +38,28 @@ public class DonationPoint {
   }
 
   public void setDescription(String description) {
+    validadeDescription(description);
     this.description = description;
   }
 
   public DonationPoint(Long id, User user, String description) {
+    validadeDescription(description);
+    validadeUser(user);
+
     this.id = id;
     this.user = user;
     this.description = description;
+  }
+
+  private void validadeDescription(String description) {
+    if (description == null || description.trim().isEmpty()) {
+      throw new IllegalArgumentException("A descrição não pode ser nula ou vazia");
+    }
+  }
+
+  private void validadeUser(User user) {
+    if (user == null) {
+      throw new IllegalArgumentException("O usuário não pode ser nulo");
+    }
   }
 }

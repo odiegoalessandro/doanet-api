@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Criar testes unitários para a classe Request
 public class Request {
   private Long id;
   private DonationPoint donationPoint;
@@ -29,6 +30,7 @@ public class Request {
   }
 
   public void setDonationPoint(DonationPoint donationPoint) {
+    validadeDonationPoint(donationPoint);
     this.donationPoint = donationPoint;
   }
 
@@ -37,6 +39,7 @@ public class Request {
   }
 
   public void setOng(Ong ong) {
+    validadeOng(ong);
     this.ong = ong;
   }
 
@@ -61,6 +64,7 @@ public class Request {
   }
 
   public void setStatus(RequestStatus status) {
+    validadeStatus(status);
     this.status = status;
   }
 
@@ -70,6 +74,10 @@ public class Request {
                  LocalDate createdAt,
                  List<RequestItem> items,
                  RequestStatus status) {
+    validadeOng(ong);
+    validadeDonationPoint(donationPoint);
+    validadeStatus(status);
+
     this.id = id;
     this.donationPoint = donationPoint;
     this.ong = ong;
@@ -77,4 +85,23 @@ public class Request {
     this.items = items;
     this.status = status;
   }
+
+  private void validadeDonationPoint(DonationPoint donationPoint) {
+    if (donationPoint == null) {
+      throw new IllegalArgumentException("Donation point não deve ser nula");
+    }
+  }
+
+  private void validadeOng(Ong ong) {
+    if (ong == null) {
+      throw new IllegalArgumentException("ONG não deve ser nula");
+    }
+  }
+
+  private void validadeStatus(RequestStatus status) {
+    if (status == null) {
+      throw new IllegalArgumentException("Status não deve ser nulo");
+    }
+  }
+
 }

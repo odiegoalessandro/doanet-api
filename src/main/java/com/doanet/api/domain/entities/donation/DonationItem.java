@@ -2,6 +2,7 @@ package com.doanet.api.domain.entities.donation;
 
 import com.doanet.api.domain.entities.item.Item;
 
+// TODO: criar testes unitarios na classe de dominio do donationitem
 public class DonationItem {
   private Long id;
   private Integer quantity;
@@ -21,6 +22,7 @@ public class DonationItem {
   }
 
   public void setQuantity(Integer quantity) {
+    validateQuantity(quantity);
     this.quantity = quantity;
   }
 
@@ -29,6 +31,7 @@ public class DonationItem {
   }
 
   public void setItem(Item item) {
+    validateItem(item);
     this.item = item;
   }
 
@@ -37,13 +40,33 @@ public class DonationItem {
   }
 
   public void setDonation(Donation donation) {
+    validateDonation(donation);
     this.donation = donation;
   }
 
   public DonationItem(Long id, Integer quantity, Item item, Donation donation) {
+    validateDonation(donation);
+    validateItem(item);
+    validateQuantity(quantity);
+
     this.id = id;
     this.quantity = quantity;
     this.item = item;
     this.donation = donation;
+  }
+
+  private void validateQuantity(Integer quantity) {
+    if (quantity == null || quantity <= 0)
+      throw new IllegalArgumentException("Quantidade deve ser maior que zero");
+  }
+
+  private void validateItem(Item item) {
+    if (item == null || item.getId() == null)
+      throw new IllegalArgumentException("Item inválido");
+  }
+
+  private void validateDonation(Donation donation) {
+    if (donation == null)
+      throw new IllegalArgumentException("Doação obrigatória");
   }
 }

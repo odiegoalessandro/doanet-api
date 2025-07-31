@@ -2,6 +2,7 @@ package com.doanet.api.domain.entities.user;
 
 import com.doanet.api.domain.enums.UserType;
 
+// TODO: Criar testes unitarios para a classe User
 public class User {
   private Long id;
   private String name;
@@ -19,86 +20,6 @@ public class User {
   private UserType userType;
   private boolean isActive = true;
 
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
-
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public String getPhone() {
-    return phone;
-  }
-
-  public String getStreet() {
-    return street;
-  }
-
-  public String getNumber() {
-    return number;
-  }
-
-  public String getNeighborhood() {
-    return neighborhood;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public String getState() {
-    return state;
-  }
-
-  public String getZipCode() {
-    return zipCode;
-  }
-
-  public Double getLatitude() {
-    return latitude;
-  }
-
-  public Double getLongitude() {
-    return longitude;
-  }
-
-  public UserType getUserType() {
-    return userType;
-  }
-
-  public boolean isActive() {
-    return isActive;
-  }
-
-  public String buildAddress() {
-    return String.join(", ",
-      street,
-      number,
-      neighborhood,
-      city,
-      state,
-      "Brazil",
-      zipCode
-    );
-  }
-
   public User(Long id,
               String name,
               String email,
@@ -114,26 +35,17 @@ public class User {
               Double longitude,
               UserType userType,
               boolean isActive) {
+    validateName(name);
+    validateEmail(email);
+    validatePhone(phone);
+    validateZipCode(zipCode);
+    validateUserType(userType);
 
-    if (name == null || name.isBlank()) {
-      throw new IllegalArgumentException("Nome é obrigatório");
-    }
-
-    if (email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
-      throw new IllegalArgumentException("Email deve ter padrão válido");
-    }
-
-    if (phone == null || phone.length() < 8){
-      throw new IllegalArgumentException("Telefone inválido");
-    }
-
-    if(userType == null){
-      throw new IllegalArgumentException("O tipo do usuario não deve ser nulo");
-    }
-
-    if (zipCode == null || !zipCode.matches("\\d{5}-?\\d{3}")) {
-      throw new IllegalArgumentException("CEP inválido");
-    }
+    validadeIsNotBlank(street, "Rua");
+    validadeIsNotBlank(number, "Número");
+    validadeIsNotBlank(neighborhood, "Bairro");
+    validadeIsNotBlank(city, "Cidade");
+    validadeIsNotBlank(state, "Estado");
 
     this.id = id;
     this.name = name;
@@ -152,55 +64,134 @@ public class User {
     this.isActive = isActive;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public void setName(String name) {
+    validateName(name);
     this.name = name;
   }
 
   public void setEmail(String email) {
+    validateEmail(email);
     this.email = email;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public void setPhone(String phone) {
+    validatePhone(phone);
     this.phone = phone;
   }
 
-  public void setStreet(String street) {
-    this.street = street;
-  }
-
-  public void setNumber(String number) {
-    this.number = number;
-  }
-
-  public void setNeighborhood(String neighborhood) {
-    this.neighborhood = neighborhood;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public void setState(String state) {
-    this.state = state;
-  }
-
   public void setZipCode(String zipCode) {
+    validateZipCode(zipCode);
     this.zipCode = zipCode;
   }
 
   public void setUserType(UserType userType) {
+    validateUserType(userType);
     this.userType = userType;
   }
 
-  public void setActive(boolean active) {
-    isActive = active;
+  public void setId(Long id) { this.id = id; }
+
+  public void setPassword(String password) {
+    validatePassword(password);
+    this.password = password;
+  }
+
+  public void setStreet(String street) {
+    validadeIsNotBlank(street, "Rua");
+    this.street = street;
+  }
+
+  public void setNumber(String number) {
+    validadeIsNotBlank(number, "Número");
+    this.number = number;
+  }
+
+  public void setNeighborhood(String neighborhood) {
+    validadeIsNotBlank(neighborhood, "Bairro");
+    this.neighborhood = neighborhood;
+  }
+
+  public void setCity(String city) {
+    validadeIsNotBlank(city, "Cidade");
+    this.city = city;
+  }
+
+  public void setState(String state) {
+    validadeIsNotBlank(state, "Estado");
+    this.state = state;
+  }
+
+  public void setLatitude(Double latitude) { this.latitude = latitude; }
+
+  public void setLongitude(Double longitude) { this.longitude = longitude; }
+
+  public void setActive(boolean active) { isActive = active; }
+
+  public Long getId() { return id; }
+  public String getName() { return name; }
+  public String getEmail() { return email; }
+  public String getPassword() { return password; }
+  public String getPhone() { return phone; }
+  public String getStreet() { return street; }
+  public String getNumber() { return number; }
+  public String getNeighborhood() { return neighborhood; }
+  public String getCity() { return city; }
+  public String getState() { return state; }
+  public String getZipCode() { return zipCode; }
+  public Double getLatitude() { return latitude; }
+  public Double getLongitude() { return longitude; }
+  public UserType getUserType() { return userType; }
+  public boolean isActive() { return isActive; }
+
+  public String buildAddress() {
+    return String.join(", ",
+      street,
+      number,
+      neighborhood,
+      city,
+      state,
+      "Brazil",
+      zipCode
+    );
+  }
+
+  private void validatePassword(String password) {
+    if (password == null || password.trim().length() < 6)
+      throw new IllegalArgumentException("Senha deve conter no mínimo 6 caracteres");
+  }
+
+  private void validadeIsNotBlank(String content, String fieldName) {
+    if (content == null || content.trim().isEmpty())
+      throw new IllegalArgumentException(fieldName + " é obrigatório(a)");
+  }
+
+  private void validateName(String name) {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("Nome é obrigatório");
+    }
+  }
+
+  private void validateEmail(String email) {
+    if (email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+      throw new IllegalArgumentException("Email deve ter padrão válido");
+    }
+  }
+
+  private void validatePhone(String phone) {
+    if (phone == null || phone.length() < 8) {
+      throw new IllegalArgumentException("Telefone inválido");
+    }
+  }
+
+  private void validateZipCode(String zipCode) {
+    if (zipCode == null || !zipCode.matches("\\d{5}-?\\d{3}")) {
+      throw new IllegalArgumentException("CEP inválido");
+    }
+  }
+
+  private void validateUserType(UserType userType) {
+    if (userType == null) {
+      throw new IllegalArgumentException("O tipo do usuário não deve ser nulo");
+    }
   }
 }

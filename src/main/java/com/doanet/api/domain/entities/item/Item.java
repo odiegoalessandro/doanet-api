@@ -3,18 +3,34 @@ package com.doanet.api.domain.entities.item;
 
 import java.time.LocalDate;
 
+// TODO: devemos criar testes unitarios para classe de dominio dos itens
 public class Item {
   private final Long id;
   private final String name;
   private final String description;
+
+  // TODO: devemos mover essas informações para o DonationItem, assim teremos controle da validade pelo lote
   private final boolean isPerishable;
   private final LocalDate expirationDate;
 
   public Item(Long id, String name, String description, boolean isPerishable, LocalDate expirationDate) {
-    if(name == null || name.trim().isEmpty()){
+    validateName(name);
+    validateExpiration(isPerishable, expirationDate);
+
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.isPerishable = isPerishable;
+    this.expirationDate = expirationDate;
+  }
+
+  private void validateName(String name) {
+    if (name == null || name.trim().isEmpty()) {
       throw new IllegalArgumentException("O nome não pode ser nulo e deve conter 1 ou mais caracteres");
     }
+  }
 
+  private void validateExpiration(boolean isPerishable, LocalDate expirationDate) {
     if (isPerishable) {
       if (expirationDate == null) {
         throw new IllegalArgumentException("Data de validade é obrigatória para produto perecível");
@@ -27,12 +43,6 @@ public class Item {
         throw new IllegalArgumentException("Não é possível definir data de validade para produto não perecível");
       }
     }
-
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.isPerishable = isPerishable;
-    this.expirationDate = expirationDate;
   }
 
   public Long getId() {

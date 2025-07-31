@@ -2,6 +2,7 @@ package com.doanet.api.domain.entities.request;
 
 import com.doanet.api.domain.entities.item.Item;
 
+// TODO: Criar testes unitários para a classe RequestItem
 public class RequestItem {
   private Long id;
   private Request request;
@@ -21,6 +22,7 @@ public class RequestItem {
   }
 
   public void setRequest(Request request) {
+    validateRequest(request);
     this.request = request;
   }
 
@@ -29,6 +31,7 @@ public class RequestItem {
   }
 
   public void setItem(Item item) {
+    setItem(item);
     this.item = item;
   }
 
@@ -37,13 +40,33 @@ public class RequestItem {
   }
 
   public void setQuantity(Integer quantity) {
+    validateQuantity(quantity);
     this.quantity = quantity;
   }
 
   public RequestItem(Long id, Request request, Item item, Integer quantity) {
+    validateRequest(request);
+    validateItem(item);
+    validateQuantity(quantity);
+
     this.id = id;
     this.request = request;
     this.item = item;
     this.quantity = quantity;
+  }
+
+  private void validateQuantity(Integer quantity) {
+    if (quantity == null || quantity <= 0)
+      throw new IllegalArgumentException("Quantidade deve ser maior que zero");
+  }
+
+  private void validateItem(Item item) {
+    if (item == null || item.getId() == null)
+      throw new IllegalArgumentException("Item inválido");
+  }
+
+  private void validateRequest(Request request) {
+    if (request == null)
+      throw new IllegalArgumentException("Solicitação obrigatória");
   }
 }

@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: criando testes unitarios na classe de domínio da doação
 public class Donation {
   public Long getId() {
     return id;
@@ -22,6 +23,7 @@ public class Donation {
   }
 
   public void setDonor(Donor donor) {
+    validadeDonor(donor);
     this.donor = donor;
   }
 
@@ -30,6 +32,7 @@ public class Donation {
   }
 
   public void setDonationPoint(DonationPoint donationPoint) {
+    validadeDonationPoint(donationPoint);
     this.donationPoint = donationPoint;
   }
 
@@ -54,6 +57,7 @@ public class Donation {
   }
 
   public void setStatus(DonationStatus status) {
+    validadeStatus(status);
     this.status = status;
   }
 
@@ -63,6 +67,10 @@ public class Donation {
                   LocalDate createdAt,
                   List<DonationItem> donationItems,
                   DonationStatus status) {
+    validadeDonor(donor);
+    validadeStatus(status);
+    validadeDonationPoint(donationPoint);
+
     this.id = id;
     this.donor = donor;
     this.donationPoint = donationPoint;
@@ -77,4 +85,22 @@ public class Donation {
   private LocalDate createdAt;
   private List<DonationItem> donationItems = new ArrayList<>();
   private DonationStatus status = DonationStatus.CREATED;
+
+  private void validadeDonor(Donor donor){
+    if(donor == null || donor.getId() == null) {
+      throw new IllegalArgumentException("Donor não pode ser nulo e deve ter um ID válido");
+    }
+  }
+
+  private void validadeDonationPoint(DonationPoint donationPoint){
+    if(donationPoint == null || donationPoint.getId() == null) {
+      throw new IllegalArgumentException("Donation Point não pode ser nulo e deve ter um ID válido");
+    }
+  }
+
+  private void validadeStatus(DonationStatus status){
+    if(status == null){
+      throw new IllegalArgumentException("Status da doação não pode ser nulo");
+    }
+  }
 }
