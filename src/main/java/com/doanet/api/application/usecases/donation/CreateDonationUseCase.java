@@ -10,7 +10,7 @@ import com.doanet.api.domain.entities.donation.DonationItem;
 import com.doanet.api.domain.enums.DonationStatus;
 
 import java.time.LocalDate;
-// TODO: Criar validação para caso o doador ou ponto de doação não estejam ativos não seja possível criar uma doação
+
 public class CreateDonationUseCase {
   private final DonationRepository donationRepository;
   private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;
@@ -30,6 +30,12 @@ public class CreateDonationUseCase {
   public Donation execute(CreateDonationCommand donationCommand){
     var donor = findActiveDonorByIdUseCase.execute(donationCommand.donorId());
     var donationPoint = findActiveDonationPointByIdUseCase.execute(donationCommand.donationPointId());
+
+    if(!donor.getUser().isActive() || !donationPoint.getUser().isActive()) {
+      throw new IllegalStateException("Não foi possivel realizar a doação. Doador ou ponto de doação não estão " +
+        "ativos.");
+    }
+
     var donation = new Donation(
       null, donor,
       donationPoint,

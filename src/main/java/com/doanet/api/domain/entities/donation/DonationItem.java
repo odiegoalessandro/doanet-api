@@ -40,12 +40,10 @@ public class DonationItem {
   }
 
   public void setDonation(Donation donation) {
-    validateDonation(donation);
     this.donation = donation;
   }
 
   public DonationItem(Long id, Integer quantity, Item item, Donation donation) {
-    validateDonation(donation);
     validateItem(item);
     validateQuantity(quantity);
 
@@ -63,10 +61,5 @@ public class DonationItem {
   private void validateItem(Item item) {
     if (item == null || item.getId() == null)
       throw new IllegalArgumentException("Item inválido");
-  }
-
-  private void validateDonation(Donation donation) {
-    if (donation == null)
-      throw new IllegalArgumentException("Doação obrigatória");
   }
 }

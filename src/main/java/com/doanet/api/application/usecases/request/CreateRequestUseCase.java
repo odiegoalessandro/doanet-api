@@ -10,7 +10,6 @@ import com.doanet.api.domain.entities.request.RequestItem;
 import com.doanet.api.domain.enums.RequestStatus;
 
 import java.time.LocalDate;
-// TODO: Criar validação para caso a ong ou ponto de doação não estejam ativos não seja possível criar uma solicitação
 public class CreateRequestUseCase {
   private final RequestRepository requestRepository;
   private final FindActiveOngByIdUseCase findActiveOngByIdUseCase;
@@ -31,6 +30,12 @@ public class CreateRequestUseCase {
   public Request execute(CreateRequestCommand requestCommand) {
     var donationPoint = findActiveDonationPointByIdUseCase.execute(requestCommand.donationPointId());
     var ong = findActiveOngByIdUseCase.execute(requestCommand.ongId());
+
+    if(!ong.getUser().isActive() || !donationPoint.getUser().isActive()) {
+      throw new IllegalStateException("Não foi possivel realizar a solicitação. Ong ou ponto de doação não estão " +
+        "ativos.");
+    }
+
     var request = new Request(null, donationPoint, ong, LocalDate.now(), null, RequestStatus.CREATED);
     var items = requestCommand.items().stream().map(item -> {
       var itemEntity = findItemByIdUseCase.execute(item.itemId());

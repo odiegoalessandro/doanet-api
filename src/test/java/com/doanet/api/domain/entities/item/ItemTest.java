@@ -56,17 +56,4 @@ public class ItemTest {
       );
     });
   }
-
-  @Test
-  public void shouldThrowException_WhenIsPerishableIsTrueAndExpirationDateIsInvalid(){
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new Item(
-        null,
-        "arroz",
-        "5kg",
-        true,
-        LocalDate.of(2000, 1, 1)
-      );
-    });
-  }
 }

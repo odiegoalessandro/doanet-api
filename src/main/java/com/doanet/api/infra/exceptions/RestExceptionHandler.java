@@ -2,6 +2,7 @@ package com.doanet.api.infra.exceptions;
 
 import com.doanet.api.application.exceptions.CoordinatesInternalServerException;
 import com.doanet.api.application.exceptions.CoordinatesNotFoundException;
+import com.doanet.api.application.exceptions.ResourceNotFoundException;
 import com.doanet.api.infra.interfaces.ApiError;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +33,12 @@ public class RestExceptionHandler {
     return buildError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), request);
   }
 
-  @ExceptionHandler({CoordinatesNotFoundException.class, EntityNotFoundException.class})
+  @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+  public ResponseEntity<ApiError> handleIllegalArgument(RuntimeException ex, HttpServletRequest request){
+    return buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
+  }
+
+  @ExceptionHandler({CoordinatesNotFoundException.class, EntityNotFoundException.class, ResourceNotFoundException.class})
   public ResponseEntity<ApiError> handleNotFound(RuntimeException ex, HttpServletRequest request){
     return buildError(HttpStatus.NOT_FOUND, ex.getMessage(), request);
   }

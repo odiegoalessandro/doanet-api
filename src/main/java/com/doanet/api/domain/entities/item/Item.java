@@ -35,9 +35,6 @@ public class Item {
       if (expirationDate == null) {
         throw new IllegalArgumentException("Data de validade é obrigatória para produto perecível");
       }
-      if (!expirationDate.isAfter(LocalDate.now()) && !expirationDate.isEqual(LocalDate.now())) {
-        throw new IllegalArgumentException("Data de validade não pode ser passada");
-      }
     } else {
       if (expirationDate != null) {
         throw new IllegalArgumentException("Não é possível definir data de validade para produto não perecível");

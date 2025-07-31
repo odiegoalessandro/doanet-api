@@ -22,7 +22,6 @@ public class RequestItem {
   }
 
   public void setRequest(Request request) {
-    validateRequest(request);
     this.request = request;
   }
 
@@ -45,7 +44,6 @@ public class RequestItem {
   }
 
   public RequestItem(Long id, Request request, Item item, Integer quantity) {
-    validateRequest(request);
     validateItem(item);
     validateQuantity(quantity);
 
@@ -63,10 +61,5 @@ public class RequestItem {
   private void validateItem(Item item) {
     if (item == null || item.getId() == null)
       throw new IllegalArgumentException("Item inválido");
-  }
-
-  private void validateRequest(Request request) {
-    if (request == null)
-      throw new IllegalArgumentException("Solicitação obrigatória");
   }
 }
