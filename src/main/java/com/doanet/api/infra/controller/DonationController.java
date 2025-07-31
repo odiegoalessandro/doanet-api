@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/donation", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "Donations", description = "Operações relacionadas às doações")
+@Tag(name = "Doações", description = "Operações relacionadas às doações")
 public class DonationController {
   private final CreateDonationUseCase createDonationUseCase;
   private final FindDonationByIdUseCase findDonationByIdUseCase;
@@ -54,8 +54,11 @@ public class DonationController {
 
   @Operation(summary = "Realiza o cadastro da doação", method = "POST")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "201", description = "Doação criada com sucesso"),
+    @ApiResponse(
+      responseCode = "201",
+      description = "Doação criada com sucesso",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "400", description = "Dados de cadastro inválidos",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
@@ -79,8 +82,11 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doação pelo ID", method = "GET")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "200", description = "Doação encontrada"),
+    @ApiResponse(
+      responseCode = "200",
+      description = "Doação encontrada",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "404", description = "Doação não encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
@@ -100,8 +106,11 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa todas as doações paginadas", method = "GET")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
+    @ApiResponse(
+      responseCode = "200",
+      description = "Lista de doações retornada",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
@@ -127,8 +136,11 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doações pelo ID do doador", method = "GET")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
+    @ApiResponse(
+      responseCode = "200",
+      description = "Lista de doações retornada",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
@@ -161,8 +173,11 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doações pelo ID do ponto de doação", method = "GET")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
+    @ApiResponse(
+      responseCode = "200",
+      description = "Lista de doações retornada",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
@@ -198,8 +213,11 @@ public class DonationController {
 
   @Operation(summary = "Pesquisa doações pelo status da doação", method = "GET")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "200", description = "Lista de doações retornada"),
+    @ApiResponse(
+      responseCode = "200",
+      description = "Lista de doações retornada",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
@@ -232,8 +250,11 @@ public class DonationController {
   @PatchMapping("/status/{id}")
   @Operation(description = "Atualiza os status da doação", method = "PATCH")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "200", description = "Doação atualizada com sucesso"),
+    @ApiResponse(
+      responseCode = "200",
+      description = "Doação atualizada com sucesso",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "404", description = "Doação não encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
@@ -262,8 +283,11 @@ public class DonationController {
   @Operation(description = "Atualiza os itens da doação", method = "PATCH")
   @PatchMapping("/{id}")
   @ApiResponses(value = {
-    // TODO: atualizar o contrato da API para incluir um schema preciso
-    @ApiResponse(responseCode = "200", description = "Doação atualizada com sucesso"),
+    @ApiResponse(
+      responseCode = "200",
+      description = "Doação atualizada com sucesso",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))
+    ),
     @ApiResponse(responseCode = "404", description = "Doação não encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
