@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// TODO: Modificar as pesquisas por ID e findAll para retornar pontos ativos e inativos conforme o usuário passe via query param
 @RestController
 @RequestMapping(value = "/donor", produces = { "application/json" })
 @Tag(name = "Doadores", description = "Operações relacionadas aos Doadores")
@@ -85,7 +86,7 @@ public class DonorController {
   }
 
   @GetMapping("/{id}")
-  @Operation(summary = "Busca doador por ID", method = "GET")
+  @Operation(summary = "Busca doador ativo por ID", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Doador encontrado"),
     @ApiResponse(responseCode = "404", description = "Doador não encontrado",
@@ -100,7 +101,7 @@ public class DonorController {
   }
 
   @GetMapping("/document/{document}")
-  @Operation(summary = "Busca doador por documento", method = "GET")
+  @Operation(summary = "Busca doador ativo por documento", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Doador encontrado"),
     @ApiResponse(responseCode = "404", description = "Doador não encontrado",
@@ -137,7 +138,7 @@ public class DonorController {
   }
 
   @GetMapping
-  @Operation(summary = "Busca paginada de doadores", method = "GET")
+  @Operation(summary = "Busca paginada de doadores ativos", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
     @ApiResponse(responseCode = "500", description = "Erro interno",

@@ -10,7 +10,7 @@ import com.doanet.api.domain.entities.donation.DonationItem;
 import com.doanet.api.domain.enums.DonationStatus;
 
 import java.time.LocalDate;
-
+// TODO: Criar validação para caso o doador ou ponto de doação não estejam ativos não seja possível criar uma doação
 public class CreateDonationUseCase {
   private final DonationRepository donationRepository;
   private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;

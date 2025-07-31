@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+// TODO: Modificar as pesquisas por ID e findAll para retornar pontos ativos e inativos conforme o usuário passe via query param
 @RestController
 @RequestMapping(value = "/ong", produces = { "application/json" })
 @Tag(name = "ONGs", description = "Operações relacionadas às ONGs")
@@ -73,7 +73,15 @@ public class OngController {
     var response = new ApiSuccessResponse<>(HttpStatus.CREATED, "ONG criada com sucesso", result);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
-
+  @Operation(summary = "Busca ONG ativa por ID")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "ONG encontrada com sucesso",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))),
+    @ApiResponse(responseCode = "404", description = "ONG não encontrada",
+      content = @Content(schema = @Schema(implementation = ApiError.class))),
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
+  })
   @GetMapping("/{id}")
   public ResponseEntity<ApiSuccessResponse<OngDto>> findById(
     @PathVariable("id") Long id
@@ -97,6 +105,15 @@ public class OngController {
     return ResponseEntity.ok(response);
   }
 
+  @Operation(summary = "Busca ONG ativa por CNPJ")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "ONG encontrada com sucesso",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))),
+    @ApiResponse(responseCode = "404", description = "ONG não encontrada",
+      content = @Content(schema = @Schema(implementation = ApiError.class))),
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
+  })
   @GetMapping("/cnpj/{cnpj}")
   public ResponseEntity<ApiSuccessResponse<OngDto>> findByCnpj(
     @PathVariable("cnpj") String cnpj
@@ -120,6 +137,13 @@ public class OngController {
     return ResponseEntity.ok(response);
   }
 
+  @Operation(summary = "Lista todas as ONGs ativas")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Lista de ONGs retornada com sucesso",
+      content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))),
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+      content = @Content(schema = @Schema(implementation = ApiError.class)))
+  })
   @GetMapping
   public ResponseEntity<ApiSuccessResponse<PageResponse<OngDto>>> findAll(
     @RequestParam Integer pageNumber,

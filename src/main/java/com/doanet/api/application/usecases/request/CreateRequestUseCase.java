@@ -10,7 +10,7 @@ import com.doanet.api.domain.entities.request.RequestItem;
 import com.doanet.api.domain.enums.RequestStatus;
 
 import java.time.LocalDate;
-
+// TODO: Criar validação para caso a ong ou ponto de doação não estejam ativos não seja possível criar uma solicitação
 public class CreateRequestUseCase {
   private final RequestRepository requestRepository;
   private final FindActiveOngByIdUseCase findActiveOngByIdUseCase;
