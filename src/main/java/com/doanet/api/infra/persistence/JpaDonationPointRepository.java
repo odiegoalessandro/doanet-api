@@ -9,18 +9,19 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface JpaDonationPointRepository extends JpaRepository<DonationPointEntity, Long> {
-    @Query("SELECT dp FROM DonationPointEntity dp WHERE id = :id AND dp.user.isActive = true")
-    Optional<DonationPointEntity> findByIdActive(@Param("id") Long id);
+    @Query("SELECT dp FROM DonationPointEntity dp WHERE id = :id AND dp.user.isActive = :isActive")
+    Optional<DonationPointEntity> findById(@Param("id") Long id, @Param("isActive") boolean isActive);
 
     @Query(
       "SELECT dp FROM DonationPointEntity dp WHERE LOWER(dp.description) LIKE LOWER(CONCAT('%', :description, '%')) " +
-        "AND dp.user.isActive = true"
+        "AND dp.user.isActive = :isActive"
     )
-    Page<DonationPointEntity> findByDescriptionContainingIgnoreCaseActive(
+    Page<DonationPointEntity> findByDescriptionIgnoreCase(
       @Param("description") String description,
+      @Param("isActive") boolean isActive,
       Pageable pageable
     );
 
-    @Query("SELECT dp FROM DonationPointEntity dp WHERE dp.user.isActive = true")
-    Page<DonationPointEntity> findAllActive(Pageable pageable);
+    @Query("SELECT dp FROM DonationPointEntity dp WHERE dp.user.isActive = :isActive")
+    Page<DonationPointEntity> findAll(boolean isActive, Pageable pageable);
 }

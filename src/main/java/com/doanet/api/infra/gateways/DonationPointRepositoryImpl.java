@@ -6,7 +6,6 @@ import com.doanet.api.application.gateways.DonationPointRepository;
 import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 import com.doanet.api.infra.persistence.JpaDonationPointRepository;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
@@ -29,8 +28,8 @@ public class DonationPointRepositoryImpl implements DonationPointRepository {
   }
 
   @Override
-  public Optional<DonationPoint> findByIdActive(Long id) {
-    return this.donationPointRepository.findByIdActive(id).map(mapper::toDomain);
+  public Optional<DonationPoint> findById(Long id, boolean isActive) {
+    return this.donationPointRepository.findById(id, isActive).map(mapper::toDomain);
   }
 
   @Override
@@ -39,14 +38,16 @@ public class DonationPointRepositoryImpl implements DonationPointRepository {
   }
 
   @Override
-  public PageResponse<DonationPoint> findByDescriptionContainingIgnoreCaseActive(
+  public PageResponse<DonationPoint> findByDescriptionIgnoreCase(
     String description,
+    boolean isActive,
     Pagination pagination
   ) {
     var pageNumber = Math.max(1, pagination.page()) - 1;
     var pageable = PageRequest.of(pageNumber, pagination.size());
-    var jpaPage = this.donationPointRepository.findByDescriptionContainingIgnoreCaseActive(
+    var jpaPage = this.donationPointRepository.findByDescriptionIgnoreCase(
       description,
+      isActive,
       pageable
     );
     var dtoPage = jpaPage.map(mapper::toDomain);
@@ -61,10 +62,10 @@ public class DonationPointRepositoryImpl implements DonationPointRepository {
   }
 
   @Override
-  public PageResponse<DonationPoint> findAllActive(Pagination pagination) {
+  public PageResponse<DonationPoint> findAll(boolean isActive, Pagination pagination) {
     var pageNumber = Math.max(1, pagination.page()) - 1;
     var pageable = PageRequest.of(pageNumber, pagination.size());
-    var jpaPage = this.donationPointRepository.findAllActive(pageable);
+    var jpaPage = this.donationPointRepository.findAll(isActive, pageable);
     var dtoPage = jpaPage.map(mapper::toDomain);
 
     return new PageResponse<DonationPoint>(

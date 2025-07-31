@@ -19,31 +19,32 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// TODO: Modificar as pesquisas por ID e findAll para retornar pontos ativos e inativos conforme o usuário passe via query param
+// TODO: Criar rota de delete para que ela seja feita o delete sistemico(UPDATE users SET is_active = false WHERE id
+//  = ?) para isso deve ser feito useCase de User e implementando nas controller de donor, donationPoint e ong
 @RestController
 @RequestMapping(value = "/donation-point", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Pontos de Doação", description = "Operações relacionadas aos Pontos de Doação")
 public class DonationPointController {
 
   private final CreateDonationPointUseCase createDonationPointUseCase;
-  private final FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase;
-  private final FindActiveDonationPointByDescriptionUseCase findActiveDonationPointByDescriptionUseCase;
-  private final FindAllActiveDonationPointsUseCase findAllActiveDonationPointsUseCase;
+  private final FindDonationPointByIdUseCase findDonationPointByIdUseCase;
+  private final FindDonationPointByDescriptionUseCase findDonationPointByDescriptionUseCase;
+  private final FindAllDonationPointsUseCase findAllDonationPointsUseCase;
   private final UpdateDonationPointUseCase updateDonationPointUseCase;
   private final DeleteDonationPointUseCase deleteDonationPointUseCase;
 
   public DonationPointController(
     CreateDonationPointUseCase createDonationPointUseCase,
-    FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase,
-    FindActiveDonationPointByDescriptionUseCase findActiveDonationPointByDescriptionUseCase,
-    FindAllActiveDonationPointsUseCase findAllActiveDonationPointsUseCase,
+    FindDonationPointByIdUseCase findDonationPointByIdUseCase,
+    FindDonationPointByDescriptionUseCase findDonationPointByDescriptionUseCase,
+    FindAllDonationPointsUseCase findAllDonationPointsUseCase,
     UpdateDonationPointUseCase updateDonationPointUseCase,
     DeleteDonationPointUseCase deleteDonationPointUseCase
   ) {
     this.createDonationPointUseCase = createDonationPointUseCase;
-    this.findActiveDonationPointByIdUseCase = findActiveDonationPointByIdUseCase;
-    this.findActiveDonationPointByDescriptionUseCase = findActiveDonationPointByDescriptionUseCase;
-    this.findAllActiveDonationPointsUseCase = findAllActiveDonationPointsUseCase;
+    this.findDonationPointByIdUseCase = findDonationPointByIdUseCase;
+    this.findDonationPointByDescriptionUseCase = findDonationPointByDescriptionUseCase;
+    this.findAllDonationPointsUseCase = findAllDonationPointsUseCase;
     this.updateDonationPointUseCase = updateDonationPointUseCase;
     this.deleteDonationPointUseCase = deleteDonationPointUseCase;
   }
@@ -86,7 +87,7 @@ public class DonationPointController {
   }
 
   @GetMapping("/{id}")
-  @Operation(summary = "Busca ponto de doação ativo por ID", method = "GET")
+  @Operation(summary = "Busca ponto de doação por ID", method = "GET")
   @ApiResponses({
     @ApiResponse(responseCode = "200", description = "Ponto encontrado"),
     @ApiResponse(
@@ -100,14 +101,15 @@ public class DonationPointController {
       content = @Content(schema = @Schema(implementation = ApiError.class))
     )
   })
-  public ResponseEntity<ApiSuccessResponse<DonationPointDto>> findById(@PathVariable("id") Long id) {
-    var entity = findActiveDonationPointByIdUseCase.execute(id);
+  public ResponseEntity<ApiSuccessResponse<DonationPointDto>> findById(@PathVariable("id") Long id,
+                                                                       @RequestParam (required = false) boolean isActive) {
+    var entity = findDonationPointByIdUseCase.execute(id, isActive);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Ponto encontrado com sucesso", mapToDto(entity));
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/description/{description}")
-  @Operation(summary = "Busca ponto de doação ativo por descrição", method = "GET")
+  @Operation(summary = "Busca ponto de doação por descrição", method = "GET")
   @ApiResponses({
     @ApiResponse(responseCode = "200", description = "Ponto encontrado"),
     @ApiResponse(
@@ -124,12 +126,14 @@ public class DonationPointController {
   public ResponseEntity<ApiSuccessResponse<PageResponse<DonationPointDto>>> findByDescription(
     @PathVariable("description") String description,
     @RequestParam Integer pageNumber,
-    @RequestParam Integer pageSize
+    @RequestParam Integer pageSize,
+    @RequestParam boolean isActive
   ) {
-    var page = findActiveDonationPointByDescriptionUseCase.execute(
+    var page = findDonationPointByDescriptionUseCase.execute(
       description,
       pageNumber,
-      pageSize
+      pageSize,
+      isActive
     );
 
     var items = page.content().stream().map(this::mapToDto).toList();
@@ -139,7 +143,7 @@ public class DonationPointController {
   }
 
   @GetMapping
-  @Operation(summary = "Busca paginada de pontos de doação ativos", method = "GET")
+  @Operation(summary = "Busca paginada de pontos de doação", method = "GET")
   @ApiResponses({
     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
     @ApiResponse(
@@ -150,8 +154,9 @@ public class DonationPointController {
   })
   public ResponseEntity<ApiSuccessResponse<PageResponse<DonationPointDto>>> findAll(
     @RequestParam Integer pageNumber,
-    @RequestParam Integer pageSize) {
-    var page = findAllActiveDonationPointsUseCase.execute(pageNumber, pageSize);
+    @RequestParam Integer pageSize,
+    @RequestParam boolean isActive) {
+    var page = findAllDonationPointsUseCase.execute(pageNumber, pageSize, isActive);
     var items = page.content().stream().map(this::mapToDto).toList();
     var dtoPage = new PageResponse<>(items, page.totalElements(), page.totalPages(), page.currentPage());
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Lista de pontos retornada com sucesso", dtoPage);

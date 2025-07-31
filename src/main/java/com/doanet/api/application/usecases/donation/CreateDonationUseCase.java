@@ -2,7 +2,7 @@ package com.doanet.api.application.usecases.donation;
 
 import com.doanet.api.application.commands.CreateDonationCommand;
 import com.doanet.api.application.gateways.DonationRepository;
-import com.doanet.api.application.usecases.donationpoint.FindActiveDonationPointByIdUseCase;
+import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
 import com.doanet.api.application.usecases.donor.FindActiveDonorByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.domain.entities.donation.Donation;
@@ -14,22 +14,25 @@ import java.time.LocalDate;
 public class CreateDonationUseCase {
   private final DonationRepository donationRepository;
   private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;
-  private final FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase;
+  private final FindDonationPointByIdUseCase findDonationPointByIdUseCase;
   private final FindItemByIdUseCase findItemByIdUseCase;
 
   public CreateDonationUseCase(DonationRepository donationRepository,
                                FindActiveDonorByIdUseCase findActiveDonorByIdUseCase,
-                               FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase,
+                               FindDonationPointByIdUseCase findDonationPointByIdUseCase,
                                FindItemByIdUseCase findItemByIdUseCase) {
     this.donationRepository = donationRepository;
     this.findActiveDonorByIdUseCase = findActiveDonorByIdUseCase;
-    this.findActiveDonationPointByIdUseCase = findActiveDonationPointByIdUseCase;
+    this.findDonationPointByIdUseCase = findDonationPointByIdUseCase;
     this.findItemByIdUseCase = findItemByIdUseCase;
   }
 
   public Donation execute(CreateDonationCommand donationCommand){
     var donor = findActiveDonorByIdUseCase.execute(donationCommand.donorId());
-    var donationPoint = findActiveDonationPointByIdUseCase.execute(donationCommand.donationPointId());
+    var donationPoint = findDonationPointByIdUseCase.execute(
+      donationCommand.donationPointId(),
+      true
+    );
 
     if(!donor.getUser().isActive() || !donationPoint.getUser().isActive()) {
       throw new IllegalStateException("Não foi possivel realizar a doação. Doador ou ponto de doação não estão " +

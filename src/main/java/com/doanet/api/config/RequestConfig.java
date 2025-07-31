@@ -1,7 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.RequestRepository;
-import com.doanet.api.application.usecases.donationpoint.FindActiveDonationPointByIdUseCase;
+import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.application.usecases.ong.FindActiveOngByIdUseCase;
 import com.doanet.api.application.usecases.request.*;
@@ -19,12 +19,12 @@ public class RequestConfig {
   public CreateRequestUseCase createRequestUseCase(
     RequestRepository requestRepository,
     FindActiveOngByIdUseCase findActiveOngByIdUseCase,
-    FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase,
+    FindDonationPointByIdUseCase findDonationPointByIdUseCase,
     FindItemByIdUseCase findItemByIdUseCase) {
     return new CreateRequestUseCase(
       requestRepository,
       findActiveOngByIdUseCase,
-      findActiveDonationPointByIdUseCase,
+      findDonationPointByIdUseCase,
       findItemByIdUseCase
     );
   }

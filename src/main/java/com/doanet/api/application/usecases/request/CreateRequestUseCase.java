@@ -2,7 +2,7 @@ package com.doanet.api.application.usecases.request;
 
 import com.doanet.api.application.commands.CreateRequestCommand;
 import com.doanet.api.application.gateways.RequestRepository;
-import com.doanet.api.application.usecases.donationpoint.FindActiveDonationPointByIdUseCase;
+import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.application.usecases.ong.FindActiveOngByIdUseCase;
  import com.doanet.api.domain.entities.request.Request;
@@ -13,22 +13,22 @@ import java.time.LocalDate;
 public class CreateRequestUseCase {
   private final RequestRepository requestRepository;
   private final FindActiveOngByIdUseCase findActiveOngByIdUseCase;
-  private final FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase;
+  private final FindDonationPointByIdUseCase findDonationPointByIdUseCase;
   private final FindItemByIdUseCase findItemByIdUseCase;
 
 
   public CreateRequestUseCase(RequestRepository requestRepository,
                               FindActiveOngByIdUseCase findActiveOngByIdUseCase,
-                              FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase,
+                              FindDonationPointByIdUseCase findDonationPointByIdUseCase,
                               FindItemByIdUseCase findItemByIdUseCase) {
     this.requestRepository = requestRepository;
     this.findActiveOngByIdUseCase = findActiveOngByIdUseCase;
-    this.findActiveDonationPointByIdUseCase = findActiveDonationPointByIdUseCase;
+    this.findDonationPointByIdUseCase = findDonationPointByIdUseCase;
     this.findItemByIdUseCase = findItemByIdUseCase;
   }
 
   public Request execute(CreateRequestCommand requestCommand) {
-    var donationPoint = findActiveDonationPointByIdUseCase.execute(requestCommand.donationPointId());
+    var donationPoint = findDonationPointByIdUseCase.execute(requestCommand.donationPointId(), true);
     var ong = findActiveOngByIdUseCase.execute(requestCommand.ongId());
 
     if(!ong.getUser().isActive() || !donationPoint.getUser().isActive()) {

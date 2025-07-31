@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public interface DonationPointRepository {
   DonationPoint save(DonationPoint donationPoint);
-  Optional<DonationPoint> findByIdActive(Long id);
+  Optional<DonationPoint> findById(Long id, boolean isActive);
   void deleteBy(Long id);
-  PageResponse<DonationPoint> findByDescriptionContainingIgnoreCaseActive(String description, Pagination pagination);
-  PageResponse<DonationPoint> findAllActive(Pagination pagination);
+  PageResponse<DonationPoint> findByDescriptionIgnoreCase(String description, boolean isActive, Pagination pagination);
+  PageResponse<DonationPoint> findAll(boolean isActive, Pagination pagination);
 
   void deleteById(Long id);
 }

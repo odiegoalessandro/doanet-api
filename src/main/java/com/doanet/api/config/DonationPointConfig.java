@@ -2,7 +2,6 @@ package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.DonationPointRepository;
 import com.doanet.api.application.usecases.donationpoint.*;
-import com.doanet.api.application.usecases.user.CreateUserUseCase;
 import com.doanet.api.infra.gateways.DonationPointEntityMapper;
 import com.doanet.api.infra.gateways.DonationPointRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaDonationPointRepository;
@@ -17,32 +16,32 @@ public class DonationPointConfig {
   }
 
   @Bean
-  public FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase(
+  public FindDonationPointByIdUseCase findActiveDonationPointByIdUseCase(
     DonationPointRepository donationPointRepository
   ) {
-    return new FindActiveDonationPointByIdUseCase(donationPointRepository);
+    return new FindDonationPointByIdUseCase(donationPointRepository);
   }
 
   @Bean
-  public FindActiveDonationPointByDescriptionUseCase findActiveDonationPointByDescriptionUseCase(
+  public FindDonationPointByDescriptionUseCase findActiveDonationPointByDescriptionUseCase(
     DonationPointRepository donationPointRepository
   ){
-    return new FindActiveDonationPointByDescriptionUseCase(donationPointRepository);
+    return new FindDonationPointByDescriptionUseCase(donationPointRepository);
   }
 
   @Bean
-  public FindAllActiveDonationPointsUseCase findAllActiveDonationPointsUseCase(
+  public FindAllDonationPointsUseCase findAllDonationPointsUseCase(
     DonationPointRepository donationPointRepository
   ) {
-    return new FindAllActiveDonationPointsUseCase(donationPointRepository);
+    return new FindAllDonationPointsUseCase(donationPointRepository);
   }
 
   @Bean
   public UpdateDonationPointUseCase updateDonationPointUseCase(
     DonationPointRepository donationPointRepository,
-    FindActiveDonationPointByIdUseCase findActiveDonationPointByIdUseCase
+    FindDonationPointByIdUseCase findDonationPointByIdUseCase
   ){
-    return new UpdateDonationPointUseCase(donationPointRepository, findActiveDonationPointByIdUseCase);
+    return new UpdateDonationPointUseCase(donationPointRepository, findDonationPointByIdUseCase);
   }
 
   @Bean
