@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Criar testes unitários para a classe Request
 public class Request {
   private Long id;
   private DonationPoint donationPoint;

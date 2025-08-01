@@ -3,7 +3,6 @@ package com.doanet.api.domain.entities.item;
 
 import java.time.LocalDate;
 
-// TODO: devemos criar testes unitarios para classe de dominio dos itens
 public class Item {
   private final Long id;
   private final String name;

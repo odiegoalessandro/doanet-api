@@ -2,7 +2,6 @@ package com.doanet.api.domain.entities.request;
 
 import com.doanet.api.domain.entities.item.Item;
 
-// TODO: Criar testes unitários para a classe RequestItem
 public class RequestItem {
   private Long id;
   private Request request;
@@ -30,7 +29,7 @@ public class RequestItem {
   }
 
   public void setItem(Item item) {
-    setItem(item);
+    validateItem(item);
     this.item = item;
   }
 
@@ -60,6 +59,6 @@ public class RequestItem {
 
   private void validateItem(Item item) {
     if (item == null || item.getId() == null)
-      throw new IllegalArgumentException("Item inválido");
+      throw new IllegalArgumentException("Item não pode ser nulo");
   }
 }

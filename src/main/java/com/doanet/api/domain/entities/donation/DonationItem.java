@@ -2,7 +2,6 @@ package com.doanet.api.domain.entities.donation;
 
 import com.doanet.api.domain.entities.item.Item;
 
-// TODO: criar testes unitarios na classe de dominio do donationitem
 public class DonationItem {
   private Long id;
   private Integer quantity;

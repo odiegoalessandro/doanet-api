@@ -2,7 +2,6 @@ package com.doanet.api.domain.entities.user;
 
 import com.doanet.api.domain.enums.UserType;
 
-// TODO: Criar testes unitarios para a classe User
 public class User {
   private Long id;
   private String name;

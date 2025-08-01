@@ -3,7 +3,7 @@ package com.doanet.api.domain.entities.donationpoint;
 
 import com.doanet.api.domain.entities.user.User;
 
-// TODO: criar testes unitarios na classe de dominio do ponto de doação
+
 public class DonationPoint {
   private Long id;
   private User user;

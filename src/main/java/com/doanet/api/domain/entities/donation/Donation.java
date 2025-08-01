@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: criando testes unitarios na classe de domínio da doação
 public class Donation {
   public Long getId() {
     return id;

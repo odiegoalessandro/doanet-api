@@ -2,7 +2,6 @@ package com.doanet.api.domain.entities.donor;
 
 import com.doanet.api.domain.entities.user.User;
 
-// TODO: criar testes unitarios na classe de dominio do doador
 public class Donor {
   private Long id;
   private User user;
