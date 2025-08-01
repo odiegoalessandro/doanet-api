@@ -6,15 +6,15 @@ import com.doanet.api.domain.entities.donor.Donor;
 
 public class UpdateDonorUseCase {
   private final DonorRepository donorRepository;
-  private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;
+  private final FindDonorByIdUseCase findDonorByIdUseCase;
 
-  public UpdateDonorUseCase(DonorRepository donorRepository, FindActiveDonorByIdUseCase findActiveDonorByIdUseCase) {
+  public UpdateDonorUseCase(DonorRepository donorRepository, FindDonorByIdUseCase findDonorByIdUseCase) {
     this.donorRepository = donorRepository;
-    this.findActiveDonorByIdUseCase = findActiveDonorByIdUseCase;
+    this.findDonorByIdUseCase = findDonorByIdUseCase;
   }
 
-  public Donor execute(Long id, UpdateDonorCommand donorCommand){
-    Donor donor = this.findActiveDonorByIdUseCase.execute(id);
+  public Donor execute(Long id, UpdateDonorCommand donorCommand, boolean isActive) {
+    Donor donor = this.findDonorByIdUseCase.execute(id, isActive);
 
     donor.updateUserData(donorCommand.name(), donorCommand.email(), donorCommand.phone());
 

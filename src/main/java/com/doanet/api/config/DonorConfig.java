@@ -17,8 +17,8 @@ public class DonorConfig {
   }
 
   @Bean
-  public FindActiveDonorByIdUseCase findActiveDonorByIdUseCase(DonorRepository donorRepository) {
-    return new FindActiveDonorByIdUseCase(donorRepository);
+  public FindDonorByIdUseCase findActiveDonorByIdUseCase(DonorRepository donorRepository) {
+    return new FindDonorByIdUseCase(donorRepository);
   }
 
   @Bean
@@ -32,29 +32,24 @@ public class DonorConfig {
   }
 
   @Bean
-  public FindActiveDonorByDocumentUseCase findActiveDonorByDocumentUseCase(DonorRepository donorRepository) {
-    return new FindActiveDonorByDocumentUseCase(donorRepository);
-  }
-
-  @Bean
-  public FindAllActiveDonorsUseCase findAllActiveDonorsUseCase(DonorRepository donorRepository) {
-    return new FindAllActiveDonorsUseCase(donorRepository);
+  public FindAllDonorsUseCase findAllActiveDonorsUseCase(DonorRepository donorRepository) {
+    return new FindAllDonorsUseCase(donorRepository);
   }
 
   @Bean
   public UpdateDonorUseCase updateDonorUseCase(
     DonorRepository donorRepository,
-    FindActiveDonorByIdUseCase findActiveDonorByIdUseCase
+    FindDonorByIdUseCase findDonorByIdUseCase
   ) {
-    return new UpdateDonorUseCase(donorRepository, findActiveDonorByIdUseCase);
+    return new UpdateDonorUseCase(donorRepository, findDonorByIdUseCase);
   }
 
   @Bean
   public DeleteDonorUseCase deleteDonorUseCase(
     DonorRepository donorRepository,
-    FindActiveDonorByIdUseCase findActiveDonorByIdUseCase
+    FindDonorByIdUseCase findDonorByIdUseCase
   ) {
-    return new DeleteDonorUseCase(findActiveDonorByIdUseCase, donorRepository);
+    return new DeleteDonorUseCase(findDonorByIdUseCase, donorRepository);
   }
 
   @Bean

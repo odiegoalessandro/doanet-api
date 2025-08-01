@@ -3,7 +3,7 @@ package com.doanet.api.config;
 import com.doanet.api.application.gateways.DonationRepository;
 import com.doanet.api.application.usecases.donation.*;
 import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
-import com.doanet.api.application.usecases.donor.FindActiveDonorByIdUseCase;
+import com.doanet.api.application.usecases.donor.FindDonorByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.infra.gateways.DonationEntityMapper;
 import com.doanet.api.infra.gateways.DonationRepositoryImpl;
@@ -17,13 +17,13 @@ public class DonationConfig {
   @Bean
   public CreateDonationUseCase createDonationUseCase(
     DonationRepository donationRepository,
-    FindActiveDonorByIdUseCase findActiveDonorByIdUseCase,
+    FindDonorByIdUseCase findDonorByIdUseCase,
     FindDonationPointByIdUseCase findDonationPointByIdUseCase,
     FindItemByIdUseCase findItemByIdUseCase
   ){
     return new CreateDonationUseCase(
       donationRepository,
-      findActiveDonorByIdUseCase,
+      findDonorByIdUseCase,
       findDonationPointByIdUseCase,
       findItemByIdUseCase
     );

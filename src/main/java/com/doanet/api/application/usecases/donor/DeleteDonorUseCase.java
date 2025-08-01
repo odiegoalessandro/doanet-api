@@ -3,11 +3,11 @@ package com.doanet.api.application.usecases.donor;
 import com.doanet.api.application.gateways.DonorRepository;
 
 public class DeleteDonorUseCase {
-  private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;
+  private final FindDonorByIdUseCase findDonorByIdUseCase;
   private final DonorRepository donorRepository;
 
-  public DeleteDonorUseCase(FindActiveDonorByIdUseCase findActiveDonorByIdUseCase, DonorRepository donorRepository) {
-    this.findActiveDonorByIdUseCase = findActiveDonorByIdUseCase;
+  public DeleteDonorUseCase(FindDonorByIdUseCase findDonorByIdUseCase, DonorRepository donorRepository) {
+    this.findDonorByIdUseCase = findDonorByIdUseCase;
     this.donorRepository = donorRepository;
   }
 

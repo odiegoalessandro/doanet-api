@@ -12,9 +12,9 @@ public class FindDonorByReasonSocialUseCase {
     this.donorRepository = donorRepository;
   }
 
-  public PageResponse<Donor> execute(String reasonSocial, int page, int size) {
+  public PageResponse<Donor> execute(String reasonSocial, int page, int size, boolean isActive) {
     var pagination = new Pagination(page, size);
 
-    return this.donorRepository.findByReasonSocialContainingIgnoreCase(reasonSocial, pagination);
+    return this.donorRepository.findByReasonSocialIgnoreCase(reasonSocial, pagination, isActive);
   }
 }

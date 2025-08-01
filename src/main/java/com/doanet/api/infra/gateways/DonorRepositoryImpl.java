@@ -3,11 +3,9 @@ package com.doanet.api.infra.gateways;
 import com.doanet.api.application.dto.PageResponse;
 import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.application.gateways.DonorRepository;
-import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 import com.doanet.api.domain.entities.donor.Donor;
 import com.doanet.api.infra.persistence.JpaDonorRepository;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
@@ -28,18 +26,13 @@ public class DonorRepositoryImpl implements DonorRepository {
   }
 
   @Override
-  public Optional<Donor> findByIdActive(Long id) {
-    return this.donorRepository.findByIdActive(id).map(mapper::toDomain);
+  public Optional<Donor> findById(Long id, boolean isActive) {
+    return this.donorRepository.findById(id, isActive).map(mapper::toDomain);
   }
 
   @Override
-  public Optional<Donor> findByDocumentActive(String document) {
-    return this.donorRepository.findByDocumentActive(document).map(mapper::toDomain);
-  }
-
-  @Override
-  public Optional<Donor> findByDocument(String document) {
-    return this.donorRepository.findByDocument(document).map(mapper::toDomain);
+  public Optional<Donor> findByDocument(String document, boolean isActive) {
+    return this.donorRepository.findByDocument(document, isActive).map(mapper::toDomain);
   }
 
   @Override
@@ -48,10 +41,10 @@ public class DonorRepositoryImpl implements DonorRepository {
   }
 
   @Override
-  public PageResponse<Donor> findByReasonSocialContainingIgnoreCase(String reasonSocial, Pagination pagination) {
+  public PageResponse<Donor> findByReasonSocialIgnoreCase(String reasonSocial, Pagination pagination, boolean isActive) {
     var pageNumber = Math.max(1, pagination.page()) - 1;
     var pageable = PageRequest.of(pageNumber, pagination.size());
-    var jpaPage = this.donorRepository.findByReasonSocialContainingIgnoreCase(reasonSocial, pageable);
+    var jpaPage = this.donorRepository.findByReasonSocialIgnoreCase(reasonSocial, pageable, isActive);
     var dtoPage = jpaPage.map(mapper::toDomain);
 
     return new PageResponse<Donor>(
@@ -63,10 +56,10 @@ public class DonorRepositoryImpl implements DonorRepository {
   }
 
   @Override
-  public PageResponse<Donor> findAllActive(Pagination pagination) {
+  public PageResponse<Donor> findAll(Pagination pagination, boolean isActive) {
     var pageNumber = Math.max(1, pagination.page()) - 1;
     var pageable = PageRequest.of(pageNumber, pagination.size());
-    var jpaPage = this.donorRepository.findAllActive(pageable);
+    var jpaPage = this.donorRepository.findAll(pageable, isActive);
     var dtoPage = jpaPage.map(mapper::toDomain);
 
     return new PageResponse<Donor>(

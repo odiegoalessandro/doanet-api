@@ -9,10 +9,9 @@ import java.util.Optional;
 
 public interface DonorRepository {
   Donor save(Donor donor);
-  Optional<Donor> findByIdActive(@Param("id") Long id);
-  Optional<Donor> findByDocumentActive(@Param("document") String document);
-  Optional<Donor> findByDocument(String document);
+  Optional<Donor> findById(@Param("id") Long id, boolean isActive);
+  Optional<Donor> findByDocument(@Param("document") String document, boolean isActive);
   void deleteById(Long id);
-  PageResponse<Donor> findAllActive(Pagination pagination);
-  PageResponse<Donor> findByReasonSocialContainingIgnoreCase(String reasonSocial, Pagination pagination);
+  PageResponse<Donor> findAll(Pagination pagination, boolean isActive);
+  PageResponse<Donor> findByReasonSocialIgnoreCase(String reasonSocial, Pagination pagination, boolean isActive);
 }

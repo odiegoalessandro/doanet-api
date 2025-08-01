@@ -3,7 +3,7 @@ package com.doanet.api.application.usecases.donation;
 import com.doanet.api.application.commands.CreateDonationCommand;
 import com.doanet.api.application.gateways.DonationRepository;
 import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
-import com.doanet.api.application.usecases.donor.FindActiveDonorByIdUseCase;
+import com.doanet.api.application.usecases.donor.FindDonorByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.domain.entities.donation.Donation;
 import com.doanet.api.domain.entities.donation.DonationItem;
@@ -13,22 +13,22 @@ import java.time.LocalDate;
 
 public class CreateDonationUseCase {
   private final DonationRepository donationRepository;
-  private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;
+  private final FindDonorByIdUseCase findDonorByIdUseCase;
   private final FindDonationPointByIdUseCase findDonationPointByIdUseCase;
   private final FindItemByIdUseCase findItemByIdUseCase;
 
   public CreateDonationUseCase(DonationRepository donationRepository,
-                               FindActiveDonorByIdUseCase findActiveDonorByIdUseCase,
+                               FindDonorByIdUseCase findDonorByIdUseCase,
                                FindDonationPointByIdUseCase findDonationPointByIdUseCase,
                                FindItemByIdUseCase findItemByIdUseCase) {
     this.donationRepository = donationRepository;
-    this.findActiveDonorByIdUseCase = findActiveDonorByIdUseCase;
+    this.findDonorByIdUseCase = findDonorByIdUseCase;
     this.findDonationPointByIdUseCase = findDonationPointByIdUseCase;
     this.findItemByIdUseCase = findItemByIdUseCase;
   }
 
   public Donation execute(CreateDonationCommand donationCommand){
-    var donor = findActiveDonorByIdUseCase.execute(donationCommand.donorId());
+    var donor = findDonorByIdUseCase.execute(donationCommand.donorId(), true);
     var donationPoint = findDonationPointByIdUseCase.execute(
       donationCommand.donationPointId(),
       true

@@ -11,8 +11,9 @@ public class FindDonorByDocumentUseCase {
     this.donorRepository = donorRepository;
   }
 
-  public Donor execute(String document){
-    return this.donorRepository.findByDocument(document)
-      .orElseThrow(() -> new ResourceNotFoundException("Não foi possivel achar nenhum doador com este documento"));
+  public Donor execute(String document, boolean isActive){
+    return this.donorRepository.findByDocument(document, isActive)
+      .orElseThrow(() -> new ResourceNotFoundException("Não foi possivel achar nenhum doador ativo com este " +
+        "documento"));
   }
 }

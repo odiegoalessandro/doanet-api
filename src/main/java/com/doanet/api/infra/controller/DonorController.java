@@ -26,24 +26,24 @@ import org.springframework.web.bind.annotation.*;
 public class DonorController {
 
   private final CreateDonorUseCase createDonorUseCase;
-  private final FindActiveDonorByIdUseCase findActiveDonorByIdUseCase;
-  private final FindAllActiveDonorsUseCase findAllActiveDonorsUseCase;
-  private final FindActiveDonorByDocumentUseCase findActiveDonorByDocumentUseCase;
+  private final FindDonorByIdUseCase findDonorByIdUseCase;
+  private final FindAllDonorsUseCase findAllDonorsUseCase;
+  private final FindDonorByDocumentUseCase findDonorByDocumentUseCase;
   private final FindDonorByReasonSocialUseCase findDonorByReasonSocialUseCase;
   private final UpdateDonorUseCase updateDonorUseCase;
   private final DeleteDonorUseCase deleteDonorUseCase;
 
   public DonorController(CreateDonorUseCase createDonorUseCase,
-                         FindActiveDonorByIdUseCase findActiveDonorByIdUseCase,
-                         FindAllActiveDonorsUseCase findAllActiveDonorsUseCase,
-                         FindActiveDonorByDocumentUseCase findActiveDonorByDocumentUseCase,
+                         FindDonorByIdUseCase findDonorByIdUseCase,
+                         FindAllDonorsUseCase findAllDonorsUseCase,
+                         FindDonorByDocumentUseCase findDonorByDocumentUseCase,
                          FindDonorByReasonSocialUseCase findDonorByReasonSocialUseCase,
                          UpdateDonorUseCase updateDonorUseCase,
                          DeleteDonorUseCase deleteDonorUseCase) {
     this.createDonorUseCase = createDonorUseCase;
-    this.findActiveDonorByIdUseCase = findActiveDonorByIdUseCase;
-    this.findAllActiveDonorsUseCase = findAllActiveDonorsUseCase;
-    this.findActiveDonorByDocumentUseCase = findActiveDonorByDocumentUseCase;
+    this.findDonorByIdUseCase = findDonorByIdUseCase;
+    this.findAllDonorsUseCase = findAllDonorsUseCase;
+    this.findDonorByDocumentUseCase = findDonorByDocumentUseCase;
     this.findDonorByReasonSocialUseCase = findDonorByReasonSocialUseCase;
     this.updateDonorUseCase = updateDonorUseCase;
     this.deleteDonorUseCase = deleteDonorUseCase;
@@ -86,7 +86,7 @@ public class DonorController {
   }
 
   @GetMapping("/{id}")
-  @Operation(summary = "Busca doador ativo por ID", method = "GET")
+  @Operation(summary = "Busca doador por ID", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Doador encontrado"),
     @ApiResponse(responseCode = "404", description = "Doador não encontrado",
@@ -94,14 +94,14 @@ public class DonorController {
     @ApiResponse(responseCode = "500", description = "Erro interno",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
-  public ResponseEntity<ApiSuccessResponse<DonorDto>> findById(@PathVariable("id") Long id) {
-    var donor = findActiveDonorByIdUseCase.execute(id);
+  public ResponseEntity<ApiSuccessResponse<DonorDto>> findById(@PathVariable("id") Long id, @RequestParam boolean isActive) {
+    var donor = findDonorByIdUseCase.execute(id, isActive);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Doador encontrado com sucesso", mapToDto(donor));
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/document/{document}")
-  @Operation(summary = "Busca doador ativo por documento", method = "GET")
+  @Operation(summary = "Busca doador por documento", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Doador encontrado"),
     @ApiResponse(responseCode = "404", description = "Doador não encontrado",
@@ -109,8 +109,9 @@ public class DonorController {
     @ApiResponse(responseCode = "500", description = "Erro interno",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
-  public ResponseEntity<ApiSuccessResponse<DonorDto>> findByDocument(@PathVariable("document") String document) {
-    var donor = findActiveDonorByDocumentUseCase.execute(document);
+  public ResponseEntity<ApiSuccessResponse<DonorDto>> findByDocument(@PathVariable("document") String document,
+                                                                     @RequestParam boolean isActive) {
+    var donor = findDonorByDocumentUseCase.execute(document, isActive);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Doador encontrado com sucesso", mapToDto(donor));
     return ResponseEntity.ok(response);
   }
@@ -127,10 +128,11 @@ public class DonorController {
   public ResponseEntity<ApiSuccessResponse<PageResponse<DonorDto>>> findByReasonSocial(
     @PathVariable("reasonSocial") String reasonSocial,
     @RequestParam Integer pageNumber,
-    @RequestParam Integer pageSize
+    @RequestParam Integer pageSize,
+    @RequestParam boolean isActive
   ) {
 
-    var page = findDonorByReasonSocialUseCase.execute(reasonSocial, pageNumber, pageSize);
+    var page = findDonorByReasonSocialUseCase.execute(reasonSocial, pageNumber, pageSize, isActive);
     var items = page.content().stream().map(this::mapToDto).toList();
     var dtoPage = new PageResponse<>(items, page.totalElements(), page.totalPages(), page.currentPage());
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Lista de doadores retornada com sucesso", dtoPage);
@@ -138,7 +140,7 @@ public class DonorController {
   }
 
   @GetMapping
-  @Operation(summary = "Busca paginada de doadores ativos", method = "GET")
+  @Operation(summary = "Busca paginada de doadores", method = "GET")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
     @ApiResponse(responseCode = "500", description = "Erro interno",
@@ -146,9 +148,10 @@ public class DonorController {
   })
   public ResponseEntity<ApiSuccessResponse<PageResponse<DonorDto>>> findAll(
     @RequestParam Integer pageNumber,
-    @RequestParam Integer pageSize
+    @RequestParam Integer pageSize,
+    @RequestParam boolean isActive
   ) {
-    var page = findAllActiveDonorsUseCase.execute(pageNumber, pageSize);
+    var page = findAllDonorsUseCase.execute(pageNumber, pageSize, isActive);
     var items = page.content().stream().map(this::mapToDto).toList();
     var dtoPage = new PageResponse<>(items, page.totalElements(), page.totalPages(), page.currentPage());
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Lista de doadores retornada com sucesso", dtoPage);
@@ -168,9 +171,10 @@ public class DonorController {
   })
   public ResponseEntity<ApiSuccessResponse<DonorDto>> update(
     @PathVariable("id") Long id,
-    @RequestBody @Valid UpdateDonorCommand updateDonorCommand
+    @RequestBody @Valid UpdateDonorCommand updateDonorCommand,
+    @RequestParam boolean isActive
   ) {
-    var donor = updateDonorUseCase.execute(id, updateDonorCommand);
+    var donor = updateDonorUseCase.execute(id, updateDonorCommand, isActive);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Doador atualizado com sucesso", mapToDto(donor));
     return ResponseEntity.ok(response);
   }

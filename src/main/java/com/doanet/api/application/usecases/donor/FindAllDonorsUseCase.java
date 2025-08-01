@@ -5,16 +5,16 @@ import com.doanet.api.application.dto.Pagination;
 import com.doanet.api.application.gateways.DonorRepository;
 import com.doanet.api.domain.entities.donor.Donor;
 
-public class FindAllActiveDonorsUseCase {
+public class FindAllDonorsUseCase {
   private final DonorRepository donorRepository;
 
-  public FindAllActiveDonorsUseCase(DonorRepository donorRepository){
+  public FindAllDonorsUseCase(DonorRepository donorRepository){
     this.donorRepository = donorRepository;
   }
 
-  public PageResponse<Donor> execute(int page, int size){
+  public PageResponse<Donor> execute(int page, int size, boolean isActive){
     var pagination = new Pagination(page, size);
 
-    return this.donorRepository.findAllActive(pagination);
+    return this.donorRepository.findAll(pagination, isActive);
   }
 }
