@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.DonorRepository;
+import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.donor.*;
 import com.doanet.api.application.usecases.user.CreateUserUseCase;
 import com.doanet.api.infra.gateways.DonorEntityMappper;
@@ -45,11 +46,11 @@ public class DonorConfig {
   }
 
   @Bean
-  public DeleteDonorUseCase deleteDonorUseCase(
-    DonorRepository donorRepository,
+  public DisableDonorUseCase deleteDonorUseCase(
+    UserRepository userRepository,
     FindDonorByIdUseCase findDonorByIdUseCase
   ) {
-    return new DeleteDonorUseCase(findDonorByIdUseCase, donorRepository);
+    return new DisableDonorUseCase(findDonorByIdUseCase, userRepository);
   }
 
   @Bean

@@ -31,7 +31,7 @@ public class DonorController {
   private final FindDonorByDocumentUseCase findDonorByDocumentUseCase;
   private final FindDonorByReasonSocialUseCase findDonorByReasonSocialUseCase;
   private final UpdateDonorUseCase updateDonorUseCase;
-  private final DeleteDonorUseCase deleteDonorUseCase;
+  private final DisableDonorUseCase disableDonorUseCase;
 
   public DonorController(CreateDonorUseCase createDonorUseCase,
                          FindDonorByIdUseCase findDonorByIdUseCase,
@@ -39,14 +39,14 @@ public class DonorController {
                          FindDonorByDocumentUseCase findDonorByDocumentUseCase,
                          FindDonorByReasonSocialUseCase findDonorByReasonSocialUseCase,
                          UpdateDonorUseCase updateDonorUseCase,
-                         DeleteDonorUseCase deleteDonorUseCase) {
+                         DisableDonorUseCase disableDonorUseCase) {
     this.createDonorUseCase = createDonorUseCase;
     this.findDonorByIdUseCase = findDonorByIdUseCase;
     this.findAllDonorsUseCase = findAllDonorsUseCase;
     this.findDonorByDocumentUseCase = findDonorByDocumentUseCase;
     this.findDonorByReasonSocialUseCase = findDonorByReasonSocialUseCase;
     this.updateDonorUseCase = updateDonorUseCase;
-    this.deleteDonorUseCase = deleteDonorUseCase;
+    this.disableDonorUseCase = disableDonorUseCase;
   }
 
   private DonorDto mapToDto(Donor donor) {
@@ -179,18 +179,18 @@ public class DonorController {
     return ResponseEntity.ok(response);
   }
 
-  @DeleteMapping("/{id}")
-  @Operation(summary = "Deleta um doador", method = "DELETE")
+  @PatchMapping("/disable/{id}")
+  @Operation(summary = "Desativa um doador", method = "PATCH")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Doador deletado com sucesso"),
+    @ApiResponse(responseCode = "200", description = "Doador desativado com sucesso"),
     @ApiResponse(responseCode = "404", description = "Doador não encontrado",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
     @ApiResponse(responseCode = "500", description = "Erro interno",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
-  public ResponseEntity<ApiSuccessResponse<Void>> delete(@PathVariable("id") Long id) {
-    deleteDonorUseCase.execute(id);
-    var response = new ApiSuccessResponse<Void>(HttpStatus.OK, "Doador deletado com sucesso", null);
+  public ResponseEntity<ApiSuccessResponse<Void>> disable(@PathVariable("id") Long id) {
+    disableDonorUseCase.execute(id);
+    var response = new ApiSuccessResponse<Void>(HttpStatus.OK, "Doador desativado com sucesso", null);
     return ResponseEntity.ok(response);
   }
 }

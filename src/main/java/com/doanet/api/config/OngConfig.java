@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.OngRepository;
+import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.ong.*;
 import com.doanet.api.application.usecases.user.CreateUserUseCase;
 import com.doanet.api.infra.gateways.OngEntityMapper;
@@ -40,10 +41,11 @@ public class OngConfig {
   }
 
   @Bean
-  public DeleteOngByIdUseCase deleteOngByIdUseCase(
-    OngRepository ongRepository
+  public DisableOngByIdUseCase deleteOngByIdUseCase(
+    UserRepository userRepository,
+    FindOngByIdUseCase findOngByIdUseCase
   ) {
-    return new DeleteOngByIdUseCase(ongRepository);
+    return new DisableOngByIdUseCase(userRepository, findOngByIdUseCase);
   }
 
   @Bean

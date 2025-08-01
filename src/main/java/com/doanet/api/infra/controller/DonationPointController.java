@@ -31,7 +31,7 @@ public class DonationPointController {
   private final FindDonationPointByDescriptionUseCase findDonationPointByDescriptionUseCase;
   private final FindAllDonationPointsUseCase findAllDonationPointsUseCase;
   private final UpdateDonationPointUseCase updateDonationPointUseCase;
-  private final DeleteDonationPointUseCase deleteDonationPointUseCase;
+  private final DisableDonationPointUseCase disableDonationPointUseCase;
 
   public DonationPointController(
     CreateDonationPointUseCase createDonationPointUseCase,
@@ -39,14 +39,14 @@ public class DonationPointController {
     FindDonationPointByDescriptionUseCase findDonationPointByDescriptionUseCase,
     FindAllDonationPointsUseCase findAllDonationPointsUseCase,
     UpdateDonationPointUseCase updateDonationPointUseCase,
-    DeleteDonationPointUseCase deleteDonationPointUseCase
+    DisableDonationPointUseCase disableDonationPointUseCase
   ) {
     this.createDonationPointUseCase = createDonationPointUseCase;
     this.findDonationPointByIdUseCase = findDonationPointByIdUseCase;
     this.findDonationPointByDescriptionUseCase = findDonationPointByDescriptionUseCase;
     this.findAllDonationPointsUseCase = findAllDonationPointsUseCase;
     this.updateDonationPointUseCase = updateDonationPointUseCase;
-    this.deleteDonationPointUseCase = deleteDonationPointUseCase;
+    this.disableDonationPointUseCase = disableDonationPointUseCase;
   }
 
   private DonationPointDto mapToDto(DonationPoint entity) {
@@ -191,10 +191,10 @@ public class DonationPointController {
     return ResponseEntity.ok(response);
   }
 
-  @DeleteMapping("/{id}")
-  @Operation(summary = "Deleta um ponto de doação", method = "DELETE")
+  @PatchMapping("/disable/{id}")
+  @Operation(summary = "Desativa um ponto de doação", method = "PATCH")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Ponto deletado com sucesso"),
+    @ApiResponse(responseCode = "200", description = "Ponto desativado com sucesso"),
     @ApiResponse(
       responseCode = "404",
       description = "Ponto não encontrado",
@@ -206,9 +206,9 @@ public class DonationPointController {
       content = @Content(schema = @Schema(implementation = ApiError.class))
     )
   })
-  public ResponseEntity<ApiSuccessResponse<Void>> delete(@PathVariable("id") Long id) {
-    deleteDonationPointUseCase.execute(id);
-    var response = new ApiSuccessResponse<Void>(HttpStatus.OK, "Ponto deletado com sucesso", null);
+  public ResponseEntity<ApiSuccessResponse<Void>> disable(@PathVariable("id") Long id) {
+    disableDonationPointUseCase.execute(id);
+    var response = new ApiSuccessResponse<Void>(HttpStatus.OK, "Ponto desativado com sucesso", null);
     return ResponseEntity.ok(response);
   }
 }

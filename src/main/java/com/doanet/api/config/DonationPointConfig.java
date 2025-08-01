@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.DonationPointRepository;
+import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.donationpoint.*;
 import com.doanet.api.infra.gateways.DonationPointEntityMapper;
 import com.doanet.api.infra.gateways.DonationPointRepositoryImpl;
@@ -45,10 +46,11 @@ public class DonationPointConfig {
   }
 
   @Bean
-  public DeleteDonationPointUseCase deleteDonationPointByIdUseCase(
-    DonationPointRepository donationPointRepository
+  public DisableDonationPointUseCase deleteDonationPointByIdUseCase(
+    UserRepository userRepository,
+    FindDonationPointByIdUseCase findDonationPointByIdUseCase
   ) {
-    return new DeleteDonationPointUseCase(donationPointRepository);
+    return new DisableDonationPointUseCase(userRepository, findDonationPointByIdUseCase);
   }
 
   @Bean

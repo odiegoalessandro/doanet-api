@@ -29,20 +29,20 @@ public class OngController {
   private final FindOngUseCase findOngUseCase;
   private final FindOngByCnpjUseCase findOngByCnpjUseCase;
   private final UpdateOngUseCase updateOngUseCase;
-  private final DeleteOngByIdUseCase deleteOngByIdUseCase;
+  private final DisableOngByIdUseCase disableOngByIdUseCase;
 
   public OngController(CreateOngUseCase createOngUseCase,
                        FindOngByIdUseCase findOngByIdUseCase,
                        FindOngUseCase findOngUseCase,
                        FindOngByCnpjUseCase findOngByCnpjUseCase,
                        UpdateOngUseCase updateOngUseCase,
-                       DeleteOngByIdUseCase deleteOngByIdUseCase) {
+                       DisableOngByIdUseCase disableOngByIdUseCase) {
     this.createOngUseCase = createOngUseCase;
     this.findOngByIdUseCase = findOngByIdUseCase;
     this.findOngUseCase = findOngUseCase;
     this.findOngByCnpjUseCase = findOngByCnpjUseCase;
     this.updateOngUseCase = updateOngUseCase;
-    this.deleteOngByIdUseCase = deleteOngByIdUseCase;
+    this.disableOngByIdUseCase = disableOngByIdUseCase;
   }
 
   @Operation(summary = "Realiza a criação de ONG`s dentro do sistema", method = "POST")
@@ -212,21 +212,21 @@ public class OngController {
     return ResponseEntity.ok(response);
   }
 
-  @Operation(summary = "Deleta a ONG", method = "DELETE")
+  @Operation(summary = "Desativa a ONG", method = "PATCH")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "201", description = "Delete da ONG realizado com sucesso"),
+    @ApiResponse(responseCode = "201", description = "Desativa da ONG realizado com sucesso"),
     @ApiResponse(responseCode = "404", description = "Ong não foi encontrada",
       content = @Content(schema = @Schema(implementation = ApiError.class))),
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
       content = @Content(schema = @Schema(implementation = ApiError.class)))
   })
-  @DeleteMapping("/{id}")
-  public ResponseEntity<ApiSuccessResponse<Void>> delete(
-    @Parameter(name = "id", example = "1", description = "ID da ONG a ser deletada")
+  @PatchMapping("/disable/{id}")
+  public ResponseEntity<ApiSuccessResponse<Void>> disable(
+    @Parameter(name = "id", example = "1", description = "ID da ONG a ser desativada")
     @PathVariable("id") Long id
   ){
-    this.deleteOngByIdUseCase.execute(id);
-    var response = new ApiSuccessResponse<Void>(HttpStatus.OK, "Ong deletada com sucesso", null);
+    this.disableOngByIdUseCase.execute(id);
+    var response = new ApiSuccessResponse<Void>(HttpStatus.OK, "Ong desativada com sucesso", null);
 
     return ResponseEntity.ok(response);
   }

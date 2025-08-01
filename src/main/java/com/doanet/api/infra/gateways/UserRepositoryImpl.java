@@ -3,6 +3,7 @@ package com.doanet.api.infra.gateways;
 import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.infra.persistence.JpaUserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public class UserRepositoryImpl implements UserRepository {
   private final JpaUserRepository jpaUserRepository;
@@ -19,5 +20,11 @@ public class UserRepositoryImpl implements UserRepository {
     var savedUser = this.jpaUserRepository.save(entity);
 
     return this.mapper.toDomain(savedUser);
+  }
+
+  @Override
+  @Transactional
+  public void disableUser(Long id) {
+    this.jpaUserRepository.disableUser(id);
   }
 }
