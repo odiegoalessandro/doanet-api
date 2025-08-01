@@ -17,13 +17,8 @@ public class OngConfig {
   }
 
   @Bean
-  public FindActiveOngByIdUseCase findActiveOngByIdUseCase(OngRepository ongRepository){
-    return new FindActiveOngByIdUseCase(ongRepository);
-  }
-
-  @Bean
-  public FindActiveOngByCnpjUseCase findActiveOngByCnpjUseCase(OngRepository ongRepository){
-    return new FindActiveOngByCnpjUseCase(ongRepository);
+  public FindOngByIdUseCase findOngByIdUseCase(OngRepository ongRepository){
+    return new FindOngByIdUseCase(ongRepository);
   }
 
   @Bean
@@ -32,16 +27,16 @@ public class OngConfig {
   }
 
   @Bean
-  public FindAllActiveOngUseCase findAllActiveOngUseCase(OngRepository ongRepository) {
-    return new FindAllActiveOngUseCase(ongRepository);
+  public FindOngUseCase findAllActiveOngUseCase(OngRepository ongRepository) {
+    return new FindOngUseCase(ongRepository);
   }
 
   @Bean
   public UpdateOngUseCase updateOngUseCase(
-    FindActiveOngByIdUseCase findActiveOngByIdUseCase,
+    FindOngByIdUseCase findOngByIdUseCase,
     OngRepository ongRepository
   ) {
-    return new UpdateOngUseCase(findActiveOngByIdUseCase, ongRepository);
+    return new UpdateOngUseCase(findOngByIdUseCase, ongRepository);
   }
 
   @Bean

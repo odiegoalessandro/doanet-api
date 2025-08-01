@@ -6,7 +6,6 @@ import com.doanet.api.application.gateways.OngRepository;
 import com.doanet.api.domain.entities.ong.Ong;
 import com.doanet.api.infra.persistence.JpaOngRepository;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
@@ -29,20 +28,20 @@ public class OngRepositoryImpl implements OngRepository {
   }
 
   @Override
-  public Optional<Ong> findByIdActive(Long id) {
-    return this.jpaOngRepository.findByIdActive(id).map(mapper::toDomain);
+  public Optional<Ong> findById(Long id, boolean isActive) {
+    return this.jpaOngRepository.findById(id, isActive).map(mapper::toDomain);
   }
 
   @Override
-  public Optional<Ong> findByCnpjActive(String cnpj) {
-    return this.jpaOngRepository.findByCnpjActive(cnpj).map(mapper::toDomain);
+  public Optional<Ong> findByCnpj(String cnpj, boolean isActive) {
+    return this.jpaOngRepository.findByCnpj(cnpj, isActive).map(mapper::toDomain);
   }
 
   @Override
-  public PageResponse<Ong> findAllActive(Pagination pagination) {
+  public PageResponse<Ong> findAll(Pagination pagination, boolean isActive) {
     var pageNumber = Math.max(1, pagination.page()) - 1;
     var pageable = PageRequest.of(pageNumber, pagination.size());
-    var jpaPage = this.jpaOngRepository.findAllActive(pageable);
+    var jpaPage = this.jpaOngRepository.findAll(pageable, isActive);
     var dtoPage = jpaPage.map(mapper::toDomain);
 
     return new PageResponse<>(
@@ -51,11 +50,6 @@ public class OngRepositoryImpl implements OngRepository {
       dtoPage.getTotalPages(),
       dtoPage.getNumber() + 1
     );
-  }
-
-  @Override
-  public Optional<Ong> findByCnpj(String cnpj) {
-    return this.jpaOngRepository.findByCnpjActive(cnpj).map(mapper::toDomain);
   }
 
   @Override

@@ -25,22 +25,22 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "ONGs", description = "Operações relacionadas às ONGs")
 public class OngController {
   private final CreateOngUseCase createOngUseCase;
-  private final FindActiveOngByIdUseCase findActiveOngByIdUseCase;
-  private final FindAllActiveOngUseCase findAllActiveOngUseCase;
-  private final FindActiveOngByCnpjUseCase findActiveOngByCnpjUseCase;
+  private final FindOngByIdUseCase findOngByIdUseCase;
+  private final FindOngUseCase findOngUseCase;
+  private final FindOngByCnpjUseCase findOngByCnpjUseCase;
   private final UpdateOngUseCase updateOngUseCase;
   private final DeleteOngByIdUseCase deleteOngByIdUseCase;
 
   public OngController(CreateOngUseCase createOngUseCase,
-                       FindActiveOngByIdUseCase findActiveOngByIdUseCase,
-                       FindAllActiveOngUseCase findAllActiveOngUseCase,
-                       FindActiveOngByCnpjUseCase findActiveOngByCnpjUseCase,
+                       FindOngByIdUseCase findOngByIdUseCase,
+                       FindOngUseCase findOngUseCase,
+                       FindOngByCnpjUseCase findOngByCnpjUseCase,
                        UpdateOngUseCase updateOngUseCase,
                        DeleteOngByIdUseCase deleteOngByIdUseCase) {
     this.createOngUseCase = createOngUseCase;
-    this.findActiveOngByIdUseCase = findActiveOngByIdUseCase;
-    this.findAllActiveOngUseCase = findAllActiveOngUseCase;
-    this.findActiveOngByCnpjUseCase = findActiveOngByCnpjUseCase;
+    this.findOngByIdUseCase = findOngByIdUseCase;
+    this.findOngUseCase = findOngUseCase;
+    this.findOngByCnpjUseCase = findOngByCnpjUseCase;
     this.updateOngUseCase = updateOngUseCase;
     this.deleteOngByIdUseCase = deleteOngByIdUseCase;
   }
@@ -73,7 +73,7 @@ public class OngController {
     var response = new ApiSuccessResponse<>(HttpStatus.CREATED, "ONG criada com sucesso", result);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
-  @Operation(summary = "Busca ONG ativa por ID")
+  @Operation(summary = "Busca ONG por ID")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "ONG encontrada com sucesso",
       content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))),
@@ -84,9 +84,10 @@ public class OngController {
   })
   @GetMapping("/{id}")
   public ResponseEntity<ApiSuccessResponse<OngDto>> findById(
-    @PathVariable("id") Long id
+    @PathVariable("id") Long id,
+    @RequestParam boolean isActive
   ){
-    Ong ong = this.findActiveOngByIdUseCase.execute(id);
+    Ong ong = this.findOngByIdUseCase.execute(id, isActive);
     var user = ong.getUser();
     var userDto = new UserDto(
       user.getId(),
@@ -105,7 +106,7 @@ public class OngController {
     return ResponseEntity.ok(response);
   }
 
-  @Operation(summary = "Busca ONG ativa por CNPJ")
+  @Operation(summary = "Busca ONG por CNPJ")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "ONG encontrada com sucesso",
       content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))),
@@ -116,9 +117,10 @@ public class OngController {
   })
   @GetMapping("/cnpj/{cnpj}")
   public ResponseEntity<ApiSuccessResponse<OngDto>> findByCnpj(
-    @PathVariable("cnpj") String cnpj
+    @PathVariable("cnpj") String cnpj,
+    @RequestParam boolean isActive
   ){
-    Ong ong = this.findActiveOngByCnpjUseCase.execute(cnpj);
+    Ong ong = this.findOngByCnpjUseCase.execute(cnpj, isActive);
     var user = ong.getUser();
     var userDto = new UserDto(
       user.getId(),
@@ -137,7 +139,7 @@ public class OngController {
     return ResponseEntity.ok(response);
   }
 
-  @Operation(summary = "Lista todas as ONGs ativas")
+  @Operation(summary = "Lista todas as ONGs")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Lista de ONGs retornada com sucesso",
       content = @Content(schema = @Schema(implementation = ApiSuccessResponse.class))),
@@ -147,9 +149,10 @@ public class OngController {
   @GetMapping
   public ResponseEntity<ApiSuccessResponse<PageResponse<OngDto>>> findAll(
     @RequestParam Integer pageNumber,
-    @RequestParam Integer pageSize
+    @RequestParam Integer pageSize,
+    @RequestParam boolean isActive
   ){
-    PageResponse<Ong> page = this.findAllActiveOngUseCase.execute(pageNumber, pageSize);
+    PageResponse<Ong> page = this.findOngUseCase.execute(pageNumber, pageSize, isActive);
     var dtoList = page.content().stream().map(ong -> {
       var user = ong.getUser();
       var userDto = new UserDto(

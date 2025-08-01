@@ -3,7 +3,7 @@ package com.doanet.api.config;
 import com.doanet.api.application.gateways.RequestRepository;
 import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
-import com.doanet.api.application.usecases.ong.FindActiveOngByIdUseCase;
+import com.doanet.api.application.usecases.ong.FindOngByIdUseCase;
 import com.doanet.api.application.usecases.request.*;
 import com.doanet.api.infra.gateways.RequestEntityMapper;
 import com.doanet.api.infra.gateways.RequestRepositoryImpl;
@@ -18,12 +18,12 @@ public class RequestConfig {
   @Bean
   public CreateRequestUseCase createRequestUseCase(
     RequestRepository requestRepository,
-    FindActiveOngByIdUseCase findActiveOngByIdUseCase,
+    FindOngByIdUseCase findOngByIdUseCase,
     FindDonationPointByIdUseCase findDonationPointByIdUseCase,
     FindItemByIdUseCase findItemByIdUseCase) {
     return new CreateRequestUseCase(
       requestRepository,
-      findActiveOngByIdUseCase,
+      findOngByIdUseCase,
       findDonationPointByIdUseCase,
       findItemByIdUseCase
     );

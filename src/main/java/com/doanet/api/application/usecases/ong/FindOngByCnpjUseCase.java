@@ -11,8 +11,8 @@ public class FindOngByCnpjUseCase {
     this.ongRepository = ongRepository;
   }
 
-  public Ong execute(String cnpj){
-    return this.ongRepository.findByCnpj(cnpj)
-      .orElseThrow(() -> new ResourceNotFoundException("Não foi possivel achar uma ONG com este cnpj"));
+  public Ong execute(String cnpj, boolean isActive) {
+    return this.ongRepository.findByCnpj(cnpj, isActive)
+      .orElseThrow(() -> new ResourceNotFoundException("Não é possivel achar nenhuma ONG ativa com esse CNPJ"));
   }
 }

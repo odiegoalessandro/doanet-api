@@ -4,15 +4,15 @@ import com.doanet.api.application.exceptions.ResourceNotFoundException;
 import com.doanet.api.application.gateways.OngRepository;
 import com.doanet.api.domain.entities.ong.Ong;
 
-public class FindActiveOngByCnpjUseCase {
+public class FindOngByIdUseCase {
   private final OngRepository ongRepository;
 
-  public FindActiveOngByCnpjUseCase(OngRepository ongRepository){
+  public FindOngByIdUseCase(OngRepository ongRepository){
     this.ongRepository = ongRepository;
   }
 
-  public Ong execute(String cnpj){
-    return this.ongRepository.findByCnpjActive(cnpj)
-      .orElseThrow(() -> new ResourceNotFoundException("Não é possivel achar nenhuma ONG ativa com esse CNPJ"));
+  public Ong execute(Long id, boolean isActive) {
+    return this.ongRepository.findById(id, isActive)
+      .orElseThrow(() -> new ResourceNotFoundException("Não é possivel achar uma ONG ativa com o id " + id));
   }
 }

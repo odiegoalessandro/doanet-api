@@ -5,16 +5,16 @@ import com.doanet.api.application.gateways.OngRepository;
 import com.doanet.api.domain.entities.ong.Ong;
 
 public class UpdateOngUseCase {
-  private final FindActiveOngByIdUseCase findActiveOngByIdUseCase;
+  private final FindOngByIdUseCase findOngByIdUseCase;
   private final OngRepository ongRepository;
 
-  public UpdateOngUseCase(FindActiveOngByIdUseCase findActiveOngByIdUseCase, OngRepository ongRepository){
-    this.findActiveOngByIdUseCase = findActiveOngByIdUseCase;
+  public UpdateOngUseCase(FindOngByIdUseCase findOngByIdUseCase, OngRepository ongRepository){
+    this.findOngByIdUseCase = findOngByIdUseCase;
     this.ongRepository = ongRepository;
   }
 
   public Ong execute(Long id, UpdateOngCommand ongCommand){
-    var ong = this.findActiveOngByIdUseCase.execute(id);
+    var ong = this.findOngByIdUseCase.execute(id, true);
 
     ong.updateUserData(ongCommand.name(), ongCommand.email(), ongCommand.phone());
 

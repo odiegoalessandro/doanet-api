@@ -8,9 +8,8 @@ import java.util.Optional;
 
 public interface OngRepository {
   Ong save(Ong ong);
-  Optional<Ong> findByIdActive(Long id);
-  Optional<Ong> findByCnpjActive(String cnpj);
-  PageResponse<Ong> findAllActive(Pagination pagination);
-  Optional<Ong> findByCnpj(String cnpj);
+  Optional<Ong> findById(Long id, boolean isActive);
+  Optional<Ong> findByCnpj(String cnpj, boolean isActive);
+  PageResponse<Ong> findAll(Pagination pagination, boolean isActive);
   void deleteById(Long id);
 }
