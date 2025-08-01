@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// TODO: Modificar as pesquisas por ID e findAll para retornar pontos ativos e inativos conforme o usuário passe via query param
 @RestController
 @RequestMapping(value = "/donor", produces = { "application/json" })
 @Tag(name = "Doadores", description = "Operações relacionadas aos Doadores")

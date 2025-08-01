@@ -19,8 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// TODO: Criar rota de delete para que ela seja feita o delete sistemico(UPDATE users SET is_active = false WHERE id
-//  = ?) para isso deve ser feito useCase de User e implementando nas controller de donor, donationPoint e ong
 @RestController
 @RequestMapping(value = "/donation-point", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Pontos de Doação", description = "Operações relacionadas aos Pontos de Doação")
