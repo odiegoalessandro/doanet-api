@@ -102,7 +102,7 @@ public class DonationPointController {
     )
   })
   public ResponseEntity<ApiSuccessResponse<DonationPointDto>> findById(@PathVariable("id") Long id,
-                                                                       @RequestParam (required = false) boolean isActive) {
+                                                                       @RequestParam boolean isActive) {
     var entity = findDonationPointByIdUseCase.execute(id, isActive);
     var response = new ApiSuccessResponse<>(HttpStatus.OK, "Ponto encontrado com sucesso", mapToDto(entity));
     return ResponseEntity.ok(response);
