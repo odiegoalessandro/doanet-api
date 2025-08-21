@@ -23,18 +23,21 @@
     );
 
     CREATE TABLE donor (
-        user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+        id SERIAL PRIMARY KEY,
+        user_id INT REFERENCES users(id) ON DELETE CASCADE,
         document VARCHAR(14) UNIQUE,
         reason_social VARCHAR(255)
     );
 
     CREATE TABLE ong (
-        user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+        id SERIAL PRIMARY KEY,
+        user_id INT REFERENCES users(id) ON DELETE CASCADE,
         cnpj VARCHAR(14) UNIQUE
     );
 
     CREATE TABLE donation_point (
-        user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+        id SERIAL PRIMARY KEY,
+        user_id INT REFERENCES users(id) ON DELETE CASCADE,
         description VARCHAR(255)
     );
 
