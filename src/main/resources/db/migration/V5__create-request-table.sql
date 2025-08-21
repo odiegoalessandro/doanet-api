@@ -1,7 +1,7 @@
 CREATE TABLE request (
     id SERIAL PRIMARY KEY,
-    donation_point_id INT NOT NULL REFERENCES donation_point(user_id),
-    ong_id INT NOT NULL REFERENCES ong(user_id),
+    donation_point_id INT NOT NULL REFERENCES donation_point(id),
+    ong_id INT NOT NULL REFERENCES ong(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

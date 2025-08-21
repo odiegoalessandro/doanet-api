@@ -8,8 +8,8 @@ CREATE TABLE item (
 
 CREATE TABLE donation (
     id SERIAL PRIMARY KEY,
-    donor_id INT NOT NULL REFERENCES donor(user_id),
-    donation_point_id INT NOT NULL REFERENCES donation_point(user_id),
+    donor_id INT NOT NULL REFERENCES donor(id),
+    donation_point_id INT NOT NULL REFERENCES donation_point(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
