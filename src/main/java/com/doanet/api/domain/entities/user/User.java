@@ -2,6 +2,8 @@ package com.doanet.api.domain.entities.user;
 
 import com.doanet.api.domain.enums.UserType;
 
+import java.util.Locale;
+
 public class User {
   private Long id;
   private String name;
@@ -35,7 +37,6 @@ public class User {
               UserType userType,
               boolean isActive) {
     validateName(name);
-    validateEmail(email);
     validatePhone(phone);
     validateZipCode(zipCode);
     validateUserType(userType);
@@ -48,7 +49,7 @@ public class User {
 
     this.id = id;
     this.name = name;
-    this.email = email;
+    this.email = normalizeEmail(email);
     this.password = password;
     this.phone = phone;
     this.street = street;
@@ -69,8 +70,7 @@ public class User {
   }
 
   public void setEmail(String email) {
-    validateEmail(email);
-    this.email = email;
+    this.email = normalizeEmail(email);
   }
 
   public void setPhone(String phone) {
@@ -170,10 +170,11 @@ public class User {
     }
   }
 
-  private void validateEmail(String email) {
-    if (email == null || !email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+  private String normalizeEmail(String email) {
+    if (email == null || !email.trim().matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
       throw new IllegalArgumentException("Email deve ter padrão válido");
     }
+    return email.trim().toLowerCase(Locale.ROOT);
   }
 
   private void validatePhone(String phone) {

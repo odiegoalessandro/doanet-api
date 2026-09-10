@@ -52,9 +52,10 @@ O README promete "Autenticação (JWT)", "Integração com Spring Security" e "V
 nem de dono do recurso. As rotas de `PATCH`/`disable` estão abertas.
 
 **Impacto nos logs de auditoria ([#10](https://github.com/odiegoalessandro/doanet-api/issues/10)):**
-a auditoria já registra ação, entidade, timestamp e valores antes/depois, mas o `author_id` permanece
-nulo porque não há usuário autenticado. Quando a autenticação existir, o `RecordAuditUseCase` deve
-preencher o autor (ver `TODO (#3)` em `application/usecases/audit/RecordAuditUseCase.java`).
+a auditoria registra ação, entidade, timestamp e valores antes/depois, mas o `author_id` ainda permanece
+nulo. A autenticação já existe ([#3](https://github.com/odiegoalessandro/doanet-api/issues/3), PR #16),
+porém o `RecordAuditUseCase` ainda não lê o usuário do contexto de segurança — falta essa ligação
+(ver `TODO (#3)` em `application/usecases/audit/RecordAuditUseCase.java`).
 
 ---
 
@@ -130,7 +131,7 @@ incorretas:
 | Acessibilidade WCAG 2.1 (`:46`) | **N/A** | Requisito de front-end. |
 | Criptografia em trânsito e repouso (`:47`) | **Não começou** | Sem config de TLS; senha em texto puro (ver seção 1). |
 | Suporte a 500+ usuários simultâneos (`:48`) | **Não verificado** | Sem teste de concorrência. |
-| Logs de auditoria (`:49`) | **Parcial** | Implementado na [#10](https://github.com/odiegoalessandro/doanet-api/issues/10): tabela `audit_log` (`V9`) + log estruturado para cadastros, mudanças de status de doação/solicitação e desativações. Autor fica nulo até a autenticação ([#3](https://github.com/odiegoalessandro/doanet-api/issues/3)); política de retenção ainda não definida. |
+| Logs de auditoria (`:49`) | **Parcial** | Implementado na [#10](https://github.com/odiegoalessandro/doanet-api/issues/10): tabela `audit_log` (`V10`) + log estruturado para cadastros, mudanças de status de doação/solicitação e desativações. Autor fica nulo até o `RecordAuditUseCase` ser ligado ao usuário autenticado ([#3](https://github.com/odiegoalessandro/doanet-api/issues/3)); política de retenção ainda não definida. |
 
 ---
 

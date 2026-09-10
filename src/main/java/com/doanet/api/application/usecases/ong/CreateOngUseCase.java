@@ -2,6 +2,7 @@ package com.doanet.api.application.usecases.ong;
 
 import com.doanet.api.application.commands.CreateOngCommand;
 import com.doanet.api.application.gateways.OngRepository;
+import com.doanet.api.application.gateways.PasswordHasher;
 import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.domain.entities.ong.Ong;
@@ -16,13 +17,16 @@ import java.util.Map;
 public class CreateOngUseCase {
   private final OngRepository ongRepository;
   private final GeolocateUserUseCase geolocateUserUseCase;
+  private final PasswordHasher passwordHasher;
   private final RecordAuditUseCase recordAuditUseCase;
 
   public CreateOngUseCase(OngRepository ongRepository,
                           GeolocateUserUseCase geolocateUserUseCase,
+                          PasswordHasher passwordHasher,
                           RecordAuditUseCase recordAuditUseCase){
     this.ongRepository = ongRepository;
     this.geolocateUserUseCase = geolocateUserUseCase;
+    this.passwordHasher = passwordHasher;
     this.recordAuditUseCase = recordAuditUseCase;
   }
 
@@ -44,6 +48,8 @@ public class CreateOngUseCase {
         UserType.ONG,
         true
     );
+
+    user.setPassword(this.passwordHasher.hash(ongCommand.password()));
 
     this.geolocateUserUseCase.execute(user);
 

@@ -2,6 +2,7 @@ package com.doanet.api.application.usecases.donor;
 
 import com.doanet.api.application.commands.CreateDonorCommand;
 import com.doanet.api.application.gateways.DonorRepository;
+import com.doanet.api.application.gateways.PasswordHasher;
 import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.domain.entities.donor.Donor;
@@ -16,13 +17,16 @@ import java.util.Map;
 public class CreateDonorUseCase {
   private final DonorRepository donorRepository;
   private final GeolocateUserUseCase geolocateUserUseCase;
+  private final PasswordHasher passwordHasher;
   private final RecordAuditUseCase recordAuditUseCase;
 
   public CreateDonorUseCase(DonorRepository donorRepository,
                             GeolocateUserUseCase geolocateUserUseCase,
+                            PasswordHasher passwordHasher,
                             RecordAuditUseCase recordAuditUseCase) {
     this.donorRepository = donorRepository;
     this.geolocateUserUseCase = geolocateUserUseCase;
+    this.passwordHasher = passwordHasher;
     this.recordAuditUseCase = recordAuditUseCase;
   }
 
@@ -44,6 +48,8 @@ public class CreateDonorUseCase {
       UserType.DONOR,
       true
     );
+
+    user.setPassword(this.passwordHasher.hash(donorCommand.password()));
 
     this.geolocateUserUseCase.execute(user);
 

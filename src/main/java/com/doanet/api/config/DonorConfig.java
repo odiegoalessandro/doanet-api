@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.DonorRepository;
+import com.doanet.api.application.gateways.PasswordHasher;
 import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.donor.*;
@@ -17,9 +18,10 @@ public class DonorConfig {
   public CreateDonorUseCase createDonorUseCase(
     DonorRepository donorRepository,
     GeolocateUserUseCase geolocateUserUseCase,
+    PasswordHasher passwordHasher,
     RecordAuditUseCase recordAuditUseCase
   ){
-    return new CreateDonorUseCase(donorRepository, geolocateUserUseCase, recordAuditUseCase);
+    return new CreateDonorUseCase(donorRepository, geolocateUserUseCase, passwordHasher, recordAuditUseCase);
   }
 
   @Bean

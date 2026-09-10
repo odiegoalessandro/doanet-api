@@ -6,6 +6,7 @@ import com.doanet.api.infra.persistence.JpaUserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
   private final JpaUserRepository jpaUserRepository;
@@ -36,5 +37,17 @@ public class UserRepositoryImpl implements UserRepository {
       .stream()
       .map(this.mapper::toDomain)
       .toList();
+  }
+
+  @Override
+  public Optional<User> findByEmail(String email) {
+    return this.jpaUserRepository.findByEmail(email)
+      .map(this.mapper::toDomain);
+  }
+
+  @Override
+  public Optional<User> findById(Long id) {
+    return this.jpaUserRepository.findById(id)
+      .map(this.mapper::toDomain);
   }
 }
