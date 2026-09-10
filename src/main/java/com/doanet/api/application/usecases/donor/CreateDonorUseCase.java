@@ -2,16 +2,18 @@ package com.doanet.api.application.usecases.donor;
 
 import com.doanet.api.application.commands.CreateDonorCommand;
 import com.doanet.api.application.gateways.DonorRepository;
-import com.doanet.api.application.usecases.user.CreateUserUseCase;
+import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.domain.entities.donor.Donor;
 import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.domain.enums.UserType;
 
 public class CreateDonorUseCase {
   private final DonorRepository donorRepository;
+  private final GeolocateUserUseCase geolocateUserUseCase;
 
-  public CreateDonorUseCase(DonorRepository donorRepository) {
+  public CreateDonorUseCase(DonorRepository donorRepository, GeolocateUserUseCase geolocateUserUseCase) {
     this.donorRepository = donorRepository;
+    this.geolocateUserUseCase = geolocateUserUseCase;
   }
 
   public Donor execute(CreateDonorCommand donorCommand){
@@ -32,6 +34,8 @@ public class CreateDonorUseCase {
       UserType.DONOR,
       true
     );
+
+    this.geolocateUserUseCase.execute(user);
 
     var donor = new Donor(null, user, donorCommand.document(), donorCommand.reasonSocial());
 

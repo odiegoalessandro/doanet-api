@@ -3,7 +3,7 @@ package com.doanet.api.config;
 import com.doanet.api.application.gateways.OngRepository;
 import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.ong.*;
-import com.doanet.api.application.usecases.user.CreateUserUseCase;
+import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.infra.gateways.OngEntityMapper;
 import com.doanet.api.infra.gateways.OngRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaOngRepository;
@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OngConfig {
   @Bean
-  public CreateOngUseCase createOngUseCase(OngRepository ongRepository, CreateUserUseCase createUserUseCase){
-    return new CreateOngUseCase(ongRepository);
+  public CreateOngUseCase createOngUseCase(
+    OngRepository ongRepository,
+    GeolocateUserUseCase geolocateUserUseCase
+  ){
+    return new CreateOngUseCase(ongRepository, geolocateUserUseCase);
   }
 
   @Bean

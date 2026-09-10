@@ -3,6 +3,7 @@ package com.doanet.api.config;
 import com.doanet.api.application.gateways.DonationPointRepository;
 import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.donationpoint.*;
+import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.infra.gateways.DonationPointEntityMapper;
 import com.doanet.api.infra.gateways.DonationPointRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaDonationPointRepository;
@@ -12,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DonationPointConfig {
   @Bean
-  public CreateDonationPointUseCase createDonationPointUseCase(DonationPointRepository donationPointRepository) {
-    return new CreateDonationPointUseCase(donationPointRepository);
+  public CreateDonationPointUseCase createDonationPointUseCase(
+    DonationPointRepository donationPointRepository,
+    GeolocateUserUseCase geolocateUserUseCase
+  ) {
+    return new CreateDonationPointUseCase(donationPointRepository, geolocateUserUseCase);
   }
 
   @Bean

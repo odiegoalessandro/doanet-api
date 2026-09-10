@@ -5,6 +5,8 @@ import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.infra.persistence.JpaUserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public class UserRepositoryImpl implements UserRepository {
   private final JpaUserRepository jpaUserRepository;
   private final UserEntityMapper mapper;
@@ -26,5 +28,13 @@ public class UserRepositoryImpl implements UserRepository {
   @Transactional
   public void disableUser(Long id) {
     this.jpaUserRepository.disableUser(id);
+  }
+
+  @Override
+  public List<User> findAllWithoutCoordinates() {
+    return this.jpaUserRepository.findAllWithoutCoordinates()
+      .stream()
+      .map(this.mapper::toDomain)
+      .toList();
   }
 }

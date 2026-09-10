@@ -3,7 +3,7 @@ package com.doanet.api.config;
 import com.doanet.api.application.gateways.DonorRepository;
 import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.donor.*;
-import com.doanet.api.application.usecases.user.CreateUserUseCase;
+import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.infra.gateways.DonorEntityMappper;
 import com.doanet.api.infra.gateways.DonorRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaDonorRepository;
@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DonorConfig {
   @Bean
-  public CreateDonorUseCase createDonorUseCase(DonorRepository donorRepository, CreateUserUseCase createUserUseCase){
-    return new CreateDonorUseCase(donorRepository);
+  public CreateDonorUseCase createDonorUseCase(
+    DonorRepository donorRepository,
+    GeolocateUserUseCase geolocateUserUseCase
+  ){
+    return new CreateDonorUseCase(donorRepository, geolocateUserUseCase);
   }
 
   @Bean

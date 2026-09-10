@@ -2,7 +2,8 @@ package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.GetCoordinatesByAddress;
 import com.doanet.api.application.gateways.UserRepository;
-import com.doanet.api.application.usecases.user.CreateUserUseCase;
+import com.doanet.api.application.usecases.user.GeolocatePendingUsersUseCase;
+import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.infra.gateways.UserEntityMapper;
 import com.doanet.api.infra.gateways.UserRepositoryImpl;
 import com.doanet.api.infra.persistence.JpaUserRepository;
@@ -12,11 +13,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserConfig {
   @Bean
-  public CreateUserUseCase createUserUseCase(
+  public GeolocateUserUseCase geolocateUserUseCase(GetCoordinatesByAddress getCoordinatesByAddress) {
+    return new GeolocateUserUseCase(getCoordinatesByAddress);
+  }
+
+  @Bean
+  public GeolocatePendingUsersUseCase geolocatePendingUsersUseCase(
     UserRepository userRepository,
-    GetCoordinatesByAddress getCoordinatesByAddress
+    GeolocateUserUseCase geolocateUserUseCase
   ) {
-    return new CreateUserUseCase(userRepository, getCoordinatesByAddress);
+    return new GeolocatePendingUsersUseCase(userRepository, geolocateUserUseCase);
   }
 
   @Bean
