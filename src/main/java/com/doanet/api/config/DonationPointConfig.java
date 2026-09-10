@@ -2,6 +2,7 @@ package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.DonationPointRepository;
 import com.doanet.api.application.gateways.UserRepository;
+import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.donationpoint.*;
 import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.infra.gateways.DonationPointEntityMapper;
@@ -15,9 +16,10 @@ public class DonationPointConfig {
   @Bean
   public CreateDonationPointUseCase createDonationPointUseCase(
     DonationPointRepository donationPointRepository,
-    GeolocateUserUseCase geolocateUserUseCase
+    GeolocateUserUseCase geolocateUserUseCase,
+    RecordAuditUseCase recordAuditUseCase
   ) {
-    return new CreateDonationPointUseCase(donationPointRepository, geolocateUserUseCase);
+    return new CreateDonationPointUseCase(donationPointRepository, geolocateUserUseCase, recordAuditUseCase);
   }
 
   @Bean
@@ -52,9 +54,10 @@ public class DonationPointConfig {
   @Bean
   public DisableDonationPointUseCase deleteDonationPointByIdUseCase(
     UserRepository userRepository,
-    FindDonationPointByIdUseCase findDonationPointByIdUseCase
+    FindDonationPointByIdUseCase findDonationPointByIdUseCase,
+    RecordAuditUseCase recordAuditUseCase
   ) {
-    return new DisableDonationPointUseCase(userRepository, findDonationPointByIdUseCase);
+    return new DisableDonationPointUseCase(userRepository, findDonationPointByIdUseCase, recordAuditUseCase);
   }
 
   @Bean

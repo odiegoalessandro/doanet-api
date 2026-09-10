@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.RequestRepository;
+import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.application.usecases.ong.FindOngByIdUseCase;
@@ -20,12 +21,14 @@ public class RequestConfig {
     RequestRepository requestRepository,
     FindOngByIdUseCase findOngByIdUseCase,
     FindDonationPointByIdUseCase findDonationPointByIdUseCase,
-    FindItemByIdUseCase findItemByIdUseCase) {
+    FindItemByIdUseCase findItemByIdUseCase,
+    RecordAuditUseCase recordAuditUseCase) {
     return new CreateRequestUseCase(
       requestRepository,
       findOngByIdUseCase,
       findDonationPointByIdUseCase,
-      findItemByIdUseCase
+      findItemByIdUseCase,
+      recordAuditUseCase
     );
   }
 
@@ -66,9 +69,10 @@ public class RequestConfig {
   @Bean
   public UpdateRequestStatusUseCase updateRequestStatusUseCase(
     RequestRepository requestRepository,
-    FindRequestByIdUseCase findRequestByIdUseCase
+    FindRequestByIdUseCase findRequestByIdUseCase,
+    RecordAuditUseCase recordAuditUseCase
   ) {
-    return new UpdateRequestStatusUseCase(requestRepository, findRequestByIdUseCase);
+    return new UpdateRequestStatusUseCase(requestRepository, findRequestByIdUseCase, recordAuditUseCase);
   }
 
   @Bean

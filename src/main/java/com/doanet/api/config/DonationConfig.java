@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.DonationRepository;
+import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.donation.*;
 import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
 import com.doanet.api.application.usecases.donor.FindDonorByIdUseCase;
@@ -19,13 +20,15 @@ public class DonationConfig {
     DonationRepository donationRepository,
     FindDonorByIdUseCase findDonorByIdUseCase,
     FindDonationPointByIdUseCase findDonationPointByIdUseCase,
-    FindItemByIdUseCase findItemByIdUseCase
+    FindItemByIdUseCase findItemByIdUseCase,
+    RecordAuditUseCase recordAuditUseCase
   ){
     return new CreateDonationUseCase(
       donationRepository,
       findDonorByIdUseCase,
       findDonationPointByIdUseCase,
-      findItemByIdUseCase
+      findItemByIdUseCase,
+      recordAuditUseCase
     );
   }
 
@@ -61,9 +64,10 @@ public class DonationConfig {
   @Bean
   public UpdateStatusDonationUseCase updateDonationStatusUseCase(
     DonationRepository donationRepository,
-    FindDonationByIdUseCase findDonationByIdUseCase
+    FindDonationByIdUseCase findDonationByIdUseCase,
+    RecordAuditUseCase recordAuditUseCase
   ){
-    return new UpdateStatusDonationUseCase(donationRepository, findDonationByIdUseCase);
+    return new UpdateStatusDonationUseCase(donationRepository, findDonationByIdUseCase, recordAuditUseCase);
   }
 
   @Bean

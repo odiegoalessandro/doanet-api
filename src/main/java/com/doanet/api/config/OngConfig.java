@@ -2,6 +2,7 @@ package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.OngRepository;
 import com.doanet.api.application.gateways.UserRepository;
+import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.ong.*;
 import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.infra.gateways.OngEntityMapper;
@@ -15,9 +16,10 @@ public class OngConfig {
   @Bean
   public CreateOngUseCase createOngUseCase(
     OngRepository ongRepository,
-    GeolocateUserUseCase geolocateUserUseCase
+    GeolocateUserUseCase geolocateUserUseCase,
+    RecordAuditUseCase recordAuditUseCase
   ){
-    return new CreateOngUseCase(ongRepository, geolocateUserUseCase);
+    return new CreateOngUseCase(ongRepository, geolocateUserUseCase, recordAuditUseCase);
   }
 
   @Bean
@@ -46,9 +48,10 @@ public class OngConfig {
   @Bean
   public DisableOngByIdUseCase deleteOngByIdUseCase(
     UserRepository userRepository,
-    FindOngByIdUseCase findOngByIdUseCase
+    FindOngByIdUseCase findOngByIdUseCase,
+    RecordAuditUseCase recordAuditUseCase
   ) {
-    return new DisableOngByIdUseCase(userRepository, findOngByIdUseCase);
+    return new DisableOngByIdUseCase(userRepository, findOngByIdUseCase, recordAuditUseCase);
   }
 
   @Bean

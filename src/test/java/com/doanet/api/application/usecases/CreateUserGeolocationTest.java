@@ -9,6 +9,7 @@ import com.doanet.api.application.gateways.DonationPointRepository;
 import com.doanet.api.application.gateways.DonorRepository;
 import com.doanet.api.application.gateways.GetCoordinatesByAddress;
 import com.doanet.api.application.gateways.OngRepository;
+import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.donationpoint.CreateDonationPointUseCase;
 import com.doanet.api.application.usecases.donor.CreateDonorUseCase;
 import com.doanet.api.application.usecases.ong.CreateOngUseCase;
@@ -29,11 +30,13 @@ class CreateUserGeolocationTest {
 
   private GetCoordinatesByAddress getCoordinatesByAddress;
   private GeolocateUserUseCase geolocateUserUseCase;
+  private RecordAuditUseCase recordAuditUseCase;
 
   @BeforeEach
   void setUp() {
     getCoordinatesByAddress = mock(GetCoordinatesByAddress.class);
     geolocateUserUseCase = new GeolocateUserUseCase(getCoordinatesByAddress);
+    recordAuditUseCase = mock(RecordAuditUseCase.class);
   }
 
   private void stubCoordinates() {
@@ -53,7 +56,7 @@ class CreateUserGeolocationTest {
       "João ME", "12345678900"
     );
 
-    new CreateDonorUseCase(donorRepository, geolocateUserUseCase).execute(command);
+    new CreateDonorUseCase(donorRepository, geolocateUserUseCase, recordAuditUseCase).execute(command);
 
     var captor = ArgumentCaptor.forClass(Donor.class);
     verify(donorRepository).save(captor.capture());
@@ -73,7 +76,7 @@ class CreateUserGeolocationTest {
       "12345678000199"
     );
 
-    new CreateOngUseCase(ongRepository, geolocateUserUseCase).execute(command);
+    new CreateOngUseCase(ongRepository, geolocateUserUseCase, recordAuditUseCase).execute(command);
 
     var captor = ArgumentCaptor.forClass(Ong.class);
     verify(ongRepository).save(captor.capture());
@@ -93,7 +96,7 @@ class CreateUserGeolocationTest {
       "Ponto de coleta do centro"
     );
 
-    new CreateDonationPointUseCase(donationPointRepository, geolocateUserUseCase).execute(command);
+    new CreateDonationPointUseCase(donationPointRepository, geolocateUserUseCase, recordAuditUseCase).execute(command);
 
     var captor = ArgumentCaptor.forClass(DonationPoint.class);
     verify(donationPointRepository).save(captor.capture());
@@ -114,7 +117,7 @@ class CreateUserGeolocationTest {
       "João ME", "12345678900"
     );
 
-    var donor = new CreateDonorUseCase(donorRepository, geolocateUserUseCase).execute(command);
+    var donor = new CreateDonorUseCase(donorRepository, geolocateUserUseCase, recordAuditUseCase).execute(command);
 
     assertNotNull(donor);
     assertNull(donor.getUser().getLatitude());
