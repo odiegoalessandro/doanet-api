@@ -2,6 +2,8 @@ package com.doanet.api.infra.exceptions;
 
 import com.doanet.api.application.exceptions.CoordinatesInternalServerException;
 import com.doanet.api.application.exceptions.CoordinatesNotFoundException;
+import com.doanet.api.application.exceptions.InvalidCredentialsException;
+import com.doanet.api.application.exceptions.InvalidTokenException;
 import com.doanet.api.application.exceptions.ResourceNotFoundException;
 import com.doanet.api.infra.interfaces.ApiError;
 import jakarta.persistence.EntityNotFoundException;
@@ -46,6 +48,11 @@ public class RestExceptionHandler {
   @ExceptionHandler(NoHandlerFoundException.class)
   public ResponseEntity<ApiError> handleNoHandler(NoHandlerFoundException ex, HttpServletRequest request) {
     return buildError(HttpStatus.NOT_FOUND, "Rota não encontrada", request);
+  }
+
+  @ExceptionHandler({InvalidCredentialsException.class, InvalidTokenException.class})
+  public ResponseEntity<ApiError> handleUnauthorized(RuntimeException ex, HttpServletRequest request){
+    return buildError(HttpStatus.UNAUTHORIZED, ex.getMessage(), request);
   }
 
   @ExceptionHandler(ConstraintViolationException.class)

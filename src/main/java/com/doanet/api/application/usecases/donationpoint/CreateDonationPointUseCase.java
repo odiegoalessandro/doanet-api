@@ -2,6 +2,7 @@ package com.doanet.api.application.usecases.donationpoint;
 
 import com.doanet.api.application.commands.CreateDonationPointCommand;
 import com.doanet.api.application.gateways.DonationPointRepository;
+import com.doanet.api.application.gateways.PasswordHasher;
 import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.domain.entities.donationpoint.DonationPoint;
 import com.doanet.api.domain.entities.user.User;
@@ -10,13 +11,16 @@ import com.doanet.api.domain.enums.UserType;
 public class CreateDonationPointUseCase {
   private final DonationPointRepository donationPointRepository;
   private final GeolocateUserUseCase geolocateUserUseCase;
+  private final PasswordHasher passwordHasher;
 
   public CreateDonationPointUseCase(
     DonationPointRepository donationPointRepository,
-    GeolocateUserUseCase geolocateUserUseCase
+    GeolocateUserUseCase geolocateUserUseCase,
+    PasswordHasher passwordHasher
   ) {
     this.donationPointRepository = donationPointRepository;
     this.geolocateUserUseCase = geolocateUserUseCase;
+    this.passwordHasher = passwordHasher;
   }
 
   public DonationPoint execute(CreateDonationPointCommand donationPointCommand){
@@ -37,6 +41,8 @@ public class CreateDonationPointUseCase {
       UserType.DONATION_POINT,
       true
     );
+
+    user.setPassword(this.passwordHasher.hash(donationPointCommand.password()));
 
     this.geolocateUserUseCase.execute(user);
 

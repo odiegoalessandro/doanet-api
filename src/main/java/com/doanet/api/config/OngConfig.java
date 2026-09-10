@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.OngRepository;
+import com.doanet.api.application.gateways.PasswordHasher;
 import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.ong.*;
 import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
@@ -15,9 +16,10 @@ public class OngConfig {
   @Bean
   public CreateOngUseCase createOngUseCase(
     OngRepository ongRepository,
-    GeolocateUserUseCase geolocateUserUseCase
+    GeolocateUserUseCase geolocateUserUseCase,
+    PasswordHasher passwordHasher
   ){
-    return new CreateOngUseCase(ongRepository, geolocateUserUseCase);
+    return new CreateOngUseCase(ongRepository, geolocateUserUseCase, passwordHasher);
   }
 
   @Bean
