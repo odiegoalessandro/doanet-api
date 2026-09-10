@@ -2,6 +2,9 @@
 
 > Análise feita em **2026-09-10**, a partir do estado do repositório na branch `master` (commit `b7cbb7a`).
 > Documento para consulta futura — as evidências citam `arquivo:linha` para conferência.
+>
+> **Atualização (2026-09-10):** [#10](https://github.com/odiegoalessandro/doanet-api/issues/10) Logs de
+> auditoria implementados (seções 1 e 3 revisadas).
 
 Este documento cruza o que o `README.md` promete com o que existe de fato no código, e registra os
 pontos que impedem o fluxo principal (cadastrar doador/ponto/ONG → geolocalizar → doar → solicitar retirada)
@@ -47,6 +50,12 @@ O README promete "Autenticação (JWT)", "Integração com Spring Security" e "V
 
 **Consequência:** qualquer usuário pode chamar todos os endpoints; não há noção de "quem está logado",
 nem de dono do recurso. As rotas de `PATCH`/`disable` estão abertas.
+
+**Impacto nos logs de auditoria ([#10](https://github.com/odiegoalessandro/doanet-api/issues/10)):**
+a auditoria registra ação, entidade, timestamp e valores antes/depois, mas o `author_id` ainda permanece
+nulo. A autenticação já existe ([#3](https://github.com/odiegoalessandro/doanet-api/issues/3), PR #16),
+porém o `RecordAuditUseCase` ainda não lê o usuário do contexto de segurança — falta essa ligação
+(ver `TODO (#3)` em `application/usecases/audit/RecordAuditUseCase.java`).
 
 ---
 
@@ -122,7 +131,7 @@ incorretas:
 | Acessibilidade WCAG 2.1 (`:46`) | **N/A** | Requisito de front-end. |
 | Criptografia em trânsito e repouso (`:47`) | **Não começou** | Sem config de TLS; senha em texto puro (ver seção 1). |
 | Suporte a 500+ usuários simultâneos (`:48`) | **Não verificado** | Sem teste de concorrência. |
-| Logs de auditoria (`:49`) | **Não começou** | Sem logging de auditoria. |
+| Logs de auditoria (`:49`) | **Parcial** | Implementado na [#10](https://github.com/odiegoalessandro/doanet-api/issues/10): tabela `audit_log` (`V10`) + log estruturado para cadastros, mudanças de status de doação/solicitação e desativações. Autor fica nulo até o `RecordAuditUseCase` ser ligado ao usuário autenticado ([#3](https://github.com/odiegoalessandro/doanet-api/issues/3)); política de retenção ainda não definida. |
 
 ---
 
@@ -147,5 +156,5 @@ incorretas:
    `countrycode=br`, tratar resultado ausente/baixa confiança em vez de virar `(0,0)`, adicionar timeout,
    expor lat/lng no DTO e criar o endpoint de pontos próximos.
 3. **Estoque e notificações** (mín/máx) e **relatórios mensais**.
-4. **Painel de gestores** e **logs de auditoria**.
+4. **Painel de gestores**. *(Logs de auditoria implementados na [#10](https://github.com/odiegoalessandro/doanet-api/issues/10).)*
 5. **Front-end** (mapa interativo, responsividade, WCAG) — fora do escopo deste repositório.

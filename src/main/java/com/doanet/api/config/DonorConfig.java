@@ -3,6 +3,7 @@ package com.doanet.api.config;
 import com.doanet.api.application.gateways.DonorRepository;
 import com.doanet.api.application.gateways.PasswordHasher;
 import com.doanet.api.application.gateways.UserRepository;
+import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.donor.*;
 import com.doanet.api.application.usecases.user.GeolocateUserUseCase;
 import com.doanet.api.infra.gateways.DonorEntityMappper;
@@ -15,11 +16,12 @@ import org.springframework.context.annotation.Configuration;
 public class DonorConfig {
   @Bean
   public CreateDonorUseCase createDonorUseCase(
-    DonorRepository donorRepository,
-    GeolocateUserUseCase geolocateUserUseCase,
-    PasswordHasher passwordHasher
-  ){
-    return new CreateDonorUseCase(donorRepository, geolocateUserUseCase, passwordHasher);
+      DonorRepository donorRepository,
+      GeolocateUserUseCase geolocateUserUseCase,
+      PasswordHasher passwordHasher,
+      RecordAuditUseCase recordAuditUseCase) {
+    return new CreateDonorUseCase(
+        donorRepository, geolocateUserUseCase, passwordHasher, recordAuditUseCase);
   }
 
   @Bean
@@ -33,7 +35,8 @@ public class DonorConfig {
   }
 
   @Bean
-  public FindDonorByReasonSocialUseCase findActiveDonorByReasonSocialUseCase(DonorRepository donorRepository) {
+  public FindDonorByReasonSocialUseCase findActiveDonorByReasonSocialUseCase(
+      DonorRepository donorRepository) {
     return new FindDonorByReasonSocialUseCase(donorRepository);
   }
 
@@ -44,22 +47,21 @@ public class DonorConfig {
 
   @Bean
   public UpdateDonorUseCase updateDonorUseCase(
-    DonorRepository donorRepository,
-    FindDonorByIdUseCase findDonorByIdUseCase
-  ) {
+      DonorRepository donorRepository, FindDonorByIdUseCase findDonorByIdUseCase) {
     return new UpdateDonorUseCase(donorRepository, findDonorByIdUseCase);
   }
 
   @Bean
   public DisableDonorUseCase deleteDonorUseCase(
-    UserRepository userRepository,
-    FindDonorByIdUseCase findDonorByIdUseCase
-  ) {
-    return new DisableDonorUseCase(findDonorByIdUseCase, userRepository);
+      UserRepository userRepository,
+      FindDonorByIdUseCase findDonorByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
+    return new DisableDonorUseCase(findDonorByIdUseCase, userRepository, recordAuditUseCase);
   }
 
   @Bean
-  public DonorRepository donorRepository(JpaDonorRepository jpaDonorRepository, DonorEntityMappper donorEntityMapper) {
+  public DonorRepository donorRepository(
+      JpaDonorRepository jpaDonorRepository, DonorEntityMappper donorEntityMapper) {
     return new DonorRepositoryImpl(jpaDonorRepository, donorEntityMapper);
   }
 }

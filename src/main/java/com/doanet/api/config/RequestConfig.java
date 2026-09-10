@@ -1,6 +1,7 @@
 package com.doanet.api.config;
 
 import com.doanet.api.application.gateways.RequestRepository;
+import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.donationpoint.FindDonationPointByIdUseCase;
 import com.doanet.api.application.usecases.item.FindItemByIdUseCase;
 import com.doanet.api.application.usecases.ong.FindOngByIdUseCase;
@@ -17,16 +18,17 @@ public class RequestConfig {
 
   @Bean
   public CreateRequestUseCase createRequestUseCase(
-    RequestRepository requestRepository,
-    FindOngByIdUseCase findOngByIdUseCase,
-    FindDonationPointByIdUseCase findDonationPointByIdUseCase,
-    FindItemByIdUseCase findItemByIdUseCase) {
+      RequestRepository requestRepository,
+      FindOngByIdUseCase findOngByIdUseCase,
+      FindDonationPointByIdUseCase findDonationPointByIdUseCase,
+      FindItemByIdUseCase findItemByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
     return new CreateRequestUseCase(
-      requestRepository,
-      findOngByIdUseCase,
-      findDonationPointByIdUseCase,
-      findItemByIdUseCase
-    );
+        requestRepository,
+        findOngByIdUseCase,
+        findDonationPointByIdUseCase,
+        findItemByIdUseCase,
+        recordAuditUseCase);
   }
 
   @Bean
@@ -35,7 +37,8 @@ public class RequestConfig {
   }
 
   @Bean
-  public FindRequestByDonationPointIdUseCase findRequestByDonationPointId(RequestRepository requestRepository) {
+  public FindRequestByDonationPointIdUseCase findRequestByDonationPointId(
+      RequestRepository requestRepository) {
     return new FindRequestByDonationPointIdUseCase(requestRepository);
   }
 
@@ -50,33 +53,34 @@ public class RequestConfig {
   }
 
   @Bean
-  public FindRequestByStatusUseCase findRequestByStatusUseCase(RequestRepository requestRepository) {
+  public FindRequestByStatusUseCase findRequestByStatusUseCase(
+      RequestRepository requestRepository) {
     return new FindRequestByStatusUseCase(requestRepository);
   }
 
   @Bean
   public UpdateRequestItemUseCase updateRequestItemUseCase(
-    RequestRepository requestRepository,
-    FindRequestByIdUseCase findRequestByIdUseCase,
-    FindItemByIdUseCase findItemByIdUseCase
-  ) {
-    return new UpdateRequestItemUseCase(requestRepository, findRequestByIdUseCase, findItemByIdUseCase);
+      RequestRepository requestRepository,
+      FindRequestByIdUseCase findRequestByIdUseCase,
+      FindItemByIdUseCase findItemByIdUseCase) {
+    return new UpdateRequestItemUseCase(
+        requestRepository, findRequestByIdUseCase, findItemByIdUseCase);
   }
 
   @Bean
   public UpdateRequestStatusUseCase updateRequestStatusUseCase(
-    RequestRepository requestRepository,
-    FindRequestByIdUseCase findRequestByIdUseCase
-  ) {
-    return new UpdateRequestStatusUseCase(requestRepository, findRequestByIdUseCase);
+      RequestRepository requestRepository,
+      FindRequestByIdUseCase findRequestByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
+    return new UpdateRequestStatusUseCase(
+        requestRepository, findRequestByIdUseCase, recordAuditUseCase);
   }
 
   @Bean
   public RequestRepository requestRepository(
-    JpaRequestRepository jpaRequestRepository,
-    RequestEntityMapper requestEntityMapper,
-    JpaItemRepository jpaItemRepository
-  ) {
+      JpaRequestRepository jpaRequestRepository,
+      RequestEntityMapper requestEntityMapper,
+      JpaItemRepository jpaItemRepository) {
     return new RequestRepositoryImpl(jpaRequestRepository, requestEntityMapper, jpaItemRepository);
   }
 }
