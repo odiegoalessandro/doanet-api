@@ -1,18 +1,17 @@
 package com.doanet.api.application.usecases.audit;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.doanet.api.application.gateways.AuditLogRepository;
 import com.doanet.api.application.gateways.AuditStateSerializer;
 import com.doanet.api.domain.entities.audit.AuditLog;
 import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class RecordAuditUseCaseTest {
 
@@ -35,7 +34,8 @@ class RecordAuditUseCaseTest {
     when(auditStateSerializer.serialize(before)).thenReturn("{\"status\":\"PENDING\"}");
     when(auditStateSerializer.serialize(after)).thenReturn("{\"status\":\"APPROVED\"}");
 
-    recordAuditUseCase.execute(AuditAction.STATUS_CHANGE, AuditedEntity.DONATION, 10L, before, after);
+    recordAuditUseCase.execute(
+        AuditAction.STATUS_CHANGE, AuditedEntity.DONATION, 10L, before, after);
 
     var captor = ArgumentCaptor.forClass(AuditLog.class);
     verify(auditLogRepository).save(captor.capture());
@@ -51,7 +51,8 @@ class RecordAuditUseCaseTest {
 
   @Test
   void shouldLeaveAuthorNullUntilAuthenticationExists() {
-    recordAuditUseCase.execute(AuditAction.CREATE, AuditedEntity.ITEM, 1L, null, Map.of("name", "Arroz"));
+    recordAuditUseCase.execute(
+        AuditAction.CREATE, AuditedEntity.ITEM, 1L, null, Map.of("name", "Arroz"));
 
     var captor = ArgumentCaptor.forClass(AuditLog.class);
     verify(auditLogRepository).save(captor.capture());

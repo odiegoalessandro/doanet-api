@@ -1,6 +1,5 @@
 package com.doanet.api.config;
 
-
 import com.doanet.api.application.gateways.ItemRepository;
 import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.application.usecases.item.*;
@@ -14,9 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class ItemConfig {
   @Bean
   public CreateItemUseCase createItemUseCase(
-    ItemRepository itemRepository,
-    RecordAuditUseCase recordAuditUseCase
-  ){
+      ItemRepository itemRepository, RecordAuditUseCase recordAuditUseCase) {
     return new CreateItemUseCase(itemRepository, recordAuditUseCase);
   }
 
@@ -26,7 +23,7 @@ public class ItemConfig {
   }
 
   @Bean
-  public FindItemByNameUseCase findItemByNameUseCase(ItemRepository itemRepository){
+  public FindItemByNameUseCase findItemByNameUseCase(ItemRepository itemRepository) {
     return new FindItemByNameUseCase(itemRepository);
   }
 
@@ -41,7 +38,8 @@ public class ItemConfig {
   }
 
   @Bean
-  public ItemRepository itemRepository(JpaItemRepository jpaItemRepository, ItemEntityMapper itemEntityMapper) {
+  public ItemRepository itemRepository(
+      JpaItemRepository jpaItemRepository, ItemEntityMapper itemEntityMapper) {
     return new ItemRepositoryImpl(jpaItemRepository, itemEntityMapper);
   }
 }

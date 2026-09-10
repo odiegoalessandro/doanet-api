@@ -3,11 +3,10 @@ package com.doanet.api.infra.persistence;
 import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
 import jakarta.persistence.*;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 @Getter
 @NoArgsConstructor

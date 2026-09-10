@@ -16,58 +16,52 @@ import org.springframework.context.annotation.Configuration;
 public class DonationPointConfig {
   @Bean
   public CreateDonationPointUseCase createDonationPointUseCase(
-    DonationPointRepository donationPointRepository,
-    GeolocateUserUseCase geolocateUserUseCase,
-    PasswordHasher passwordHasher,
-    RecordAuditUseCase recordAuditUseCase
-  ) {
-    return new CreateDonationPointUseCase(donationPointRepository, geolocateUserUseCase, passwordHasher, recordAuditUseCase);
+      DonationPointRepository donationPointRepository,
+      GeolocateUserUseCase geolocateUserUseCase,
+      PasswordHasher passwordHasher,
+      RecordAuditUseCase recordAuditUseCase) {
+    return new CreateDonationPointUseCase(
+        donationPointRepository, geolocateUserUseCase, passwordHasher, recordAuditUseCase);
   }
 
   @Bean
   public FindDonationPointByIdUseCase findActiveDonationPointByIdUseCase(
-    DonationPointRepository donationPointRepository
-  ) {
+      DonationPointRepository donationPointRepository) {
     return new FindDonationPointByIdUseCase(donationPointRepository);
   }
 
   @Bean
   public FindDonationPointByDescriptionUseCase findActiveDonationPointByDescriptionUseCase(
-    DonationPointRepository donationPointRepository
-  ){
+      DonationPointRepository donationPointRepository) {
     return new FindDonationPointByDescriptionUseCase(donationPointRepository);
   }
 
   @Bean
   public FindAllDonationPointsUseCase findAllDonationPointsUseCase(
-    DonationPointRepository donationPointRepository
-  ) {
+      DonationPointRepository donationPointRepository) {
     return new FindAllDonationPointsUseCase(donationPointRepository);
   }
 
   @Bean
   public UpdateDonationPointUseCase updateDonationPointUseCase(
-    DonationPointRepository donationPointRepository,
-    FindDonationPointByIdUseCase findDonationPointByIdUseCase
-  ){
+      DonationPointRepository donationPointRepository,
+      FindDonationPointByIdUseCase findDonationPointByIdUseCase) {
     return new UpdateDonationPointUseCase(donationPointRepository, findDonationPointByIdUseCase);
   }
 
   @Bean
   public DisableDonationPointUseCase deleteDonationPointByIdUseCase(
-    UserRepository userRepository,
-    FindDonationPointByIdUseCase findDonationPointByIdUseCase,
-    RecordAuditUseCase recordAuditUseCase
-  ) {
-    return new DisableDonationPointUseCase(userRepository, findDonationPointByIdUseCase, recordAuditUseCase);
+      UserRepository userRepository,
+      FindDonationPointByIdUseCase findDonationPointByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
+    return new DisableDonationPointUseCase(
+        userRepository, findDonationPointByIdUseCase, recordAuditUseCase);
   }
 
   @Bean
   public DonationPointRepository donationPointRepositoryImpl(
-    JpaDonationPointRepository jpaDonationPointRepository,
-    DonationPointEntityMapper donationPointEntityMapper
-  ) {
+      JpaDonationPointRepository jpaDonationPointRepository,
+      DonationPointEntityMapper donationPointEntityMapper) {
     return new DonationPointRepositoryImpl(jpaDonationPointRepository, donationPointEntityMapper);
   }
 }
-

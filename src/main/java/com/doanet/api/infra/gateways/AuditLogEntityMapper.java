@@ -8,27 +8,25 @@ import org.springframework.stereotype.Component;
 public class AuditLogEntityMapper {
   public AuditLogEntity toEntity(AuditLog auditLog) {
     return new AuditLogEntity(
-      auditLog.getId(),
-      auditLog.getAuthorId(),
-      auditLog.getAction(),
-      auditLog.getEntityType(),
-      auditLog.getEntityId(),
-      auditLog.getOccurredAt(),
-      auditLog.getBeforeState(),
-      auditLog.getAfterState()
-    );
+        auditLog.getId(),
+        auditLog.getAuthorId(),
+        auditLog.getAction(),
+        auditLog.getEntityType(),
+        auditLog.getEntityId(),
+        auditLog.getOccurredAt(),
+        auditLog.getBeforeState(),
+        auditLog.getAfterState());
   }
 
   public AuditLog toDomain(AuditLogEntity auditLogEntity) {
     return new AuditLog(
-      auditLogEntity.getId(),
-      auditLogEntity.getAuthorId(),
-      auditLogEntity.getAction(),
-      auditLogEntity.getEntityType(),
-      auditLogEntity.getEntityId(),
-      auditLogEntity.getOccurredAt(),
-      auditLogEntity.getBeforeState(),
-      auditLogEntity.getAfterState()
-    );
+        auditLogEntity.getId(),
+        auditLogEntity.getAuthorId(),
+        auditLogEntity.getAction(),
+        auditLogEntity.getEntityType(),
+        auditLogEntity.getEntityId(),
+        auditLogEntity.getOccurredAt(),
+        auditLogEntity.getBeforeState(),
+        auditLogEntity.getAfterState());
   }
 }

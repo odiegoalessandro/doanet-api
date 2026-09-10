@@ -15,28 +15,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserConfig {
   @Bean
-  public GeolocateUserUseCase geolocateUserUseCase(GetCoordinatesByAddress getCoordinatesByAddress) {
+  public GeolocateUserUseCase geolocateUserUseCase(
+      GetCoordinatesByAddress getCoordinatesByAddress) {
     return new GeolocateUserUseCase(getCoordinatesByAddress);
   }
 
   @Bean
   public GeolocatePendingUsersUseCase geolocatePendingUsersUseCase(
-    UserRepository userRepository,
-    GeolocateUserUseCase geolocateUserUseCase
-  ) {
+      UserRepository userRepository, GeolocateUserUseCase geolocateUserUseCase) {
     return new GeolocatePendingUsersUseCase(userRepository, geolocateUserUseCase);
   }
 
   @Bean
   public DisableUserUseCase disableUserUseCase(
-    UserRepository userRepository,
-    RecordAuditUseCase recordAuditUseCase
-  ) {
+      UserRepository userRepository, RecordAuditUseCase recordAuditUseCase) {
     return new DisableUserUseCase(userRepository, recordAuditUseCase);
   }
 
   @Bean
-  public UserRepositoryImpl userRepositoryImpl(JpaUserRepository jpaUserRepository, UserEntityMapper userEntityMapper) {
+  public UserRepositoryImpl userRepositoryImpl(
+      JpaUserRepository jpaUserRepository, UserEntityMapper userEntityMapper) {
     return new UserRepositoryImpl(jpaUserRepository, userEntityMapper);
   }
 }

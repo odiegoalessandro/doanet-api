@@ -13,17 +13,13 @@ import org.springframework.context.annotation.Configuration;
 public class AuditConfig {
   @Bean
   public RecordAuditUseCase recordAuditUseCase(
-    AuditLogRepository auditLogRepository,
-    AuditStateSerializer auditStateSerializer
-  ) {
+      AuditLogRepository auditLogRepository, AuditStateSerializer auditStateSerializer) {
     return new RecordAuditUseCase(auditLogRepository, auditStateSerializer);
   }
 
   @Bean
   public AuditLogRepository auditLogRepository(
-    JpaAuditLogRepository jpaAuditLogRepository,
-    AuditLogEntityMapper auditLogEntityMapper
-  ) {
+      JpaAuditLogRepository jpaAuditLogRepository, AuditLogEntityMapper auditLogEntityMapper) {
     return new AuditLogRepositoryImpl(jpaAuditLogRepository, auditLogEntityMapper);
   }
 }

@@ -7,7 +7,6 @@ import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
 import com.doanet.api.domain.enums.DonationStatus;
 import com.doanet.api.domain.validator.DonationStatusValidator;
-
 import java.util.Map;
 
 public class UpdateStatusDonationUseCase {
@@ -15,9 +14,10 @@ public class UpdateStatusDonationUseCase {
   private final FindDonationByIdUseCase findDonationByIdUseCase;
   private final RecordAuditUseCase recordAuditUseCase;
 
-  public UpdateStatusDonationUseCase(DonationRepository donationRepository,
-                                     FindDonationByIdUseCase findDonationByIdUseCase,
-                                     RecordAuditUseCase recordAuditUseCase) {
+  public UpdateStatusDonationUseCase(
+      DonationRepository donationRepository,
+      FindDonationByIdUseCase findDonationByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
     this.donationRepository = donationRepository;
     this.findDonationByIdUseCase = findDonationByIdUseCase;
     this.recordAuditUseCase = recordAuditUseCase;
@@ -34,12 +34,11 @@ public class UpdateStatusDonationUseCase {
     var savedDonation = donationRepository.save(donation);
 
     this.recordAuditUseCase.execute(
-      AuditAction.STATUS_CHANGE,
-      AuditedEntity.DONATION,
-      savedDonation.getId(),
-      Map.of("status", previousStatus.name()),
-      Map.of("status", savedDonation.getStatus().name())
-    );
+        AuditAction.STATUS_CHANGE,
+        AuditedEntity.DONATION,
+        savedDonation.getId(),
+        Map.of("status", previousStatus.name()),
+        Map.of("status", savedDonation.getStatus().name()));
 
     return savedDonation;
   }

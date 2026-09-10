@@ -18,18 +18,17 @@ public class RequestConfig {
 
   @Bean
   public CreateRequestUseCase createRequestUseCase(
-    RequestRepository requestRepository,
-    FindOngByIdUseCase findOngByIdUseCase,
-    FindDonationPointByIdUseCase findDonationPointByIdUseCase,
-    FindItemByIdUseCase findItemByIdUseCase,
-    RecordAuditUseCase recordAuditUseCase) {
+      RequestRepository requestRepository,
+      FindOngByIdUseCase findOngByIdUseCase,
+      FindDonationPointByIdUseCase findDonationPointByIdUseCase,
+      FindItemByIdUseCase findItemByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
     return new CreateRequestUseCase(
-      requestRepository,
-      findOngByIdUseCase,
-      findDonationPointByIdUseCase,
-      findItemByIdUseCase,
-      recordAuditUseCase
-    );
+        requestRepository,
+        findOngByIdUseCase,
+        findDonationPointByIdUseCase,
+        findItemByIdUseCase,
+        recordAuditUseCase);
   }
 
   @Bean
@@ -38,7 +37,8 @@ public class RequestConfig {
   }
 
   @Bean
-  public FindRequestByDonationPointIdUseCase findRequestByDonationPointId(RequestRepository requestRepository) {
+  public FindRequestByDonationPointIdUseCase findRequestByDonationPointId(
+      RequestRepository requestRepository) {
     return new FindRequestByDonationPointIdUseCase(requestRepository);
   }
 
@@ -53,34 +53,34 @@ public class RequestConfig {
   }
 
   @Bean
-  public FindRequestByStatusUseCase findRequestByStatusUseCase(RequestRepository requestRepository) {
+  public FindRequestByStatusUseCase findRequestByStatusUseCase(
+      RequestRepository requestRepository) {
     return new FindRequestByStatusUseCase(requestRepository);
   }
 
   @Bean
   public UpdateRequestItemUseCase updateRequestItemUseCase(
-    RequestRepository requestRepository,
-    FindRequestByIdUseCase findRequestByIdUseCase,
-    FindItemByIdUseCase findItemByIdUseCase
-  ) {
-    return new UpdateRequestItemUseCase(requestRepository, findRequestByIdUseCase, findItemByIdUseCase);
+      RequestRepository requestRepository,
+      FindRequestByIdUseCase findRequestByIdUseCase,
+      FindItemByIdUseCase findItemByIdUseCase) {
+    return new UpdateRequestItemUseCase(
+        requestRepository, findRequestByIdUseCase, findItemByIdUseCase);
   }
 
   @Bean
   public UpdateRequestStatusUseCase updateRequestStatusUseCase(
-    RequestRepository requestRepository,
-    FindRequestByIdUseCase findRequestByIdUseCase,
-    RecordAuditUseCase recordAuditUseCase
-  ) {
-    return new UpdateRequestStatusUseCase(requestRepository, findRequestByIdUseCase, recordAuditUseCase);
+      RequestRepository requestRepository,
+      FindRequestByIdUseCase findRequestByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
+    return new UpdateRequestStatusUseCase(
+        requestRepository, findRequestByIdUseCase, recordAuditUseCase);
   }
 
   @Bean
   public RequestRepository requestRepository(
-    JpaRequestRepository jpaRequestRepository,
-    RequestEntityMapper requestEntityMapper,
-    JpaItemRepository jpaItemRepository
-  ) {
+      JpaRequestRepository jpaRequestRepository,
+      RequestEntityMapper requestEntityMapper,
+      JpaItemRepository jpaItemRepository) {
     return new RequestRepositoryImpl(jpaRequestRepository, requestEntityMapper, jpaItemRepository);
   }
 }

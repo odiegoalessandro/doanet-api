@@ -4,7 +4,6 @@ import com.doanet.api.application.gateways.UserRepository;
 import com.doanet.api.application.usecases.audit.RecordAuditUseCase;
 import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,17 +13,16 @@ public class DisableDonationPointUseCase {
   private final RecordAuditUseCase recordAuditUseCase;
 
   public DisableDonationPointUseCase(
-   UserRepository userRepository,
-   FindDonationPointByIdUseCase findDonationPointByIdUseCase,
-   RecordAuditUseCase recordAuditUseCase
-  ) {
+      UserRepository userRepository,
+      FindDonationPointByIdUseCase findDonationPointByIdUseCase,
+      RecordAuditUseCase recordAuditUseCase) {
     this.userRepository = userRepository;
     this.findDonationPointByIdUseCase = findDonationPointByIdUseCase;
     this.recordAuditUseCase = recordAuditUseCase;
   }
 
-  public void execute(Long id){
-    var donationPoint  = findDonationPointByIdUseCase.execute(id, true);
+  public void execute(Long id) {
+    var donationPoint = findDonationPointByIdUseCase.execute(id, true);
 
     this.userRepository.disableUser(donationPoint.getUser().getId());
 
@@ -37,11 +35,10 @@ public class DisableDonationPointUseCase {
     afterState.put("userId", donationPoint.getUser().getId());
 
     this.recordAuditUseCase.execute(
-      AuditAction.DEACTIVATE,
-      AuditedEntity.DONATION_POINT,
-      donationPoint.getId(),
-      beforeState,
-      afterState
-    );
+        AuditAction.DEACTIVATE,
+        AuditedEntity.DONATION_POINT,
+        donationPoint.getId(),
+        beforeState,
+        afterState);
   }
 }

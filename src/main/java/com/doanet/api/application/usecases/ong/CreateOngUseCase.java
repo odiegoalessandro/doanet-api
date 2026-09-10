@@ -10,7 +10,6 @@ import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
 import com.doanet.api.domain.enums.UserType;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,34 +19,35 @@ public class CreateOngUseCase {
   private final PasswordHasher passwordHasher;
   private final RecordAuditUseCase recordAuditUseCase;
 
-  public CreateOngUseCase(OngRepository ongRepository,
-                          GeolocateUserUseCase geolocateUserUseCase,
-                          PasswordHasher passwordHasher,
-                          RecordAuditUseCase recordAuditUseCase){
+  public CreateOngUseCase(
+      OngRepository ongRepository,
+      GeolocateUserUseCase geolocateUserUseCase,
+      PasswordHasher passwordHasher,
+      RecordAuditUseCase recordAuditUseCase) {
     this.ongRepository = ongRepository;
     this.geolocateUserUseCase = geolocateUserUseCase;
     this.passwordHasher = passwordHasher;
     this.recordAuditUseCase = recordAuditUseCase;
   }
 
-  public Ong execute(CreateOngCommand ongCommand){
-    var user = new User(
-        null,
-        ongCommand.name(),
-        ongCommand.email(),
-        ongCommand.password(),
-        ongCommand.phone(),
-        ongCommand.street(),
-        ongCommand.number(),
-        ongCommand.neighborhood(),
-        ongCommand.city(),
-        ongCommand.state(),
-        ongCommand.zipCode(),
-        null,
-        null,
-        UserType.ONG,
-        true
-    );
+  public Ong execute(CreateOngCommand ongCommand) {
+    var user =
+        new User(
+            null,
+            ongCommand.name(),
+            ongCommand.email(),
+            ongCommand.password(),
+            ongCommand.phone(),
+            ongCommand.street(),
+            ongCommand.number(),
+            ongCommand.neighborhood(),
+            ongCommand.city(),
+            ongCommand.state(),
+            ongCommand.zipCode(),
+            null,
+            null,
+            UserType.ONG,
+            true);
 
     user.setPassword(this.passwordHasher.hash(ongCommand.password()));
 
@@ -58,12 +58,7 @@ public class CreateOngUseCase {
     var savedOng = this.ongRepository.save(ong);
 
     this.recordAuditUseCase.execute(
-      AuditAction.CREATE,
-      AuditedEntity.ONG,
-      savedOng.getId(),
-      null,
-      this.auditStateOf(savedOng)
-    );
+        AuditAction.CREATE, AuditedEntity.ONG, savedOng.getId(), null, this.auditStateOf(savedOng));
 
     return savedOng;
   }

@@ -10,7 +10,8 @@ public class AuditLogRepositoryImpl implements AuditLogRepository {
   private final JpaAuditLogRepository jpaAuditLogRepository;
   private final AuditLogEntityMapper mapper;
 
-  public AuditLogRepositoryImpl(JpaAuditLogRepository jpaAuditLogRepository, AuditLogEntityMapper mapper) {
+  public AuditLogRepositoryImpl(
+      JpaAuditLogRepository jpaAuditLogRepository, AuditLogEntityMapper mapper) {
     this.jpaAuditLogRepository = jpaAuditLogRepository;
     this.mapper = mapper;
   }
@@ -20,15 +21,14 @@ public class AuditLogRepositoryImpl implements AuditLogRepository {
     var savedAuditLog = this.jpaAuditLogRepository.save(this.mapper.toEntity(auditLog));
 
     log.info(
-      "Auditoria: action={} entity={} entityId={} authorId={} occurredAt={} before={} after={}",
-      savedAuditLog.getAction(),
-      savedAuditLog.getEntityType(),
-      savedAuditLog.getEntityId(),
-      savedAuditLog.getAuthorId(),
-      savedAuditLog.getOccurredAt(),
-      savedAuditLog.getBeforeState(),
-      savedAuditLog.getAfterState()
-    );
+        "Auditoria: action={} entity={} entityId={} authorId={} occurredAt={} before={} after={}",
+        savedAuditLog.getAction(),
+        savedAuditLog.getEntityType(),
+        savedAuditLog.getEntityId(),
+        savedAuditLog.getAuthorId(),
+        savedAuditLog.getOccurredAt(),
+        savedAuditLog.getBeforeState(),
+        savedAuditLog.getAfterState());
 
     return this.mapper.toDomain(savedAuditLog);
   }

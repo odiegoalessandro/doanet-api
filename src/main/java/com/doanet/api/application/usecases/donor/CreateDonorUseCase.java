@@ -10,7 +10,6 @@ import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
 import com.doanet.api.domain.enums.UserType;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,34 +19,35 @@ public class CreateDonorUseCase {
   private final PasswordHasher passwordHasher;
   private final RecordAuditUseCase recordAuditUseCase;
 
-  public CreateDonorUseCase(DonorRepository donorRepository,
-                            GeolocateUserUseCase geolocateUserUseCase,
-                            PasswordHasher passwordHasher,
-                            RecordAuditUseCase recordAuditUseCase) {
+  public CreateDonorUseCase(
+      DonorRepository donorRepository,
+      GeolocateUserUseCase geolocateUserUseCase,
+      PasswordHasher passwordHasher,
+      RecordAuditUseCase recordAuditUseCase) {
     this.donorRepository = donorRepository;
     this.geolocateUserUseCase = geolocateUserUseCase;
     this.passwordHasher = passwordHasher;
     this.recordAuditUseCase = recordAuditUseCase;
   }
 
-  public Donor execute(CreateDonorCommand donorCommand){
-    var user = new User(
-      null,
-      donorCommand.name(),
-      donorCommand.email(),
-      donorCommand.password(),
-      donorCommand.phone(),
-      donorCommand.street(),
-      donorCommand.number(),
-      donorCommand.neighborhood(),
-      donorCommand.city(),
-      donorCommand.state(),
-      donorCommand.zipCode(),
-      null,
-      null,
-      UserType.DONOR,
-      true
-    );
+  public Donor execute(CreateDonorCommand donorCommand) {
+    var user =
+        new User(
+            null,
+            donorCommand.name(),
+            donorCommand.email(),
+            donorCommand.password(),
+            donorCommand.phone(),
+            donorCommand.street(),
+            donorCommand.number(),
+            donorCommand.neighborhood(),
+            donorCommand.city(),
+            donorCommand.state(),
+            donorCommand.zipCode(),
+            null,
+            null,
+            UserType.DONOR,
+            true);
 
     user.setPassword(this.passwordHasher.hash(donorCommand.password()));
 
@@ -58,12 +58,11 @@ public class CreateDonorUseCase {
     var savedDonor = this.donorRepository.save(donor);
 
     this.recordAuditUseCase.execute(
-      AuditAction.CREATE,
-      AuditedEntity.DONOR,
-      savedDonor.getId(),
-      null,
-      this.auditStateOf(savedDonor)
-    );
+        AuditAction.CREATE,
+        AuditedEntity.DONOR,
+        savedDonor.getId(),
+        null,
+        this.auditStateOf(savedDonor));
 
     return savedDonor;
   }

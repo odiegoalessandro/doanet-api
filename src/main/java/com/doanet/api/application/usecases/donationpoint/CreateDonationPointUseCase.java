@@ -10,7 +10,6 @@ import com.doanet.api.domain.entities.user.User;
 import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
 import com.doanet.api.domain.enums.UserType;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,35 +20,34 @@ public class CreateDonationPointUseCase {
   private final RecordAuditUseCase recordAuditUseCase;
 
   public CreateDonationPointUseCase(
-    DonationPointRepository donationPointRepository,
-    GeolocateUserUseCase geolocateUserUseCase,
-    PasswordHasher passwordHasher,
-    RecordAuditUseCase recordAuditUseCase
-  ) {
+      DonationPointRepository donationPointRepository,
+      GeolocateUserUseCase geolocateUserUseCase,
+      PasswordHasher passwordHasher,
+      RecordAuditUseCase recordAuditUseCase) {
     this.donationPointRepository = donationPointRepository;
     this.geolocateUserUseCase = geolocateUserUseCase;
     this.passwordHasher = passwordHasher;
     this.recordAuditUseCase = recordAuditUseCase;
   }
 
-  public DonationPoint execute(CreateDonationPointCommand donationPointCommand){
-    var user = new User(
-      null,
-      donationPointCommand.name(),
-      donationPointCommand.email(),
-      donationPointCommand.password(),
-      donationPointCommand.phone(),
-      donationPointCommand.street(),
-      donationPointCommand.number(),
-      donationPointCommand.neighborhood(),
-      donationPointCommand.city(),
-      donationPointCommand.state(),
-      donationPointCommand.zipCode(),
-      null,
-      null,
-      UserType.DONATION_POINT,
-      true
-    );
+  public DonationPoint execute(CreateDonationPointCommand donationPointCommand) {
+    var user =
+        new User(
+            null,
+            donationPointCommand.name(),
+            donationPointCommand.email(),
+            donationPointCommand.password(),
+            donationPointCommand.phone(),
+            donationPointCommand.street(),
+            donationPointCommand.number(),
+            donationPointCommand.neighborhood(),
+            donationPointCommand.city(),
+            donationPointCommand.state(),
+            donationPointCommand.zipCode(),
+            null,
+            null,
+            UserType.DONATION_POINT,
+            true);
 
     user.setPassword(this.passwordHasher.hash(donationPointCommand.password()));
 
@@ -60,12 +58,11 @@ public class CreateDonationPointUseCase {
     var savedDonationPoint = this.donationPointRepository.save(donationPoint);
 
     this.recordAuditUseCase.execute(
-      AuditAction.CREATE,
-      AuditedEntity.DONATION_POINT,
-      savedDonationPoint.getId(),
-      null,
-      this.auditStateOf(savedDonationPoint)
-    );
+        AuditAction.CREATE,
+        AuditedEntity.DONATION_POINT,
+        savedDonationPoint.getId(),
+        null,
+        this.auditStateOf(savedDonationPoint));
 
     return savedDonationPoint;
   }

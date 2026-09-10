@@ -2,7 +2,6 @@ package com.doanet.api.domain.entities.audit;
 
 import com.doanet.api.domain.enums.AuditAction;
 import com.doanet.api.domain.enums.AuditedEntity;
-
 import java.time.Instant;
 
 public class AuditLog {
@@ -15,14 +14,15 @@ public class AuditLog {
   private final String beforeState;
   private final String afterState;
 
-  public AuditLog(Long id,
-                  Long authorId,
-                  AuditAction action,
-                  AuditedEntity entityType,
-                  Long entityId,
-                  Instant occurredAt,
-                  String beforeState,
-                  String afterState) {
+  public AuditLog(
+      Long id,
+      Long authorId,
+      AuditAction action,
+      AuditedEntity entityType,
+      Long entityId,
+      Instant occurredAt,
+      String beforeState,
+      String afterState) {
     validateAction(action);
     validateEntityType(entityType);
     validateOccurredAt(occurredAt);
